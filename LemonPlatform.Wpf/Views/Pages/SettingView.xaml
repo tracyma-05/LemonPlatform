@@ -1,0 +1,58 @@
+﻿<Page x:Class="LemonPlatform.Wpf.Views.Pages.SettingView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LemonPlatform.Wpf.Views.Pages"
+      xmlns:assist="clr-namespace:LemonPlatform.Wpf.Helpers"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450"
+      d:DesignWidth="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0">
+                <TextBlock Margin="5" VerticalAlignment="Center" Text="Light" />
+                <ToggleButton IsChecked="{Binding IsDarkTheme}" />
+                <TextBlock Margin="5" VerticalAlignment="Center" Text="Dark" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1">
+                <TextBlock Margin="5" VerticalAlignment="Center" Text="Color Adjustment: " />
+                <ToggleButton IsChecked="{Binding IsColorAdjusted}" HorizontalAlignment="Center" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="2">
+                <TextBlock Margin="5" VerticalAlignment="Center" Text="Desired Contrast Ratio: " />
+                <Slider Width="150" VerticalAlignment="Center" IsSnapToTickEnabled="True" Maximum="21" Minimum="1" TickFrequency="0.1" Value="{Binding DesiredContrastRatio}" />
+                <TextBlock Width="40" Margin="5 0 0 0" VerticalAlignment="Center" Text="{Binding DesiredContrastRatio, StringFormat={}{0}:1}" TextAlignment="Right" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="3">
+                <TextBlock Margin="5" VerticalAlignment="Center" Text="Contrast: " />
+                <ComboBox ItemsSource="{Binding ContrastValues}" SelectedItem="{Binding ContrastValue}" Width="80" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="4">
+                <TextBlock Margin="5" VerticalAlignment="Center" Text="Color Selection: " />
+                <ComboBox ItemsSource="{Binding ColorSelectionValues}" SelectedItem="{Binding ColorSelectionValue}" Width="100" />
+            </StackPanel>
+        </Grid>
+
+
+
+    </Grid>
+</Page>
