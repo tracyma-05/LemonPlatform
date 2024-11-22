@@ -13,9 +13,12 @@
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!--<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBodyMediumTextBlock}">
+        <Setter Property="FontFamily" Value="{materialDesign:MaterialDesignFont}" />
+    </Style>-->
 
-    <Style TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBodyMediumTextBlock}">
+        <!--<Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />-->
         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="{materialDesign:MaterialDesignFont}" />

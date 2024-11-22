@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.Json.Views
 {
-    public partial class JsonView : Page, ITransientDependency
+    public partial class JsonView : UserControl, ITransientDependency
     {
         public JsonView(JsonViewModel model)
         {

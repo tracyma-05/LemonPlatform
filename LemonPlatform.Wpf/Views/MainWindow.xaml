@@ -64,14 +64,14 @@
                         HorizontalContentAlignment="Center"
                         PopupHorizontalOffset="100"
                         PopupVerticalOffset="-100"
-                        Height="30"
+                        Height="50"
                         Width="100">
                         <materialDesign:PopupBox.ToggleContent>
-                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Width="100">
-                                <materialDesign:PackIcon Width="30" Height="30" Kind="User" />
-                                <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text="tracy.ma" />
-                                    <TextBlock Text="admin" />
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Width="100" >
+                                <materialDesign:PackIcon Width="40" Height="40" Kind="User" />
+                                <StackPanel VerticalAlignment="Center" Height="30">
+                                    <TextBlock Text="tracy.ma" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="14" Foreground="{DynamicResource MaterialDesignBody}"/>
+                                    <TextBlock Text="admin" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Foreground="{DynamicResource MaterialDesignBody}"/>
                                 </StackPanel>
                             </StackPanel>
                         </materialDesign:PopupBox.ToggleContent>
@@ -105,17 +105,13 @@
                         HorizontalAlignment="Center"
                         MessageQueue="{materialDesign:MessageQueue}"/>
 
-                    <Frame NavigationUIVisibility="Hidden"
-                           Background="Transparent"
-                           Content="{Binding Path=CurrentPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <Frame.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Copy"/>
-                                <Separator/>
-                                <MenuItem Header="Paste"/>
-                            </ContextMenu>
-                        </Frame.ContextMenu>
-                    </Frame>
+                    <ScrollViewer x:Name="MainScrollViewer"
+                          Grid.Row="1"
+                          materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                        <ContentControl Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}" />
+                    </ScrollViewer>
                 </Grid>
             </DockPanel>
         </materialDesign:DrawerHost>

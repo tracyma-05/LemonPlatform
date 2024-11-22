@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Wpf.Views.Pages
 {
-    public partial class SettingView : Page, ISingletonDependency
+    public partial class SettingView : UserControl, ISingletonDependency
     {
         public SettingView(SettingViewModel model)
         {

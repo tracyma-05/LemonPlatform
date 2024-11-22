@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Wpf.Views.Pages
 {
-    public partial class LogView : Page, ITransientDependency
+    public partial class LogView : UserControl, ITransientDependency
     {
         public LogView(LogViewModel model)
         {
