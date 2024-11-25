@@ -5,5 +5,7 @@ namespace LemonPlatform.Wpf.Commons
     internal class LemonConstants
     {
         internal static List<PluginItem> PageItems = new List<PluginItem>();
+
+        internal const string ApplicationName = "LemonPlatform";
     }
 }

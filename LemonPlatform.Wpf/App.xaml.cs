@@ -37,7 +37,8 @@ namespace LemonPlatform.Wpf
 
         protected override async void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
+            ApplicationHelper.CheckApplicationMutex();
+
             await _host.StartAsync();
 
             ThemeHelper.SetLemonTheme();
