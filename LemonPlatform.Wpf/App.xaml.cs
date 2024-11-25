@@ -1,9 +1,12 @@
-﻿using LemonPlatform.Wpf.Helpers;
+﻿using LemonPlatform.Wpf.Exceptions;
+using LemonPlatform.Wpf.Helpers;
 using LemonPlatform.Wpf.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
+using NLog.Extensions.Logging;
 using System.Windows;
 
 namespace LemonPlatform.Wpf
@@ -22,6 +25,8 @@ namespace LemonPlatform.Wpf
                 .ConfigureServices(WpfModule.ConfigureServices)
                 .ConfigureLogging((context, logging) =>
                 {
+                    logging.ClearProviders();
+                    logging.AddNLog(context.Configuration);
                 })
                 .Build();
         }
@@ -33,6 +38,9 @@ namespace LemonPlatform.Wpf
 
             ThemeHelper.SetLemonTheme();
             SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
+
+            var handler = _host.Services.GetRequiredService<LemonExceptionHandler>();
+            ExceptionHandler(handler);
 
             var login = _host.Services.GetRequiredService<MainWindow>();
             login.Show();
@@ -50,6 +58,13 @@ namespace LemonPlatform.Wpf
             {
                 ThemeHelper.SetPrimaryColor();
             }
+        }
+
+        private void ExceptionHandler(LemonExceptionHandler handler)
+        {
+            DispatcherUnhandledException += handler.ApplicationExceptionHandler;
+            TaskScheduler.UnobservedTaskException += handler.UnobservedTaskExceptionHandler;
+            AppDomain.CurrentDomain.UnhandledException += handler.DomainExceptionHandler;
         }
     }
 }

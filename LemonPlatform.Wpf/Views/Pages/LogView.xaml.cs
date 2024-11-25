@@ -4,12 +4,17 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Wpf.Views.Pages
 {
-    public partial class LogView : UserControl, ITransientDependency
+    public partial class LogView : UserControl, ISingletonDependency
     {
         public LogView(LogViewModel model)
         {
             InitializeComponent();
             DataContext = model;
+        }
+
+        private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            logTextBox.ScrollToEnd();
         }
     }
 }

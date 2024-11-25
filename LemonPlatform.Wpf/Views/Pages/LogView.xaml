@@ -4,10 +4,48 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LemonPlatform.Wpf.Views.Pages"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800">
+      d:DesignHeight="450"
+      d:DesignWidth="800">
 
-    <Grid>
-        <TextBlock Text="Log Page" />
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <materialDesign:Card Grid.Row="0" Margin="10">
+            <TextBox Text="{Binding LogContent}" TextWrapping="WrapWithOverflow" VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto" TextChanged="TextBoxBase_OnTextChanged" Name="logTextBox"/>
+        </materialDesign:Card>
+        <Separator Grid.Row="0" VerticalAlignment="Bottom"/>
+        <materialDesign:Card Grid.Row="1" Margin="10">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Separator BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Right">
+                    <Separator.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </Separator.LayoutTransform>
+                </Separator>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Logger Level: " HorizontalContentAlignment="Right" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1" Width="200" ItemsSource="{Binding LogLevels}" SelectedItem="{Binding SelectedLogLevel}"/>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Date: " HorizontalContentAlignment="Right"  VerticalAlignment="Center"/>
+                    <DatePicker Grid.Row="1" Grid.Column="1" Width="200" VerticalAlignment="Center" SelectedDate="{Binding SelectedDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+                </Grid>
+                <Button Grid.Column="1" Width="200" Content="Search" Command="{Binding SearchCommand}"/>
+            </Grid>
+        </materialDesign:Card>
     </Grid>
 </UserControl>
