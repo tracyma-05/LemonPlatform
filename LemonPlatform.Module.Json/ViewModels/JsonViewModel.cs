@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Flurl.Http;
 using LemonPlatform.Core.Infrastructures.Denpendency;
-using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 
@@ -14,13 +12,6 @@ namespace LemonPlatform.Module.Json.ViewModels
     {
         public JsonViewModel()
         {
-        }
-
-        [RelayCommand]
-        private async void Set()
-        {
-            var url = "https://cn.bing.com/";
-            Name = await url.GetStringAsync();
         }
 
         [ObservableProperty]
