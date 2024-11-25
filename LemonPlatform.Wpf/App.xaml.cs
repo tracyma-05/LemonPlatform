@@ -1,14 +1,17 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
+using LemonPlatform.SQLite;
 using LemonPlatform.Wpf.Exceptions;
 using LemonPlatform.Wpf.Helpers;
 using LemonPlatform.Wpf.Resources;
 using LemonPlatform.Wpf.Views;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
 using NLog.Extensions.Logging;
+using System.IO;
 using System.Windows;
 
 namespace LemonPlatform.Wpf
@@ -48,6 +51,9 @@ namespace LemonPlatform.Wpf
             var handler = _host.Services.GetRequiredService<LemonExceptionHandler>();
             ExceptionHandler(handler);
 
+            var dbContext = _host.Services.GetRequiredService<LemonDbContext>();
+            InitializeDatabase(dbContext);
+
             var login = _host.Services.GetRequiredService<MainWindow>();
             login.Show();
 
@@ -76,6 +82,23 @@ namespace LemonPlatform.Wpf
             DispatcherUnhandledException += handler.ApplicationExceptionHandler;
             TaskScheduler.UnobservedTaskException += handler.UnobservedTaskExceptionHandler;
             AppDomain.CurrentDomain.UnhandledException += handler.DomainExceptionHandler;
+        }
+
+        private void InitializeDatabase(LemonDbContext context)
+        {
+            var databasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lemon.db");
+            try
+            {
+                var isCreated = context.Database.EnsureCreated();
+                if (isCreated)
+                {
+                    context.Database.Migrate();
+                }
+            }
+            catch
+            {
+                //ignore
+            }
         }
     }
 }

@@ -129,7 +129,6 @@
                             BusyContent="Please wait..."
                             BusyContentMargin="10"
                             IndicatorType="Bar"
-                            Opacity="0.8"
                             Background="{DynamicResource MaterialDesignBody}"
                             IsBusy="{Binding IsBusy,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                             IsBusyAtStartup="False">

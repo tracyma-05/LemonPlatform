@@ -1,7 +1,10 @@
 ﻿using LemonPlatform.Core;
 using LemonPlatform.Core.Infrastructures.Dependency;
 using LemonPlatform.Core.Infrastructures.Ioc;
+using LemonPlatform.SQLite;
 using LemonPlatform.Wpf.Commons;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
@@ -16,8 +19,19 @@ namespace LemonPlatform.Wpf
             services.AddAssemblyServices();
             services.AddNextIocManager();
             services.AddModuleServices();
+            services.AddDbContextServices();
 
             IocManager.Instance.ServiceProvider = services.BuildServiceProvider();
+        }
+
+        private static void AddDbContextServices(this IServiceCollection services)
+        {
+            services.AddDbContext<LemonDbContext>(options =>
+            {
+                var databasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lemon.db");
+                options.UseSqlite($"Data Source={databasePath}")
+                    .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+            });
         }
 
         private static void AddAssemblyServices(this IServiceCollection services)
