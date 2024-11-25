@@ -96,6 +96,20 @@
                                       Style="{StaticResource MaterialDesignHamburgerToggleButton}"
                                       VerticalAlignment="Center" />
                     </StatusBarItem>
+                    <Separator/>
+                    <StatusBarItem>
+                        <TextBlock 
+                            Text="{Binding StatusMessage}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignBody}"
+                            Margin="10,0"
+                            MaxWidth="300"/>
+                    </StatusBarItem>
+                    <Separator/>
+                    <StatusBarItem>
+                        <ProgressBar IsIndeterminate="{Binding IsIndeterminate}" Style="{StaticResource MaterialDesignCircularProgressBar}" />
+                    </StatusBarItem>
                 </StatusBar>
                 <Grid>
                     <materialDesign:Snackbar 
@@ -119,7 +133,7 @@
                             Background="{DynamicResource MaterialDesignBody}"
                             IsBusy="{Binding IsBusy,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                             IsBusyAtStartup="False">
-                                <ContentControl Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}" />
+                            <ContentControl Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}" />
                         </busyMask:BusyMask>
                     </ScrollViewer>
                 </Grid>

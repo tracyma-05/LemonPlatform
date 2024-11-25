@@ -25,6 +25,7 @@ namespace LemonPlatform.Wpf.ViewModels
             MenuItems = new ObservableCollection<LemonMenuItem>(LemonMenuItem.MenuItems);
             SelectMenuItem = MenuItems.First();
             MessageHelper.SendSnackMessage("Lemon Platform");
+            MessageHelper.SendStatusBarTextMessage("Ready");
         }
 
         [ObservableProperty]
@@ -47,6 +48,12 @@ namespace LemonPlatform.Wpf.ViewModels
             }
         }
 
+        [ObservableProperty]
+        private string _statusMessage;
+
+        [ObservableProperty]
+        private bool _isIndeterminate;
+
         partial void OnSelectMenuItemChanged(LemonMenuItem? oldValue, LemonMenuItem newValue)
         {
             CurrentPage = IocManager.Instance.ServiceProvider.GetRequiredService(SelectMenuItem.PageType);
@@ -58,28 +65,45 @@ namespace LemonPlatform.Wpf.ViewModels
             switch (message.MessageType)
             {
                 case MessageType.Menu:
-                    var name = message.Content.ToString();
-                    var menu = MenuItems.FirstOrDefault(x => x.Title.Equals(name, StringComparison.OrdinalIgnoreCase));
-                    if (menu == null) return;
-                    SelectMenuItem = menu;
-
-                    break;
-                case MessageType.IsBusy:
-                    var model = (BusyItem)message.Content;
-                    _asyncRelayCommand = model.Command;
-                    IsBusy = model.IsBusy;
-
-                    break;
-                case MessageType.Snack:
-                    Application.Current.Dispatcher.BeginInvoke(() =>
                     {
-                        if (Application.Current.MainWindow is IMainHostWindow window)
-                        {
-                            window.AddSnackMessage(message.Content.ToString()!);
-                        }
-                    });
+                        var name = message.Content.ToString();
+                        var menu = MenuItems.FirstOrDefault(x => x.Title.Equals(name, StringComparison.OrdinalIgnoreCase));
+                        if (menu == null) return;
+                        SelectMenuItem = menu;
 
-                    break;
+                        break;
+                    }
+                case MessageType.IsBusy:
+                    {
+                        var model = (BusyItem)message.Content;
+                        _asyncRelayCommand = model.Command;
+                        IsBusy = model.IsBusy;
+
+                        break;
+                    }
+                case MessageType.Snack:
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            if (Application.Current.MainWindow is IMainHostWindow window)
+                            {
+                                window.AddSnackMessage(message.Content.ToString()!);
+                            }
+                        });
+
+                        break;
+                    }
+                case MessageType.StatusBarText:
+                    {
+                        StatusMessage = message.Content.ToString();
+                        break;
+                    }
+
+                case MessageType.StatusBarProcess:
+                    {
+                        IsIndeterminate = bool.Parse(message.Content.ToString()!);
+                        break;
+                    }
                 default:
 
                     break;

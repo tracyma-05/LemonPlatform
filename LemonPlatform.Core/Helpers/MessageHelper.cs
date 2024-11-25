@@ -35,9 +35,14 @@ namespace LemonPlatform.Core.Helpers
             SendLemonMessage(MessageType.Snack, context);
         }
 
-        public static void SendStatusBarMessage(string context)
+        public static void SendStatusBarTextMessage(string context)
         {
-            SendLemonMessage(MessageType.StatusBar, context);
+            SendLemonMessage(MessageType.StatusBarText, context);
+        }
+
+        public static void SendStatusBarProcessMessage(bool context)
+        {
+            SendLemonMessage(MessageType.StatusBarProcess, context);
         }
     }
 }

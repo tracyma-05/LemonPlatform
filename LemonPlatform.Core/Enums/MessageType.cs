@@ -6,6 +6,7 @@
         Plugin,
         IsBusy,
         Snack,
-        StatusBar
+        StatusBarText,
+        StatusBarProcess
     }
 }
