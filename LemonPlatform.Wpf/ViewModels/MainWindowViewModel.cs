@@ -6,7 +6,6 @@ using LemonPlatform.Core.Infrastructures.Ioc;
 using LemonPlatform.Core.Infrastructures.Messages;
 using LemonPlatform.Core.Models;
 using LemonPlatform.Wpf.Models;
-using LiveChartsCore.SkiaSharpView.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 

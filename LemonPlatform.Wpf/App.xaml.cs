@@ -1,5 +1,7 @@
-﻿using LemonPlatform.Wpf.Exceptions;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using LemonPlatform.Wpf.Exceptions;
 using LemonPlatform.Wpf.Helpers;
+using LemonPlatform.Wpf.Resources;
 using LemonPlatform.Wpf.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,8 @@ namespace LemonPlatform.Wpf
     public partial class App : Application
     {
         private readonly IHost _host;
+        private TaskbarIcon notifyIcon;
+
         public App()
         {
             _host = new HostBuilder()
@@ -44,11 +48,16 @@ namespace LemonPlatform.Wpf
 
             var login = _host.Services.GetRequiredService<MainWindow>();
             login.Show();
+
+            var notifyIconDataContext = _host.Services.GetRequiredService<NotifyIconViewModel>();
+            notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
+            notifyIcon.DataContext = notifyIconDataContext;
         }
 
         protected override async void OnExit(ExitEventArgs e)
         {
             await _host.StopAsync();
+            notifyIcon.Dispose();
             base.OnExit(e);
         }
 

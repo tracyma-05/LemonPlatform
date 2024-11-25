@@ -14,14 +14,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="Resources\Icons\lemon.ico" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\LemonPlatform.Core\LemonPlatform.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Hardcodet.NotifyIcon.Wpf" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" />
 		<PackageReference Include="NLog.Extensions.Logging" />
