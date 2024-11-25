@@ -14,6 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\LemonPlatform.BusyIndicator\LemonPlatform.BusyIndicator.csproj" />
 		<ProjectReference Include="..\LemonPlatform.Core\LemonPlatform.Core.csproj" />
 	</ItemGroup>
 

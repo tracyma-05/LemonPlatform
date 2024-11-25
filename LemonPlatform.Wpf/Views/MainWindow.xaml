@@ -7,6 +7,7 @@
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:models="clr-namespace:LemonPlatform.Wpf.Models"
+        xmlns:busyMask="clr-namespace:LemonPlatform.BusyIndicator.BusyMask;assembly=LemonPlatform.BusyIndicator"
         mc:Ignorable="d"
         Title="Lemon Platform" 
         Style="{StaticResource MaterialDesignWindow}"
@@ -110,7 +111,16 @@
                           materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto">
-                        <ContentControl Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}" />
+                        <busyMask:BusyMask
+                            BusyContent="Please wait..."
+                            BusyContentMargin="10"
+                            IndicatorType="Bar"
+                            Opacity="0.8"
+                            Background="{DynamicResource MaterialDesignBody}"
+                            IsBusy="{Binding IsBusy,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            IsBusyAtStartup="False">
+                                <ContentControl Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}" />
+                        </busyMask:BusyMask>
                     </ScrollViewer>
                 </Grid>
             </DockPanel>

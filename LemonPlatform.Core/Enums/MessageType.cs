@@ -3,6 +3,9 @@
     public enum MessageType
     {
         Menu,
-        Plugin
+        Plugin,
+        IsBusy,
+        Snack,
+        StatusBar
     }
 }

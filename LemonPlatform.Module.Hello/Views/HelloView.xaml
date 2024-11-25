@@ -17,7 +17,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <TextBlock Text="Hello"/>
-
+        <TextBlock Text="{Binding Time}"/>
+        <Button Command="{Binding DfsCommand}" Content="Cancel" Width="200"/>
     </Grid>
 </UserControl>

@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using LemonPlatform.Core.Enums;
 using LemonPlatform.Core.Helpers;
 using LemonPlatform.Core.Infrastructures.Denpendency;
 using LemonPlatform.Core.Models;
@@ -23,8 +22,8 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         partial void OnSelectedPluginItemChanged(PluginItem? oldValue, PluginItem newValue)
         {
             if (newValue == null) return;
-            MessageHelper.SendLemonMessage(MessageType.Menu, "Chat");
-            MessageHelper.SendLemonMessage(MessageType.Plugin, newValue);
+            MessageHelper.SendMenuMessage("Chat");
+            MessageHelper.SendPluginMessage(newValue);
         }
     }
 }

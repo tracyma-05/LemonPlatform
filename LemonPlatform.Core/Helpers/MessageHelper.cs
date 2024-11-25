@@ -14,5 +14,30 @@ namespace LemonPlatform.Core.Helpers
                 Content = context
             });
         }
+
+        public static void SendBusyMessage(BusyItem context)
+        {
+            SendLemonMessage(MessageType.IsBusy, context);
+        }
+
+        public static void SendMenuMessage(string context)
+        {
+            SendLemonMessage(MessageType.Menu, context);   
+        }
+
+        public static void SendPluginMessage(PluginItem context)
+        {
+            SendLemonMessage(MessageType.Plugin, context);
+        }
+
+        public static void SendSnackMessage(string context)
+        {
+            SendLemonMessage(MessageType.Snack, context);
+        }
+
+        public static void SendStatusBarMessage(string context)
+        {
+            SendLemonMessage(MessageType.StatusBar, context);
+        }
     }
 }

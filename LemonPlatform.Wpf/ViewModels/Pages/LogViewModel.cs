@@ -42,7 +42,7 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
             var filePath = Path.Combine(path, SelectedLogLevel, fileName);
 
             await using var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            var readArr = new byte[1024 * 5];
+            var readArr = new byte[1024 * 1024 * 5];
             var count = await stream.ReadAsync(readArr, 0, readArr.Length);
             LogContent = Encoding.UTF8.GetString(readArr, 0, count);
         }

@@ -17,6 +17,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Module.Json",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Module.Hello", "LemonPlatform.Module.Hello\LemonPlatform.Module.Hello.csproj", "{3312412F-4ED8-4A5D-91A5-8A203B8AC421}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libraries", "libraries", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.BusyIndicator", "LemonPlatform.BusyIndicator\LemonPlatform.BusyIndicator.csproj", "{B7D8F202-34C5-4E2B-A6AA-023FB5C5FE40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,8 +45,20 @@ Global
 		{3312412F-4ED8-4A5D-91A5-8A203B8AC421}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3312412F-4ED8-4A5D-91A5-8A203B8AC421}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3312412F-4ED8-4A5D-91A5-8A203B8AC421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7D8F202-34C5-4E2B-A6AA-023FB5C5FE40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7D8F202-34C5-4E2B-A6AA-023FB5C5FE40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7D8F202-34C5-4E2B-A6AA-023FB5C5FE40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7D8F202-34C5-4E2B-A6AA-023FB5C5FE40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{41EC3901-1D7F-4288-B046-F3351DB83105} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{3312412F-4ED8-4A5D-91A5-8A203B8AC421} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{B7D8F202-34C5-4E2B-A6AA-023FB5C5FE40} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8F28D13C-E0E5-4BFE-AAB8-83F44715B622}
 	EndGlobalSection
 EndGlobal

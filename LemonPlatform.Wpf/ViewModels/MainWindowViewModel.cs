@@ -1,28 +1,30 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using LemonPlatform.Core.Enums;
+using LemonPlatform.Core.Helpers;
 using LemonPlatform.Core.Infrastructures.Denpendency;
 using LemonPlatform.Core.Infrastructures.Ioc;
-using LemonPlatform.Core.Infrastructures.Messages;
+using LemonPlatform.Core.Infrastructures.MainWindowService;
 using LemonPlatform.Core.Models;
 using LemonPlatform.Wpf.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace LemonPlatform.Wpf.ViewModels
 {
     public partial class MainWindowViewModel : ObservableObject, IRecipient<LemonMessage>, ITransientDependency
     {
-        private readonly IMessageService _messageService;
-        public MainWindowViewModel(IMessageService messageService)
+        private IAsyncRelayCommand? _asyncRelayCommand;
+
+        public MainWindowViewModel()
         {
             WeakReferenceMessenger.Default.Register(this);
 
             MenuItems = new ObservableCollection<LemonMenuItem>(LemonMenuItem.MenuItems);
             SelectMenuItem = MenuItems.First();
-            _messageService = messageService;
-
-            _messageService.ShowSnackMessage("Lemon Platform");
+            MessageHelper.SendSnackMessage("Lemon Platform");
         }
 
         [ObservableProperty]
@@ -34,6 +36,17 @@ namespace LemonPlatform.Wpf.ViewModels
         [ObservableProperty]
         private LemonMenuItem _selectMenuItem;
 
+        [ObservableProperty]
+        private bool _isBusy;
+        partial void OnIsBusyChanged(bool oldValue, bool newValue)
+        {
+            if (oldValue && !newValue && _asyncRelayCommand != null && _asyncRelayCommand.IsRunning)
+            {
+                _asyncRelayCommand.Cancel();
+                _asyncRelayCommand = null;
+            }
+        }
+
         partial void OnSelectMenuItemChanged(LemonMenuItem? oldValue, LemonMenuItem newValue)
         {
             CurrentPage = IocManager.Instance.ServiceProvider.GetRequiredService(SelectMenuItem.PageType);
@@ -41,20 +54,34 @@ namespace LemonPlatform.Wpf.ViewModels
 
         public void Receive(LemonMessage message)
         {
+            if (message.Content == null) return;
             switch (message.MessageType)
             {
                 case MessageType.Menu:
+                    var name = message.Content.ToString();
+                    var menu = MenuItems.FirstOrDefault(x => x.Title.Equals(name, StringComparison.OrdinalIgnoreCase));
+                    if (menu == null) return;
+                    SelectMenuItem = menu;
+
+                    break;
+                case MessageType.IsBusy:
+                    var model = (BusyItem)message.Content;
+                    _asyncRelayCommand = model.Command;
+                    IsBusy = model.IsBusy;
+
+                    break;
+                case MessageType.Snack:
+                    Application.Current.Dispatcher.BeginInvoke(() =>
                     {
-                        if (message.Content == null) return;
-                        var name = message.Content.ToString();
-                        var menu = MenuItems.FirstOrDefault(x=>x.Title.Equals(name, StringComparison.OrdinalIgnoreCase));
-                        if(menu == null) return;
-                        SelectMenuItem = menu;
-                        
-                        break;
-                    }
+                        if (Application.Current.MainWindow is IMainHostWindow window)
+                        {
+                            window.AddSnackMessage(message.Content.ToString()!);
+                        }
+                    });
+
+                    break;
                 default:
-                    
+
                     break;
             }
         }
