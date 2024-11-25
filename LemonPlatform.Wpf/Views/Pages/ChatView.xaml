@@ -20,38 +20,63 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <DockPanel LastChildFill="True">
-                <TextBox
-                    Margin="16,4,16,4"
-                    materialDesign:HintAssist.Hint="Search"
-                    materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
-                    materialDesign:TextFieldAssist.HasClearButton="True"
-                    materialDesign:TextFieldAssist.TextFieldCornerRadius="8"
-                    DockPanel.Dock="Top"
-                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    Text="{Binding SearchKeyword, UpdateSourceTrigger=PropertyChanged}" />
+            <ScrollViewer Grid.Row="0" Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                <StackPanel Width="200">
+                    <ListBox ItemsSource="{Binding ChatItems}" 
+                             SelectedItem="{Binding SelectedChatItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             SelectionMode="Single"
+                             x:Name="menuListBox"
+                             BorderThickness="0">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                            <Grid>
+                                                <Border Name="border"/>
+                                                <ContentPresenter/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
 
-                <ListBox 
-                    Margin="12,16,12,16"
-                    ItemsSource="{Binding ChatItems}"
-                    SelectedItem="{Binding SelectedChatItem, UpdateSourceTrigger=PropertyChanged}">
-                    <ListBox.Resources>
-                        <Style TargetType="ScrollViewer" BasedOn="{StaticResource MaterialDesignScrollViewer}" />
-                        <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" />
-                        <DataTemplate DataType="{x:Type model:PluginItem}">
-                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
-                        </DataTemplate>
-                    </ListBox.Resources>
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesign3.NavigationDrawerPrimaryListBoxItem}">
-                            <!--<Setter Property="materialDesign:BadgedAssist.Badge" Value="{Binding Notifications}" />-->
-                            <Setter Property="Width" Value="360" />
-                            <Setter Property="materialDesign:NavigationDrawerAssist.SelectedIcon" Value="{Binding IconFont}" />
-                            <Setter Property="materialDesign:NavigationDrawerAssist.UnselectedIcon" Value="{Binding IconFont}" />
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                </ListBox>
-            </DockPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton Style="{DynamicResource RadioButtonStyle}">
+                                    <RadioButton.IsChecked>
+                                        <Binding Path="IsSelected"
+                                                 RelativeSource="{RelativeSource AncestorType=ListBoxItem}"
+                                                 Mode="TwoWay"/>
+                                    </RadioButton.IsChecked>
+
+                                    <StackPanel  Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="{Binding IconFont}" 
+                                                                 Height="24"
+                                                                 Width="24"
+                                                                 Margin="10 0 0 0"
+                                                                 Foreground="{Binding BackgroundColor}"/>
+                                        <TextBlock Margin="10 0 0 0" 
+                                                       Text="{Binding Name}" 
+                                                       FontSize="14"
+                                                       VerticalAlignment="Center" 
+                                                       Foreground="{Binding BackgroundColor}" />
+                                    </StackPanel>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </ScrollViewer>
             <Border Grid.Column="1" Width="0.8"  Background="{DynamicResource MaterialDesignCardBackground}"/>
         </Grid>
 
