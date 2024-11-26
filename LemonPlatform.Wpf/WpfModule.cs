@@ -1,10 +1,7 @@
 ﻿using LemonPlatform.Core;
+using LemonPlatform.Core.Commons;
 using LemonPlatform.Core.Infrastructures.Dependency;
 using LemonPlatform.Core.Infrastructures.Ioc;
-using LemonPlatform.SQLite;
-using LemonPlatform.Wpf.Commons;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
@@ -19,28 +16,15 @@ namespace LemonPlatform.Wpf
             services.AddAssemblyServices();
             services.AddNextIocManager();
             services.AddModuleServices();
-            services.AddDbContextServices();
+            services.AddCoreServices(context.Configuration);
 
             IocManager.Instance.ServiceProvider = services.BuildServiceProvider();
-        }
-
-        private static void AddDbContextServices(this IServiceCollection services)
-        {
-            services.AddDbContext<LemonDbContext>(options =>
-            {
-                var databasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lemon.db");
-                options.UseSqlite($"Data Source={databasePath}")
-                    .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
-            });
         }
 
         private static void AddAssemblyServices(this IServiceCollection services)
         {
             var assembly = Assembly.GetAssembly(typeof(WpfModule))!;
-            var coreAssembly = Assembly.GetAssembly(typeof(ILemonModule))!;
-
             services.AddServiceAssembly(assembly);
-            services.AddServiceAssembly(coreAssembly);
         }
 
         private static void AddModuleServices(this IServiceCollection services)
@@ -63,14 +47,14 @@ namespace LemonPlatform.Wpf
                 }
 
                 var assembly = LoadPlugin(pluginDll);
-                var modules = CreateLemonModule(assembly);
-
                 services.AddServiceAssembly(assembly);
-                foreach (var item in modules)
-                {
-                    item.RegisterServices(services);
-                    LemonConstants.PageItems.AddRange(item.GetMenuItems());
-                }
+
+                CreateLemonModule(assembly);
+            }
+
+            foreach (var item in LemonConstants.Modules)
+            {
+                LemonConstants.PageItems.Add(item.GetMenuItem());
             }
         }
 
@@ -82,9 +66,8 @@ namespace LemonPlatform.Wpf
             return Assembly.LoadFrom(path);
         }
 
-        private static IEnumerable<ILemonModule> CreateLemonModule(Assembly assembly)
+        private static void CreateLemonModule(Assembly assembly)
         {
-            var lemonModules = new List<ILemonModule>();
             foreach (var type in assembly.GetTypes())
             {
                 if (typeof(ILemonModule).IsAssignableFrom(type))
@@ -92,12 +75,10 @@ namespace LemonPlatform.Wpf
                     var result = Activator.CreateInstance(type) as ILemonModule;
                     if (result != null)
                     {
-                        lemonModules.Add(result);
+                        LemonConstants.Modules.Add(result);
                     }
                 }
             }
-
-            return lemonModules;
         }
     }
 }

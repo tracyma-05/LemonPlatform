@@ -9,5 +9,6 @@
 
     <Grid Margin="5">
         <TextBlock Text="Home Page" />
+        <Button Content="Jobs" Width="300" Command="{Binding GetJobsCommand}"/>
     </Grid>
 </UserControl>

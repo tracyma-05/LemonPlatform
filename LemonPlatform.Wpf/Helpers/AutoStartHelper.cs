@@ -1,5 +1,5 @@
 ﻿using IWshRuntimeLibrary;
-using LemonPlatform.Wpf.Commons;
+using LemonPlatform.Core.Commons;
 using System.Diagnostics;
 using System.IO;
 using File = System.IO.File;

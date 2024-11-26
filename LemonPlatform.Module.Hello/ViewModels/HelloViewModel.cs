@@ -8,6 +8,11 @@ namespace LemonPlatform.Module.Hello.ViewModels
     [ObservableObject]
     public partial class HelloViewModel : ITransientDependency
     {
+        public HelloViewModel()
+        {
+            
+        }
+
         [ObservableProperty]
         private int _time;
 

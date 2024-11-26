@@ -1,4 +1,4 @@
-﻿using LemonPlatform.Wpf.Commons;
+﻿using LemonPlatform.Core.Commons;
 using System.Runtime.InteropServices;
 
 namespace LemonPlatform.Wpf.Helpers
