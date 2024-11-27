@@ -49,6 +49,13 @@ namespace LemonPlatform.Wpf.Models
                 },
                 new LemonMenuItem
                 {
+                    Title = "Schedule",
+                    SelectedIcon = PackIconKind.CalendarMonth,
+                    UnselectedIcon = PackIconKind.Calendar,
+                    PageType = typeof(ScheduleView)
+                },
+                new LemonMenuItem
+                {
                     Title = "Setting",
                     SelectedIcon = PackIconKind.CogBox,
                     UnselectedIcon = PackIconKind.Cog,

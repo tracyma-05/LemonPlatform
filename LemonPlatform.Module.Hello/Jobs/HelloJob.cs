@@ -4,6 +4,7 @@ using System.Diagnostics;
 
 namespace LemonPlatform.Module.Hello.Jobs
 {
+    [PersistJobDataAfterExecution]
     public class HelloJob : IJob
     {
         private readonly JobService _jobService;

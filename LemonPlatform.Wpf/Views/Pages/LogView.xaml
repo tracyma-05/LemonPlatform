@@ -15,7 +15,14 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <materialDesign:Card Grid.Row="0" Margin="10">
-            <TextBox Text="{Binding LogContent}" TextWrapping="WrapWithOverflow" VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto" TextChanged="TextBoxBase_OnTextChanged" Name="logTextBox"/>
+            <TextBox Text="{Binding LogContent}" 
+                     TextWrapping="WrapWithOverflow" 
+                     VerticalContentAlignment="Top"
+                     VerticalScrollBarVisibility="Auto" 
+                     TextChanged="TextBoxBase_OnTextChanged"
+                     AcceptsReturn="True"
+                     AcceptsTab="True"
+                     Name="logTextBox"/>
         </materialDesign:Card>
         <Separator Grid.Row="0" VerticalAlignment="Bottom"/>
         <materialDesign:Card Grid.Row="1" Margin="10">

@@ -40,6 +40,7 @@ namespace LemonPlatform.Core
             {
                 options.UsePersistentStore(s =>
                 {
+                    s.UseProperties = true;
                     s.UseMicrosoftSQLite(sqlite =>
                     {
                         sqlite.UseDriverDelegate<SQLiteDelegate>();
