@@ -1,6 +1,5 @@
 ﻿using LemonPlatform.Core.Models;
 using Microsoft.Extensions.DependencyInjection;
-using Quartz;
 
 namespace LemonPlatform.Core
 {
@@ -10,6 +9,6 @@ namespace LemonPlatform.Core
 
         PluginItem GetMenuItem();
 
-        void RegisterJobs(IServiceCollectionQuartzConfigurator quartz);
+        void PostInit(IServiceProvider serviceProvider);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
+using LemonPlatform.Core.Commons;
 using LemonPlatform.Core.Databases;
+using LemonPlatform.Core.Infrastructures.Ioc;
 using LemonPlatform.Wpf.Exceptions;
 using LemonPlatform.Wpf.Helpers;
 using LemonPlatform.Wpf.Resources;
@@ -60,6 +62,8 @@ namespace LemonPlatform.Wpf
             var notifyIconDataContext = _host.Services.GetRequiredService<NotifyIconViewModel>();
             notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
             notifyIcon.DataContext = notifyIconDataContext;
+
+            PostInit();
         }
 
         protected override async void OnExit(ExitEventArgs e)
@@ -98,6 +102,15 @@ namespace LemonPlatform.Wpf
             catch
             {
                 //ignore
+            }
+        }
+
+        private void PostInit()
+        {
+            var provider = IocManager.Instance.ServiceProvider.GetRequiredService<IServiceProvider>();
+            foreach (var item in LemonConstants.Modules)
+            {
+                item.PostInit(provider);
             }
         }
     }

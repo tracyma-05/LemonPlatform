@@ -10,7 +10,7 @@ namespace LemonPlatform.Module.Hello.ViewModels
     {
         public HelloViewModel()
         {
-            
+
         }
 
         [ObservableProperty]

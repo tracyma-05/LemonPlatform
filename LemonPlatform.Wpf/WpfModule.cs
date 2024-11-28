@@ -2,6 +2,7 @@
 using LemonPlatform.Core.Commons;
 using LemonPlatform.Core.Infrastructures.Dependency;
 using LemonPlatform.Core.Infrastructures.Ioc;
+using LemonPlatform.Wpf.Infrastructures;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;

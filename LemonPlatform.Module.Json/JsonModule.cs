@@ -2,7 +2,6 @@
 using LemonPlatform.Core.Models;
 using LemonPlatform.Module.Json.Views;
 using Microsoft.Extensions.DependencyInjection;
-using Quartz;
 
 namespace LemonPlatform.Module.Json
 {
@@ -13,9 +12,9 @@ namespace LemonPlatform.Module.Json
             return new PluginItem("Json", typeof(JsonView), "CodeJson", "#D9D9D9", "Json转换器");
         }
 
-        public void RegisterJobs(IServiceCollectionQuartzConfigurator quartz)
+        public void PostInit(IServiceProvider serviceProvider)
         {
-
+            
         }
 
         public void RegisterServices(IServiceCollection services)

@@ -47,7 +47,7 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         [RelayCommand]
         private async void Start(JobDetailDto options)
         {
-            await _jobService.StartJobAsync(options.JobKey);
+            await _jobService.ResumeJobAsync(options.JobKey);
             await GetJobsAsync();
         }
     }

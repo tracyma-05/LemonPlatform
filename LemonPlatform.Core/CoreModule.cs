@@ -49,16 +49,10 @@ namespace LemonPlatform.Core
 
                     s.UseSystemTextJsonSerializer();
                 });
-
-                foreach (var item in LemonConstants.Modules)
-                {
-                    item.RegisterJobs(options);
-                }
             });
 
             services.AddQuartzHostedService(options =>
             {
-                // when shutting down we want jobs to complete gracefully
                 options.WaitForJobsToComplete = true;
             });
         }
