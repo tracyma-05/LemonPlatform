@@ -25,7 +25,7 @@ namespace LemonPlatform.Core.Services
                 var dto = new JobDetailDto
                 {
                     JobKey = jobKey,
-                    JobType = jobDetail.JobType,
+                    JobType = jobDetail.JobType.FullName,
                     Durable = jobDetail.Durable,
                     PersistJobDataAfterExecution = jobDetail.PersistJobDataAfterExecution,
                     Description = jobDetail.Description
@@ -44,28 +44,28 @@ namespace LemonPlatform.Core.Services
             return jobDetails;
         }
 
-        public async Task StartJobAsync(JobKey jobKey)
+        public async Task StartJobAsync(JobKey jobKey, CancellationToken token)
         {
-            var scheduler = await _schedulerFactory.GetScheduler();
-            await scheduler.TriggerJob(jobKey);
+            var scheduler = await _schedulerFactory.GetScheduler(token);
+            await scheduler.TriggerJob(jobKey, token);
         }
 
-        public async Task PauseJobAsync(JobKey jobKey)
+        public async Task PauseJobAsync(JobKey jobKey, CancellationToken token)
         {
-            var scheduler = await _schedulerFactory.GetScheduler();
-            await scheduler.PauseJob(jobKey);
+            var scheduler = await _schedulerFactory.GetScheduler(token);
+            await scheduler.PauseJob(jobKey, token);
         }
 
-        public async Task ResumeJobAsync(JobKey jobKey)
+        public async Task ResumeJobAsync(JobKey jobKey, CancellationToken token)
         {
-            var scheduler = await _schedulerFactory.GetScheduler();
-            await scheduler.ResumeJob(jobKey);
+            var scheduler = await _schedulerFactory.GetScheduler(token);
+            await scheduler.ResumeJob(jobKey, token);
         }
 
-        public async Task DeleteJobAsync(JobKey jobKey)
+        public async Task DeleteJobAsync(JobKey jobKey, CancellationToken token)
         {
-            var scheduler = await _schedulerFactory.GetScheduler();
-            await scheduler.DeleteJob(jobKey);
+            var scheduler = await _schedulerFactory.GetScheduler(token);
+            await scheduler.DeleteJob(jobKey, token);
         }
     }
 }

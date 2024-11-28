@@ -4,27 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LemonPlatform.Wpf.Views.Pages"
+             xmlns:converter="clr-namespace:LemonPlatform.Wpf.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450"
              d:DesignWidth="800">
     <Grid Margin="5">
         <DataGrid ItemsSource="{Binding Jobs}"
-                      Grid.Row="1"
-                      ScrollViewer.CanContentScroll="True" 
-                      ScrollViewer.VerticalScrollBarVisibility="Auto"
-                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                      AutoGenerateColumns="False"
-                      EnableRowVirtualization="False" 
-                      RowDetailsVisibilityMode="Collapsed" 
-                      EnableColumnVirtualization="False"
-                      AllowDrop="False"
-                      SelectionMode="Extended"
-                      SelectionUnit="Cell"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False" 
-                      CanUserResizeRows="False">
+                  Grid.Row="1"
+                  ScrollViewer.CanContentScroll="True" 
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  AutoGenerateColumns="False"
+                  EnableRowVirtualization="False" 
+                  RowDetailsVisibilityMode="Collapsed" 
+                  EnableColumnVirtualization="False"
+                  VerticalContentAlignment="Center"
+                  HorizontalContentAlignment="Center"
+                  AllowDrop="False"
+                  SelectionMode="Extended"
+                  SelectionUnit="Cell"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False" 
+                  CanUserResizeRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="JobKey" Binding="{Binding JobKey}" />
+                <DataGridTextColumn Header="JobKey" Binding="{Binding JobKey.Name}"/>
                 <DataGridTextColumn Header="JobType" Binding="{Binding JobType}" />
                 <DataGridTextColumn Header="TriggerState" Binding="{Binding TriggerState}" />
                 <DataGridTextColumn Header="Durable" Binding="{Binding Durable}" />
@@ -37,13 +40,15 @@
 
                                 <Button Content="Pause" 
                                         Margin="5"
+                                        IsEnabled="{Binding TriggerState,Converter={converter:TriggerStateConverter},ConverterParameter=Paused}"
                                         Command="{Binding DataContext.PauseCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
                                         CommandParameter="{Binding}">
                                 </Button>
 
                                 <Button Content="Start" 
                                         Margin="5"
-                                        Command="{Binding DataContext.StartCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
+                                        IsEnabled="{Binding TriggerState,Converter={converter:TriggerStateConverter},ConverterParameter=Normal}"
+                                        Command="{Binding DataContext.ResumeCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
                                         CommandParameter="{Binding}">
                                 </Button>
 
