@@ -45,6 +45,9 @@ namespace LemonPlatform.Wpf
             AutoStartHelper.SetMeAutoStart();
             ApplicationHelper.CheckApplicationMutex();
 
+            var splashScreen = new SplashScreen("Resources/Images/lemon.png");
+            splashScreen.Show(true, true);
+
             await _host.StartAsync();
 
             ThemeHelper.SetLemonTheme();
