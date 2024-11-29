@@ -9,16 +9,16 @@ namespace LemonPlatform.Module.Hello
 {
     public class HelloModule : ILemonModule
     {
-        public PluginItem GetMenuItem()
+        public List<PluginItem> GetMenuItems()
         {
-            return new PluginItem("Hello", typeof(HelloView), "Graph", "#FAA570", "用于测试");
+            return new List<PluginItem> { new PluginItem("Hello", typeof(HelloView), "Graph", "#FAA570", "用于测试") };
         }
 
         public async void PostInit(IServiceProvider serviceProvider)
         {
             var schedulerFactory = serviceProvider.GetRequiredService<ISchedulerFactory>();
             var scheduler = await schedulerFactory.GetScheduler();
-            var jobKey = new JobKey("HelloJob","DEFAULT");
+            var jobKey = new JobKey("HelloJob", "DEFAULT");
             var triggerKey = new TriggerKey("Combined Configuration Trigger", "DEFAULT");
 
             var jobExists = await scheduler.CheckExists(jobKey);

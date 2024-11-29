@@ -7,7 +7,7 @@ namespace LemonPlatform.Core
     {
         void RegisterServices(IServiceCollection services);
 
-        PluginItem GetMenuItem();
+        List<PluginItem> GetMenuItems();
 
         void PostInit(IServiceProvider serviceProvider);
     }

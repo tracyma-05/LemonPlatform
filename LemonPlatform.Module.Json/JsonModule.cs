@@ -7,14 +7,14 @@ namespace LemonPlatform.Module.Json
 {
     public class JsonModule : ILemonModule
     {
-        public PluginItem GetMenuItem()
+        public List<PluginItem> GetMenuItems()
         {
-            return new PluginItem("Json", typeof(JsonView), "CodeJson", "#D9D9D9", "Json转换器");
+            return new List<PluginItem> { new PluginItem("Json", typeof(JsonView), "CodeJson", "#D9D9D9", "Json转换器") };
         }
 
         public void PostInit(IServiceProvider serviceProvider)
         {
-            
+
         }
 
         public void RegisterServices(IServiceCollection services)
