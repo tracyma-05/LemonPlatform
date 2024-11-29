@@ -8,6 +8,7 @@ using LemonPlatform.Core.Helpers;
 using LemonPlatform.Core.Infrastructures.Denpendency;
 using LemonPlatform.Core.Models;
 using LemonPlatform.Wpf.Configs;
+using LemonPlatform.Wpf.Views.UserControls;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -18,22 +19,35 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
     public partial class ChatViewModel : ObservableObject, IRecipient<LemonMessage>, ISingletonDependency
     {
         private readonly LemonDbContext _lemonDbContext;
-        public ChatViewModel(LemonDbContext lemonDbContext)
+        private readonly ChatEmptyView _chatEmptyView;
+        public ChatViewModel(LemonDbContext lemonDbContext, ChatEmptyView chatEmptyView)
         {
             WeakReferenceMessenger.Default.Register(this);
             _lemonDbContext = lemonDbContext;
+            _chatEmptyView = chatEmptyView;
 
             ChatItems = new ObservableCollection<PluginItem>(LemonConstants.ChatItems);
-            SelectedChatItem = LemonConstants.SelectChatItem ?? ChatItems.FirstOrDefault();   
+            SelectedChatItem = LemonConstants.SelectChatItem ?? ChatItems.FirstOrDefault();
+
+            if (SelectedChatItem == null)
+            {
+                CurrentChat = chatEmptyView;
+            }
         }
 
         [ObservableProperty]
         private ObservableCollection<PluginItem> _chatItems;
 
         [ObservableProperty]
-        private PluginItem _selectedChatItem;
-        partial void OnSelectedChatItemChanged(PluginItem? oldValue, PluginItem newValue)
+        private PluginItem? _selectedChatItem;
+        partial void OnSelectedChatItemChanged(PluginItem? oldValue, PluginItem? newValue)
         {
+            if (newValue == null)
+            {
+                CurrentChat = _chatEmptyView;
+                return;
+            };
+
             CurrentChat = newValue.Content;
             UpdateChatConfig();
         }
@@ -48,6 +62,15 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         private void ScreenShot(Control control)
         {
             ScreenShotHelper.ScreenShot(control);
+        }
+
+        [RelayCommand]
+        private void Remove()
+        {
+            ChatItems.Remove(SelectedChatItem);
+            SelectedChatItem = ChatItems.FirstOrDefault();
+
+            UpdateChatConfig();
         }
 
         public void Receive(LemonMessage message)
@@ -74,7 +97,7 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
             var chatConfig = new ChatConfig
             {
                 Names = string.Join(',', names),
-                SelectName = SelectedChatItem.Name,
+                SelectName = SelectedChatItem?.Name,
             };
 
             chatPreference.Content = JsonSerializer.Serialize(chatConfig);

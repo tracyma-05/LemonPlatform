@@ -27,6 +27,11 @@
                              SelectionMode="Single"
                              x:Name="menuListBox"
                              BorderThickness="0">
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Remove" Command="{Binding RemoveCommand}"/>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="HorizontalAlignment" Value="Stretch" />

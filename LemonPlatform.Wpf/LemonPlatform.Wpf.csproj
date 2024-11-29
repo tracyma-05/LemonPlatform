@@ -52,4 +52,8 @@
 	  <Resource Include="Resources\Images\lemon.png" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="ViewModels\UserControls\" />
+	</ItemGroup>
+
 </Project>
