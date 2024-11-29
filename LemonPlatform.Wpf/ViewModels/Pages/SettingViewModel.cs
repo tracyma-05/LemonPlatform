@@ -1,14 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LemonPlatform.Core.Commons;
+using LemonPlatform.Core.Databases;
+using LemonPlatform.Core.Databases.Models;
 using LemonPlatform.Core.Infrastructures.Denpendency;
+using LemonPlatform.Wpf.Configs;
 using LemonPlatform.Wpf.Helpers;
 using MaterialDesignThemes.Wpf;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace LemonPlatform.Wpf.ViewModels.Pages
 {
     public partial class SettingViewModel : ObservableObject, ISingletonDependency
     {
-        public SettingViewModel()
+        private readonly LemonDbContext _lemonDbContext;
+        public SettingViewModel(LemonDbContext lemonDbContext)
         {
+            _lemonDbContext = lemonDbContext;
+
             InitData();
             SetTheme();
         }
@@ -38,6 +47,8 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
                         : null;
                 }
             });
+
+            UpdateThemeConfig();
         }
 
         [ObservableProperty]
@@ -49,6 +60,8 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
                 if (theme is Theme internalTheme && internalTheme.ColorAdjustment != null)
                     internalTheme.ColorAdjustment.DesiredContrastRatio = newValue;
             });
+
+            UpdateThemeConfig();
         }
 
         [ObservableProperty]
@@ -60,6 +73,8 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
                 if (theme is Theme internalTheme && internalTheme.ColorAdjustment != null)
                     internalTheme.ColorAdjustment.Contrast = newValue;
             });
+
+            UpdateThemeConfig();
         }
 
         [ObservableProperty]
@@ -71,6 +86,8 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
                 if (theme is Theme internalTheme && internalTheme.ColorAdjustment != null)
                     internalTheme.ColorAdjustment.Colors = newValue;
             });
+
+            UpdateThemeConfig();
         }
 
         [ObservableProperty]
@@ -79,11 +96,69 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         [ObservableProperty]
         public IEnumerable<Contrast> _contrastValues;
 
-        private void InitData()
+        private async void InitData()
         {
             ColorSelectionValues = Enum.GetValues(typeof(ColorSelection)).Cast<ColorSelection>(); ;
             ContrastValues = Enum.GetValues(typeof(Contrast)).Cast<Contrast>();
-            DesiredContrastRatio = 4.5f;
+            var dtNow = DateTime.Now;
+
+            var themePreference = await _lemonDbContext.UserPreference.FirstOrDefaultAsync(x => x.Id == LemonConstants.ThemeConfigId);
+            if (themePreference == null)
+            {
+                var paletteHelper = new PaletteHelper();
+                var systemTheme = paletteHelper.GetTheme();
+                var isDarkTheme = systemTheme.GetBaseTheme() == BaseTheme.Dark;
+                var themeConfig = new ThemeConfig
+                {
+                    IsDarkTheme = isDarkTheme,
+                    IsColorAdjusted = false,
+                    DesiredContrastRatio = 4.5f,
+                    ContrastValue = Contrast.None,
+                    ColorSelectionValue = ColorSelection.None,
+                };
+
+                var type = GetType();
+                themePreference = new UserPreference
+                {
+                    Id = LemonConstants.ThemeConfigId,
+                    Content = JsonSerializer.Serialize(themeConfig),
+                    UserId = LemonConstants.GuestUserId,
+                    CreatedAt = dtNow,
+                    LastModifiedAt = dtNow,
+                    ModuleName = $"{type.Module.Name}-{type.Namespace}-{type.Name}",
+                };
+
+                await _lemonDbContext.AddAsync(themePreference);
+                await _lemonDbContext.SaveChangesAsync();
+            }
+
+            var theme = JsonSerializer.Deserialize<ThemeConfig>(themePreference.Content);
+            if (theme != null)
+            {
+                DesiredContrastRatio = theme.DesiredContrastRatio;
+                IsDarkTheme = theme.IsDarkTheme;
+                IsColorAdjusted = theme.IsColorAdjusted;
+                ContrastValue = theme.ContrastValue;
+                ColorSelectionValue = theme.ColorSelectionValue;
+            }
+        }
+
+        private async void UpdateThemeConfig()
+        {
+            var themePreference = await _lemonDbContext.UserPreference.FirstOrDefaultAsync(x => x.Id == LemonConstants.ThemeConfigId);
+            if (themePreference == null) return;
+            var newTheme = new ThemeConfig
+            {
+                IsDarkTheme = IsDarkTheme,
+                IsColorAdjusted = IsColorAdjusted,
+                DesiredContrastRatio = DesiredContrastRatio,
+                ContrastValue = ContrastValue,
+                ColorSelectionValue = ColorSelectionValue,
+            };
+
+            themePreference.Content = JsonSerializer.Serialize(newTheme);
+            themePreference.LastModifiedAt = DateTime.Now;
+            await _lemonDbContext.SaveChangesAsync();
         }
 
         private void SetTheme()

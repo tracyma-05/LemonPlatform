@@ -1,7 +1,9 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using LemonPlatform.Core.Commons;
 using LemonPlatform.Core.Databases;
+using LemonPlatform.Core.Databases.Models;
 using LemonPlatform.Core.Infrastructures.Ioc;
+using LemonPlatform.Wpf.Configs;
 using LemonPlatform.Wpf.Exceptions;
 using LemonPlatform.Wpf.Helpers;
 using LemonPlatform.Wpf.Resources;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
 using NLog.Extensions.Logging;
 using System.IO;
+using System.Text.Json;
 using System.Windows;
 
 namespace LemonPlatform.Wpf
@@ -50,7 +53,8 @@ namespace LemonPlatform.Wpf
 
             await _host.StartAsync();
 
-            ThemeHelper.SetLemonTheme();
+            var isDark = await GetThemeAsync();
+            ThemeHelper.SetLemonTheme(isDark);
             SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
 
             var handler = _host.Services.GetRequiredService<LemonExceptionHandler>();
@@ -67,6 +71,8 @@ namespace LemonPlatform.Wpf
             notifyIcon.DataContext = notifyIconDataContext;
 
             PostInit();
+
+            await SetHistoryChatAsync();
         }
 
         protected override async void OnExit(ExitEventArgs e)
@@ -74,6 +80,69 @@ namespace LemonPlatform.Wpf
             await _host.StopAsync();
             notifyIcon.Dispose();
             base.OnExit(e);
+        }
+
+        private async Task<bool> GetThemeAsync()
+        {
+            var isDark = SystemThemeHelper.GetWindowsTheme();
+            var context = _host.Services.GetRequiredService<LemonDbContext>();
+            var theme = await context.UserPreference.FirstOrDefaultAsync(x => x.Id == LemonConstants.ThemeConfigId);
+            if (theme != null)
+            {
+                var config = JsonSerializer.Deserialize<ThemeConfig>(theme.Content);
+                isDark = config.IsDarkTheme;
+            }
+
+            return isDark;
+        }
+
+        private async Task SetHistoryChatAsync()
+        {
+            var context = _host.Services.GetRequiredService<LemonDbContext>();
+            var chat = await context.UserPreference.FirstOrDefaultAsync(x => x.Id == LemonConstants.ChatConfigId);
+            var type = GetType();
+            var dtNow = DateTime.Now;
+            if (chat == null)
+            {
+                chat = new UserPreference
+                {
+                    Id = LemonConstants.ChatConfigId,
+                    Content = string.Empty,
+                    UserId = LemonConstants.GuestUserId,
+                    LastModifiedAt = dtNow,
+                    CreatedAt = dtNow,
+                    ModuleName = $"{type.Module.Name}-LemonPlatform.Wpf.ViewModels.Pages-ChatViewModel"
+                };
+
+                await context.UserPreference.AddAsync(chat);
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(chat.Content)) return;
+                var chatConfig = JsonSerializer.Deserialize<ChatConfig>(chat.Content);
+                if (chatConfig == null || string.IsNullOrEmpty(chatConfig.Names)) return;
+                var names = chatConfig.Names.Split(',');
+                var pages = LemonConstants.PageItems.Select(x => x.Name).ToList();
+                foreach (var item in LemonConstants.PageItems)
+                {
+                    if (names.Contains(item.Name))
+                    {
+                        LemonConstants.ChatItems.Add(item);
+                    }
+                }
+
+                if (chatConfig.SelectName != null && !pages.Contains(chatConfig.SelectName))
+                {
+                    chatConfig.SelectName = null;
+                }
+
+                if (chatConfig.SelectName != null)
+                {
+                    LemonConstants.SelectChatItem = LemonConstants.ChatItems.FirstOrDefault(x => x.Name == chatConfig.SelectName);
+                }
+            }
+
+            await context.SaveChangesAsync();
         }
 
         private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)

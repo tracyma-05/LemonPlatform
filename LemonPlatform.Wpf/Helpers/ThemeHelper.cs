@@ -5,11 +5,11 @@ namespace LemonPlatform.Wpf.Helpers
 {
     internal class ThemeHelper
     {
-        public static void SetLemonTheme()
+        public static void SetLemonTheme(bool isDark = false)
         {
             SystemThemeHelper.DwmGetColorizationColor(out int pcrColorization, out _);
             var color = SystemThemeHelper.GetMediaColor(pcrColorization);
-            var isDark = SystemThemeHelper.GetWindowsTheme();
+            //var isDark = SystemThemeHelper.GetWindowsTheme();
 
             SetPrimaryColorAndBaseTheme(color, isDark);
         }

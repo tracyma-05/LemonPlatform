@@ -1,26 +1,30 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using LemonPlatform.Core.Commons;
+using LemonPlatform.Core.Databases;
 using LemonPlatform.Core.Enums;
 using LemonPlatform.Core.Helpers;
 using LemonPlatform.Core.Infrastructures.Denpendency;
 using LemonPlatform.Core.Models;
-using SkiaSharp;
+using LemonPlatform.Wpf.Configs;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Windows;
+using System.Text.Json;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace LemonPlatform.Wpf.ViewModels.Pages
 {
     public partial class ChatViewModel : ObservableObject, IRecipient<LemonMessage>, ISingletonDependency
     {
-        public ChatViewModel()
+        private readonly LemonDbContext _lemonDbContext;
+        public ChatViewModel(LemonDbContext lemonDbContext)
         {
             WeakReferenceMessenger.Default.Register(this);
-            ChatItems = new ObservableCollection<PluginItem>();
+            _lemonDbContext = lemonDbContext;
+
+            ChatItems = new ObservableCollection<PluginItem>(LemonConstants.ChatItems);
+            SelectedChatItem = LemonConstants.SelectChatItem ?? ChatItems.FirstOrDefault();   
         }
 
         [ObservableProperty]
@@ -31,6 +35,7 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         partial void OnSelectedChatItemChanged(PluginItem? oldValue, PluginItem newValue)
         {
             CurrentChat = newValue.Content;
+            UpdateChatConfig();
         }
 
         [ObservableProperty]
@@ -58,6 +63,23 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
             }
 
             SelectedChatItem = item;
+            UpdateChatConfig();
+        }
+
+        private async void UpdateChatConfig()
+        {
+            var chatPreference = await _lemonDbContext.UserPreference.FirstOrDefaultAsync(x => x.Id == LemonConstants.ChatConfigId);
+            if (chatPreference == null) return;
+            var names = ChatItems.Select(x => x.Name).ToList();
+            var chatConfig = new ChatConfig
+            {
+                Names = string.Join(',', names),
+                SelectName = SelectedChatItem.Name,
+            };
+
+            chatPreference.Content = JsonSerializer.Serialize(chatConfig);
+            chatPreference.LastModifiedAt = DateTime.Now;
+            await _lemonDbContext.SaveChangesAsync();
         }
     }
 }
