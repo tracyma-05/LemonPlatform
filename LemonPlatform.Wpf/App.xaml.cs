@@ -113,7 +113,14 @@ namespace LemonPlatform.Wpf
             var provider = IocManager.Instance.ServiceProvider.GetRequiredService<IServiceProvider>();
             foreach (var item in LemonConstants.Modules)
             {
-                item.PostInit(provider);
+                try
+                {
+                    item.PostInit(provider);
+                }
+                catch
+                {
+                    //ignore
+                }
             }
         }
     }

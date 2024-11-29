@@ -85,7 +85,15 @@
                       materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto">
-            <ContentControl Content="{Binding CurrentChat, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}" />
+            <ContentControl Content="{Binding CurrentChat, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}" Background="{DynamicResource MaterialDesign.Brush.Background }" >
+                <ContentControl.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Screen Shot" 
+                                  Command="{Binding ScreenShotCommand}" 
+                                  CommandParameter="{Binding PlacementTarget, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                    </ContextMenu>
+                </ContentControl.ContextMenu>
+            </ContentControl>
         </ScrollViewer>
     </Grid>
 </UserControl>

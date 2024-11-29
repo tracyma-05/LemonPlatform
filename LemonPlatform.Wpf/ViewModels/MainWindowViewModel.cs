@@ -59,6 +59,12 @@ namespace LemonPlatform.Wpf.ViewModels
             CurrentPage = IocManager.Instance.ServiceProvider.GetRequiredService(SelectMenuItem.PageType);
         }
 
+        [RelayCommand]
+        private void Exit()
+        {
+            Application.Current.Shutdown();
+        }
+
         public void Receive(LemonMessage message)
         {
             if (message.Content == null) return;

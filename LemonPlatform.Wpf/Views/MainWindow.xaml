@@ -77,11 +77,11 @@
                             </StackPanel>
                         </materialDesign:PopupBox.ToggleContent>
                         <StackPanel>
-                            <Button Content="User Info" />
+                            <Button Content="User Info"/>
                             <Separator />
                             <Button Content="Check Update" />
                             <Separator />
-                            <Button Content="Exit" />
+                            <Button Content="Exit" Command="{Binding ExitCommand}"/>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>
