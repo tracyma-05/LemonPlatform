@@ -1,4 +1,5 @@
 ﻿using LemonPlatform.Core;
+using LemonPlatform.Core.Enums;
 using LemonPlatform.Core.Models;
 using LemonPlatform.Module.Hello.Jobs;
 using LemonPlatform.Module.Hello.Views;
@@ -11,7 +12,7 @@ namespace LemonPlatform.Module.Hello
     {
         public List<PluginItem> GetMenuItems()
         {
-            return new List<PluginItem> { new PluginItem("Hello", typeof(HelloView), "Graph", "#FAA570", "用于测试") };
+            return new List<PluginItem> { new PluginItem("Hello", typeof(HelloView), "Graph", "#FAA570", "用于测试", PluginType.Else) };
         }
 
         public async void PostInit(IServiceProvider serviceProvider)

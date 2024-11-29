@@ -120,25 +120,25 @@ namespace LemonPlatform.Wpf
             {
                 if (string.IsNullOrEmpty(chat.Content)) return;
                 var chatConfig = JsonSerializer.Deserialize<ChatConfig>(chat.Content);
-                if (chatConfig == null || string.IsNullOrEmpty(chatConfig.Names)) return;
-                var names = chatConfig.Names.Split(',');
-                var pages = LemonConstants.PageItems.Select(x => x.Name).ToList();
+                if (chatConfig == null || string.IsNullOrEmpty(chatConfig.Items)) return;
+                var items = chatConfig.Items.Split(',');
+                var pages = LemonConstants.PageItems.Select(x => x.Guid).ToList();
                 foreach (var item in LemonConstants.PageItems)
                 {
-                    if (names.Contains(item.Name))
+                    if (items.Contains(item.Guid))
                     {
                         LemonConstants.ChatItems.Add(item);
                     }
                 }
 
-                if (chatConfig.SelectName != null && !pages.Contains(chatConfig.SelectName))
+                if (chatConfig.SelectItem != null && !pages.Contains(chatConfig.SelectItem))
                 {
-                    chatConfig.SelectName = null;
+                    chatConfig.SelectItem = null;
                 }
 
-                if (chatConfig.SelectName != null)
+                if (chatConfig.SelectItem != null)
                 {
-                    LemonConstants.SelectChatItem = LemonConstants.ChatItems.FirstOrDefault(x => x.Name == chatConfig.SelectName);
+                    LemonConstants.SelectChatItem = LemonConstants.ChatItems.FirstOrDefault(x => x.Guid == chatConfig.SelectItem);
                 }
             }
 

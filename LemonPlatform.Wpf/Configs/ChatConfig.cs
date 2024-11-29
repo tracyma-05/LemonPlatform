@@ -2,8 +2,8 @@
 {
     internal class ChatConfig
     {
-        public string? Names { get; set; }
+        public string? Items { get; set; }
 
-        public string? SelectName { get; set; }
+        public string? SelectItem { get; set; }
     }
 }

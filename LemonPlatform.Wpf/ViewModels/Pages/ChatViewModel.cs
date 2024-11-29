@@ -93,11 +93,11 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         {
             var chatPreference = await _lemonDbContext.UserPreference.FirstOrDefaultAsync(x => x.Id == LemonConstants.ChatConfigId);
             if (chatPreference == null) return;
-            var names = ChatItems.Select(x => x.Name).ToList();
+            var items = ChatItems.Select(x => x.Guid).ToList();
             var chatConfig = new ChatConfig
             {
-                Names = string.Join(',', names),
-                SelectName = SelectedChatItem?.Name,
+                Items = string.Join(',', items),
+                SelectItem = SelectedChatItem?.Guid,
             };
 
             chatPreference.Content = JsonSerializer.Serialize(chatConfig);
