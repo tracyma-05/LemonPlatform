@@ -8,18 +8,55 @@
       mc:Ignorable="d" 
       d:DesignHeight="450"
       d:DesignWidth="800">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="GroupedPluginItems" Source="{Binding PluginItems}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="PluginType" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
 
     <Grid Margin="5">
-        <ListBox ItemsSource="{Binding PluginItems}"
+        <ListBox ItemsSource="{Binding Source={StaticResource GroupedPluginItems}}"
                  SelectedItem="{Binding SelectedPluginItem}">
+            <ListBox.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="GroupItem">
+                            <Setter Property="Margin" Value="10" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="GroupItem">
+                                        <materialDesign:Card Margin="10">
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Name}"
+                                                   FontWeight="Bold"
+                                                   FontSize="16"
+                                                   Margin="5" />
+                                                <Separator Margin="0,5,0,5" />
+                                                <ItemsPresenter />
+                                            </StackPanel>
+                                        </materialDesign:Card>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListBox.GroupStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:Card>
+                        <materialDesign:Card materialDesign:ElevationAssist.Elevation="Dp12" >
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="{Binding IconFont}"
                                                  Grid.Column="0"
