@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LemonPlatform.Wpf.Views.Pages"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
       mc:Ignorable="d" 
       d:DesignHeight="450"
       d:DesignWidth="800">
@@ -13,6 +14,9 @@
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="PluginType" />
             </CollectionViewSource.GroupDescriptions>
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="PluginType" Direction="Ascending" />
+            </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
 

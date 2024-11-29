@@ -2,12 +2,12 @@
 {
     public enum PluginType
     {
-        DataGeneration,
-        ConverterTools,
-        TextTools,
         JsonTools,
-        ImageTools,
+        TextTools,
+        ConverterTools,
+        DataGeneration,
         DataStructures,
-        Else
+        ImageTools,
+        Other
     }
 }

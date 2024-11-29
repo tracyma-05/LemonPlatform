@@ -12,7 +12,7 @@ namespace LemonPlatform.Module.Hello
     {
         public List<PluginItem> GetMenuItems()
         {
-            return new List<PluginItem> { new PluginItem("Hello", typeof(HelloView), "Graph", "#FAA570", "用于测试", PluginType.Else) };
+            return new List<PluginItem> { new PluginItem("Hello", typeof(HelloView), "Graph", "#FAA570", "用于测试", PluginType.Other) };
         }
 
         public async void PostInit(IServiceProvider serviceProvider)
