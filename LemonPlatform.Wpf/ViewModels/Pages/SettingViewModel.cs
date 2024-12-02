@@ -27,6 +27,7 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         partial void OnIsDarkThemeChanged(bool oldValue, bool newValue)
         {
             ThemeHelper.ModifyTheme(theme => theme.SetBaseTheme(IsDarkTheme ? BaseTheme.Dark : BaseTheme.Light));
+            UpdateThemeConfig();
         }
 
         [ObservableProperty]
