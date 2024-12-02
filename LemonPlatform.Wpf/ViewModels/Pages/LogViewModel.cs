@@ -9,18 +9,29 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
 {
     public partial class LogViewModel : ObservableObject, ISingletonDependency
     {
+        private readonly int _defaultLogCount = 100;
+        private readonly string _defaultLogLevel = "info";
         public LogViewModel()
         {
             SelectedDate = DateTime.Today;
+            LogCounts = GetLogCounts();
+            SelectedLogCount = LogCounts.First(x => x.Equals(_defaultLogCount));
+
             LogLevels = GetLogLevels();
-            SelectedLogLevel = LogLevels.LastOrDefault();
+            SelectedLogLevel = LogLevels.First(x => x.Equals(_defaultLogLevel));
         }
 
         [ObservableProperty]
-        private string? _selectedLogLevel;
+        private string _selectedLogLevel;
 
         [ObservableProperty]
         private ObservableCollection<string> _logLevels;
+
+        [ObservableProperty]
+        private int _selectedLogCount;
+
+        [ObservableProperty]
+        private ObservableCollection<int> _logCounts;
 
         [ObservableProperty]
         private DateTime _selectedDate;
@@ -28,7 +39,10 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         partial void OnSelectedDateChanged(DateTime oldValue, DateTime newValue)
         {
             LogLevels = GetLogLevels();
-            SelectedLogLevel = LogLevels.LastOrDefault();
+            if (string.IsNullOrEmpty(SelectedLogLevel))
+            {
+                SelectedLogLevel = LogLevels.First(x => x.Equals(_defaultLogLevel));
+            }
         }
 
         [ObservableProperty]
@@ -40,11 +54,14 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
             var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
             var fileName = $"{SelectedLogLevel}.{SelectedDate:yyyy-MM-dd}.log";
             var filePath = Path.Combine(path, SelectedLogLevel, fileName);
-
-            await using var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            var readArr = new byte[1024 * 1024 * 5];
-            var count = await stream.ReadAsync(readArr, 0, readArr.Length, token);
-            LogContent = Encoding.UTF8.GetString(readArr, 0, count);
+            if (SelectedLogCount > 0)
+            {
+                LogContent = await ReadLastLinesAsync(filePath, SelectedLogCount);
+            }
+            else
+            {
+                LogContent = await ReadLogFileAsync(filePath, token);
+            }
         }
 
         #region private
@@ -73,9 +90,90 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
             return result;
         }
 
+        private ObservableCollection<int> GetLogCounts()
+        {
+            return new ObservableCollection<int>
+            {
+                100,
+                200,
+                500,
+                1000,
+                -1
+            };
+        }
+
         private bool CanExecute()
         {
             return !string.IsNullOrEmpty(SelectedLogLevel);
+        }
+
+        private async Task<string> ReadLastLinesAsync(string filePath, int lineCount)
+        {
+            var lines = new List<string>();
+            const int bufferSize = 4096;
+            byte[] buffer = new byte[bufferSize];
+            int bytesRead;
+            long position = 0;
+
+            using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                position = stream.Length;
+                while (lines.Count < lineCount && position > 0)
+                {
+                    int toRead = (int)Math.Min(bufferSize, position);
+                    position -= toRead;
+                    stream.Seek(position, SeekOrigin.Begin);
+
+                    bytesRead = await stream.ReadAsync(buffer, 0, toRead);
+                    for (int i = bytesRead - 1; i >= 0; i--)
+                    {
+                        if (buffer[i] == '\n')
+                        {
+                            var line = Encoding.UTF8.GetString(buffer, i + 1, bytesRead - i - 1);
+                            lines.Insert(0, line.TrimEnd('\r', '\n'));
+                            bytesRead = i;
+                            if (lines.Count == lineCount)
+                                break;
+                        }
+                    }
+
+                    if (bytesRead > 0)
+                    {
+                        var remaining = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                        if (!string.IsNullOrWhiteSpace(remaining))
+                        {
+                            lines.Insert(0, remaining.TrimEnd('\r', '\n'));
+                        }
+                    }
+                }
+            }
+
+            return string.Join(Environment.NewLine, lines);
+        }
+
+        public async Task<string> ReadLogFileAsync(string filePath, CancellationToken token)
+        {
+            var stringBuilder = new StringBuilder();
+
+            await using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var reader = new StreamReader(stream, Encoding.UTF8))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = await reader.ReadLineAsync();
+                    if (line != null)
+                    {
+                        stringBuilder.AppendLine(line);
+                    }
+
+                    if (token.IsCancellationRequested)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return stringBuilder.ToString();
         }
 
         #endregion
