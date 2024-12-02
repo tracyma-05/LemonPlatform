@@ -4,11 +4,33 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LemonPlatform.Wpf.Views.Pages"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid Margin="5">
         <TextBlock Text="Home Page" />
-        <Button Content="Jobs" Width="300" Command="{Binding GetJobsCommand}"/>
+        <materialDesign:PopupBox
+            StaysOpen="False"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="White"
+            materialDesign:RippleAssist.Feedback="{x:Null}"
+            Background="{DynamicResource PrimaryHueMidBrush}">
+            <materialDesign:PopupBox.ToggleContent>
+                <Button Content="Click Me"
+                        Style="{StaticResource MaterialDesignFlatButton}" 
+                        />
+            </materialDesign:PopupBox.ToggleContent>
+            <materialDesign:PopupBox.PopupContent>
+                <StackPanel>
+                    <Button Content="User Info"/>
+                    <Separator />
+                    <Button Content="Check Update" />
+                    <Separator />
+                    <Button Content="Exit"/>
+                </StackPanel>
+            </materialDesign:PopupBox.PopupContent>
+        </materialDesign:PopupBox>
     </Grid>
 </UserControl>

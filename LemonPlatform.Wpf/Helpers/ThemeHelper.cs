@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using System.Windows;
 using System.Windows.Media;
 
 namespace LemonPlatform.Wpf.Helpers
@@ -9,18 +10,19 @@ namespace LemonPlatform.Wpf.Helpers
         {
             SystemThemeHelper.DwmGetColorizationColor(out int pcrColorization, out _);
             var color = SystemThemeHelper.GetMediaColor(pcrColorization);
-            //var isDark = SystemThemeHelper.GetWindowsTheme();
+            var secondaryColor = SystemParameters.WindowGlassColor;
 
-            SetPrimaryColorAndBaseTheme(color, isDark);
+            SetPrimaryColorAndBaseTheme(color, secondaryColor, isDark);
         }
 
-        private static void SetPrimaryColorAndBaseTheme(Color color, bool isDark = false)
+        private static void SetPrimaryColorAndBaseTheme(Color primaryColor, Color secondaryColor, bool isDark = false)
         {
             var paletteHelper = new PaletteHelper();
             var theme = paletteHelper.GetTheme();
             var baseTheme = isDark ? BaseTheme.Dark : BaseTheme.Light;
             theme.SetBaseTheme(baseTheme);
-            theme.SetPrimaryColor(color);
+            theme.SetPrimaryColor(primaryColor);
+            theme.SetSecondaryColor(secondaryColor);
             paletteHelper.SetTheme(theme);
         }
 
@@ -28,10 +30,12 @@ namespace LemonPlatform.Wpf.Helpers
         {
             SystemThemeHelper.DwmGetColorizationColor(out int pcrColorization, out _);
             var color = SystemThemeHelper.GetMediaColor(pcrColorization);
+            var secondaryColor = SystemParameters.WindowGlassColor;
 
             var paletteHelper = new PaletteHelper();
             var theme = paletteHelper.GetTheme();
             theme.SetPrimaryColor(color);
+            theme.SetSecondaryColor(secondaryColor);
             paletteHelper.SetTheme(theme);
         }
 

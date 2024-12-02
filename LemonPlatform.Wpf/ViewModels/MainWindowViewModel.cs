@@ -17,13 +17,14 @@ namespace LemonPlatform.Wpf.ViewModels
     public partial class MainWindowViewModel : ObservableObject, IRecipient<LemonMessage>, ITransientDependency
     {
         private IAsyncRelayCommand? _asyncRelayCommand;
+        private readonly string _defaultMenu = "Chat";
 
         public MainWindowViewModel()
         {
             WeakReferenceMessenger.Default.Register(this);
 
             MenuItems = new ObservableCollection<LemonMenuItem>(LemonMenuItem.MenuItems);
-            SelectMenuItem = MenuItems.First();
+            SelectMenuItem = MenuItems.First(x => x.Title == _defaultMenu);
             MessageHelper.SendSnackMessage("Lemon Platform");
             MessageHelper.SendStatusBarTextMessage("Ready");
         }

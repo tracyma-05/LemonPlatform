@@ -63,6 +63,8 @@ namespace LemonPlatform.Wpf
             var dbContext = _host.Services.GetRequiredService<LemonDbContext>();
             InitializeDatabase(dbContext);
 
+            await SetHistoryChatAsync();
+
             var login = _host.Services.GetRequiredService<MainWindow>();
             login.Show();
 
@@ -71,8 +73,6 @@ namespace LemonPlatform.Wpf
             notifyIcon.DataContext = notifyIconDataContext;
 
             PostInit();
-
-            await SetHistoryChatAsync();
         }
 
         protected override async void OnExit(ExitEventArgs e)
