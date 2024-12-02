@@ -5,21 +5,27 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LemonPlatform.Wpf.Views.Pages"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:converters="clr-namespace:LemonPlatform.Core.Converters;assembly=LemonPlatform.Core"
       mc:Ignorable="d" 
       d:DesignHeight="450"
       d:DesignWidth="800">
 
-    <Grid Margin="5">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <materialDesign:Card Grid.Row="0" Margin="10">
+        <materialDesign:Card 
+            Grid.Row="0"
+            Margin="10"
+            MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.75-30}"
+            MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=1-30}">
             <TextBox Text="{Binding LogContent}" 
-                     TextWrapping="WrapWithOverflow" 
+                     TextWrapping="Wrap" 
                      VerticalContentAlignment="Top"
                      VerticalScrollBarVisibility="Auto" 
                      TextChanged="TextBoxBase_OnTextChanged"
+                     materialDesign:TextFieldAssist.HasClearButton="True"
                      AcceptsReturn="True"
                      AcceptsTab="True"
                      Name="logTextBox"/>

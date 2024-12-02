@@ -35,7 +35,7 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         private string _logContent;
 
         [RelayCommand(CanExecute = nameof(CanExecute))]
-        private async void Search()
+        private async Task Search(CancellationToken token)
         {
             var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
             var fileName = $"{SelectedLogLevel}.{SelectedDate:yyyy-MM-dd}.log";
@@ -43,7 +43,7 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
 
             await using var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             var readArr = new byte[1024 * 1024 * 5];
-            var count = await stream.ReadAsync(readArr, 0, readArr.Length);
+            var count = await stream.ReadAsync(readArr, 0, readArr.Length, token);
             LogContent = Encoding.UTF8.GetString(readArr, 0, count);
         }
 

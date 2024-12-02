@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LemonPlatform.Module.Tools.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:LemonPlatform.Core.Converters;assembly=LemonPlatform.Core"
              mc:Ignorable="d" 
              d:DesignHeight="450"
              d:DesignWidth="800">
@@ -18,13 +19,21 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Border Grid.Column="0" Grid.Row="0" Margin="10" BorderThickness="1" CornerRadius="5"
+        <Border 
+            Grid.Column="0"
+            Grid.Row="0" 
+            Margin="10"
+            BorderThickness="1"
+            CornerRadius="5"
+            MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.5-40}"
+            MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.5-40}"
             BorderBrush="{DynamicResource MaterialDesignDivider}">
             <TextBox  
             Text="{Binding InputOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             TextWrapping="Wrap" 
             AcceptsReturn="True"
             AcceptsTab="True"
+            HorizontalScrollBarVisibility="Auto"
             VerticalScrollBarVisibility="Auto"
             VerticalContentAlignment="Top"
             Padding="10"
@@ -32,24 +41,45 @@
             materialDesign:TextFieldAssist.HasClearButton="True"/>
         </Border>
 
-        <Border Grid.Column="1" Grid.Row="0" Margin="10" BorderThickness="1" CornerRadius="5"
+        <Border 
+            Grid.Column="1"
+            Grid.Row="0"
+            Margin="10"
+            MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.5-40}"
+            MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.5-40}"
+            BorderThickness="1"
+            CornerRadius="5"
             BorderBrush="{DynamicResource MaterialDesignDivider}">
             <TextBox  
             Text="{Binding InputTwo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             TextWrapping="Wrap" 
             AcceptsReturn="True"
             AcceptsTab="True"
+            HorizontalScrollBarVisibility="Auto"
             VerticalScrollBarVisibility="Auto"
             VerticalContentAlignment="Top"
+
             Padding="10"
             materialDesign:HintAssist.Hint="Please input something"
             materialDesign:TextFieldAssist.HasClearButton="True"/>
         </Border>
 
-        <Border Grid.Column="0" Grid.Row="1" Margin="10" BorderThickness="1" CornerRadius="5"
+        <Border 
+            Grid.Column="0"
+            Grid.Row="1"
+            Margin="10"
+            BorderThickness="1"
+            CornerRadius="5"
+            MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.5-40}"
+            MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.5-40}"
             BorderBrush="{DynamicResource MaterialDesignDivider}">
-            <TextBox Text="{Binding Response}" TextWrapping="Wrap" VerticalContentAlignment="Top"
-                 VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Padding="10"/>
+            <TextBox Text="{Binding Response}" 
+                     TextWrapping="Wrap"
+                     VerticalContentAlignment="Top"
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Auto"
+                     AcceptsReturn="True"
+                     Padding="10"/>
         </Border>
 
         <materialDesign:Card Grid.Row="1" Grid.Column="1" Margin="10" Padding="10" materialDesign:ElevationAssist.Elevation="Dp2">
