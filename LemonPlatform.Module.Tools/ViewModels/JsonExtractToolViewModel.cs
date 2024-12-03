@@ -7,7 +7,7 @@ using System.Text.Json.Nodes;
 namespace LemonPlatform.Module.Tools.ViewModels
 {
     [ObservableObject]
-    public partial class JsonExtractToolViewModel : ITransientDependency
+    public partial class JsonExtractToolViewModel : ISingletonDependency
     {
         [NotifyCanExecuteChangedFor(nameof(ParseCommand))]
         [NotifyCanExecuteChangedFor(nameof(ExtractCommand))]

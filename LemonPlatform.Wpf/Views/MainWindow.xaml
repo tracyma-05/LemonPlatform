@@ -135,7 +135,6 @@
                     <ScrollViewer x:Name="MainScrollViewer"
                           Grid.Row="1"
                           materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
-                          HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto">
                         <busyMask:BusyMask
                             BusyContent="Please wait..."

@@ -15,15 +15,17 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         {
             SelectedDate = DateTime.Today;
             LogCounts = GetLogCounts();
-            SelectedLogCount = LogCounts.First(x => x.Equals(_defaultLogCount));
+            SelectedLogCount = LogCounts.FirstOrDefault(x => x.Equals(_defaultLogCount));
 
             LogLevels = GetLogLevels();
             SelectedLogLevel = LogLevels.First(x => x.Equals(_defaultLogLevel));
         }
 
+        [NotifyCanExecuteChangedFor(nameof(SearchCommand))]
         [ObservableProperty]
-        private string _selectedLogLevel;
+        private string? _selectedLogLevel;
 
+        [NotifyCanExecuteChangedFor(nameof(SearchCommand))]
         [ObservableProperty]
         private ObservableCollection<string> _logLevels;
 
@@ -39,9 +41,17 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         partial void OnSelectedDateChanged(DateTime oldValue, DateTime newValue)
         {
             LogLevels = GetLogLevels();
-            if (string.IsNullOrEmpty(SelectedLogLevel))
+            if (!LogLevels.Any())
             {
-                SelectedLogLevel = LogLevels.First(x => x.Equals(_defaultLogLevel));
+                SelectedLogLevel = null;
+                return;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(SelectedLogLevel))
+                {
+                    SelectedLogLevel = LogLevels.First(x => x.Equals(_defaultLogLevel));
+                }
             }
         }
 
@@ -104,7 +114,7 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
 
         private bool CanExecute()
         {
-            return !string.IsNullOrEmpty(SelectedLogLevel);
+            return !string.IsNullOrEmpty(SelectedLogLevel) && LogLevels.Any();
         }
 
         private async Task<string> ReadLastLinesAsync(string filePath, int lineCount)

@@ -10,6 +10,7 @@ namespace LemonPlatform.Core.Converters
         {
             if (value is double originalValue && parameter is string parameterString)
             {
+                if (originalValue <= 0) return (int)originalValue;
                 var data = parameterString.Split('-');
                 if (data.Length == 2)
                 {

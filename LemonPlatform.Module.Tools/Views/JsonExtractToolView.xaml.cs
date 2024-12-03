@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.Tools.Views
 {
-    public partial class JsonExtractToolView : UserControl, ITransientDependency
+    public partial class JsonExtractToolView : UserControl, ISingletonDependency
     {
         public JsonExtractToolView(JsonExtractToolViewModel model)
         {
