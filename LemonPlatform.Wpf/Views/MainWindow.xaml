@@ -143,7 +143,7 @@
                             Background="{DynamicResource MaterialDesignBody}"
                             IsBusy="{Binding IsBusy,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                             IsBusyAtStartup="False">
-                            <ContentControl Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}" />
+                            <ContentControl Content="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}" x:Name="xContent"/>
                         </busyMask:BusyMask>
                     </ScrollViewer>
                 </Grid>

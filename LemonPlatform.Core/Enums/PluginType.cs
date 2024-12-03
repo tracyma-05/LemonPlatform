@@ -7,6 +7,10 @@
         ConverterTools,
         DataGeneration,
         DataStructures,
+        Algorithm,
+        Graph,
+        Games,
+        Visualization,
         ImageTools,
         Other
     }

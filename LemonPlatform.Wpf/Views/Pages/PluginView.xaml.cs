@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Wpf.Views.Pages
 {
-    public partial class PluginView : UserControl, ITransientDependency
+    public partial class PluginView : UserControl, ISingletonDependency
     {
         public PluginView(PluginViewModel model)
         {

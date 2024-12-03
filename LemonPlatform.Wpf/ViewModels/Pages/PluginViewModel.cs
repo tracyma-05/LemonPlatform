@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace LemonPlatform.Wpf.ViewModels.Pages
 {
-    public partial class PluginViewModel : ObservableObject, ITransientDependency
+    public partial class PluginViewModel : ObservableObject, ISingletonDependency
     {
         public PluginViewModel()
         {

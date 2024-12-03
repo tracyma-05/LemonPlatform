@@ -2,6 +2,7 @@
 using LemonPlatform.Core.Infrastructures.MainWindowService;
 using LemonPlatform.Wpf.ViewModels;
 using System.Windows;
+using System.Windows.Input;
 
 namespace LemonPlatform.Wpf.Views
 {
@@ -11,6 +12,18 @@ namespace LemonPlatform.Wpf.Views
         {
             InitializeComponent();
             DataContext = model;
+            xContent.PreviewMouseWheel += OnPreviewMouseWheel;
+        }
+
+        private void OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+            {
+                RoutedEvent = MouseWheelEvent,
+                Source = sender
+            };
+
+            xContent.RaiseEvent(eventArg);
         }
 
         public void AddSnackMessage(string message)
