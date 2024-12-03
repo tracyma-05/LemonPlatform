@@ -6,7 +6,7 @@ using System.Text;
 namespace LemonPlatform.Module.Tools.ViewModels
 {
     [ObservableObject]
-    public partial class CompareToolViewModel: ITransientDependency
+    public partial class CompareToolViewModel: ISingletonDependency
     {
         public CompareToolViewModel()
         {
