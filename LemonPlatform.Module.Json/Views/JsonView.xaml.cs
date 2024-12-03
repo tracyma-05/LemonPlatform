@@ -6,10 +6,9 @@ namespace LemonPlatform.Module.Json.Views
 {
     public partial class JsonView : UserControl, ITransientDependency
     {
-        public JsonView(JsonViewModel model)
+        public JsonView()
         {
             InitializeComponent();
-            DataContext = model;
         }
     }
 }

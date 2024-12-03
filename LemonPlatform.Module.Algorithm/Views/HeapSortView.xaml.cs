@@ -1,11 +1,11 @@
 ﻿using LemonPlatform.Core.Infrastructures.Denpendency;
 using System.Windows.Controls;
 
-namespace LemonPlatform.Module.DataStructure.Views
+namespace LemonPlatform.Module.Algorithm.Views
 {
-    public partial class BSTreeView : UserControl, ISingletonDependency
+    public partial class HeapSortView : UserControl, ISingletonDependency
     {
-        public BSTreeView()
+        public HeapSortView()
         {
             InitializeComponent();
         }

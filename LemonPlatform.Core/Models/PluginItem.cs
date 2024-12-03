@@ -2,6 +2,7 @@
 using LemonPlatform.Core.Enums;
 using LemonPlatform.Core.Infrastructures.Ioc;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Controls;
 
 namespace LemonPlatform.Core.Models
 {
@@ -50,7 +51,27 @@ namespace LemonPlatform.Core.Models
 
         private object CreateContent()
         {
-            return IocManager.Instance.ServiceProvider.GetRequiredService(_contentType);
+            var view = IocManager.Instance.ServiceProvider.GetRequiredService(_contentType);
+            if (view is UserControl control)
+            {
+                if (control.DataContext is null)
+                {
+                    var contextNamespace = _contentType.Namespace?.Replace("Views", "ViewModels");
+                    var viewModelName = $"{contextNamespace}.{_contentType.Name}Model";
+                    var viewModelType = AppDomain.CurrentDomain.GetAssemblies().SelectMany(assembly => assembly.GetTypes()).FirstOrDefault(type => type.FullName == viewModelName);
+                    if (viewModelType != null)
+                    {
+                        var viewModel = IocManager.Instance.ServiceProvider.GetService(viewModelType);
+                        if (viewModel != null)
+                        {
+                            control.DataContext = viewModel;
+                        }
+                    }
+
+                }
+            }
+
+            return view;
         }
     }
 }
