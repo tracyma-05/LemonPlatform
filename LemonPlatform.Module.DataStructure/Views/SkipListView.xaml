@@ -9,10 +9,76 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
     <Grid Margin="10">
-        <ScrollViewer
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <GroupBox Header="Configuration" Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Delay: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBox Width="40" Height="30" Margin="10" Text="{Binding Delay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Command" Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Key: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBox Width="40" Height="30" Margin="10" Text="{Binding Key,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Command="{Binding AddCommand}" Width="100" Content="Add" Height="30" Margin="10"/>
+                    <Button Command="{Binding RemoveCommand}" Width="100" Content="Remove" Height="30" Margin="10"/>
+                    <Button Command="{Binding FindCommand}" Width="100" Content="Find" Height="30" Margin="10"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <GroupBox Header="Raw Data" Grid.Row="0" Margin="3">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBox 
+                            Text="{Binding Input}" 
+                            TextWrapping="Wrap" 
+                            AcceptsReturn="True"
+                            AcceptsTab="True"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto" 
+                            VerticalContentAlignment="Top"/>
+                        <Grid Grid.Row="1">
+                            <Button Grid.Column="1" Command="{Binding LoadCommand}" Content="Load" Margin="5"/>
+                        </Grid>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Response" Grid.Row="1" Margin="3">
+                    <TextBox 
+                        Text="{Binding Response}" 
+                        TextWrapping="Wrap" 
+                        AcceptsReturn="True"
+                        AcceptsTab="True"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto" 
+                        VerticalContentAlignment="Top"/>
+                </GroupBox>
+            </Grid>
+            <ScrollViewer
+                Grid.Column="0"
                 VerticalScrollBarVisibility="Auto"
                 HorizontalScrollBarVisibility="Auto">
-            <controls:LemonSKElement Render="{Binding Render,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-        </ScrollViewer>
+                <controls:LemonSKElement Render="{Binding Render,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>

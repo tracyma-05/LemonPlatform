@@ -10,18 +10,55 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
 {
     public class SkipListRender : LemonBaseRender<SkipList<int>>, ITransientDependency
     {
-        public override ICollection<int> Keys { get; set; } = new List<int>();
+        public override event EventHandler RefreshRequested;
+        public override ICollection<int> Keys { get; set; } = new HashSet<int>();
+
+        private bool _reInit;
+        public override bool ReInit
+        {
+            get => _reInit;
+            set
+            {
+                if (_reInit == value) return;
+                _reInit = value;
+                RefreshRequested?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public override void Add(int key)
+        {
+            CoreData.Add(key);
+            Keys.Add(key);
+            RefreshRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        public override void Remove(int key)
+        {
+            CoreData.Remove(key);
+            Keys.Remove(key);
+            RefreshRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        public override bool Contains(int key)
+        {
+            return CoreData.Find(key, out var result);
+        }
+
+        private List<List<LemonSKPoint>> _points;
 
         public override void InitRawData()
         {
-            if (Keys.Any())
+            if (ReInit && Keys.Any())
             {
+                CoreData.Clear();
                 foreach (var item in Keys)
                 {
                     CoreData.Add(item);
                 }
+
+                ReInit = false;
             }
-            else
+            else if (CoreData.IsEmpty())
             {
                 for (var i = 0; i < InitCount; i++)
                 {
@@ -32,7 +69,6 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
             }
         }
 
-        private List<List<LemonSKPoint>> _points;
         public override void InitCanvasData(SKCanvas canvas, SKImageInfo info)
         {
             var radius = 20;
@@ -118,6 +154,11 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
                     }
                 }
             }
+        }
+
+        public override bool IsEmpty()
+        {
+            return CoreData.IsEmpty();
         }
     }
 }

@@ -38,10 +38,7 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
         /// <summary>
         /// Checks if list is empty or not
         /// </summary>
-        public bool IsEmpty
-        {
-            get { return Count == 0; }
-        }
+        public bool IsEmpty() => Count == 0;
 
         /// <summary>
         /// Return count of elements
@@ -208,7 +205,7 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
             }
 
             // Skip null element (in first postion) if contain
-            if (!IsEmpty && current.Forwards[0].Value == null)
+            if (!IsEmpty() && current.Forwards[0].Value == null)
             {
                 current = current.Forwards[0];
             }
@@ -254,7 +251,7 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
         /// </summary>
         public bool TryDeleteMin(out T result)
         {
-            if (IsEmpty)
+            if (IsEmpty())
             {
                 result = default;
                 return false;
@@ -283,7 +280,7 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
         /// </summary>
         public bool TryPeek(out T result)
         {
-            if (IsEmpty)
+            if (IsEmpty())
             {
                 result = default;
                 return false;

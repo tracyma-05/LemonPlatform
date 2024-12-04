@@ -4,7 +4,7 @@ namespace LemonPlatform.Core.Renders
 {
     public abstract class LemonBaseRender<T> : ILemonRender where T : new()
     {
-        public event EventHandler RefreshRequested;
+        public abstract event EventHandler RefreshRequested;
 
         public Random Random { get; set; } = new Random();
         public T CoreData { get; set; } = new T();
@@ -14,11 +14,7 @@ namespace LemonPlatform.Core.Renders
 
         public virtual void PaintSurface(SKSurface surface, SKImageInfo info)
         {
-            if (!Keys.Any())
-            {
-                InitRawData();
-            }
-
+            InitRawData();
             SKCanvas canvas = surface.Canvas;
             canvas.Clear();
 
@@ -42,9 +38,13 @@ namespace LemonPlatform.Core.Renders
         /// <param name="canvas"></param>
         public abstract void DrawInCanvas(SKCanvas canvas, SKImageInfo info);
 
-        /// <summary>
-        /// keys for data
-        /// </summary>
+        public abstract void Add(int key);
+        public abstract void Remove(int key);
+        public abstract bool Contains(int key);
+        public abstract bool IsEmpty();
+
         public abstract ICollection<int> Keys { get; set; }
+
+        public abstract bool ReInit { get; set; }
     }
 }
