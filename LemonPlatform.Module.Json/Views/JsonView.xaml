@@ -8,22 +8,18 @@
       d:DesignHeight="450" 
       d:DesignWidth="800"
       xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+      xmlns:controls="clr-namespace:LemonPlatform.Module.Json.Controls"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/LemonPlatform.Core;component/Themes/LemonTheme.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
-
     <Grid>
-
-        <ToggleButton x:Name="MenuToggleButton"
-                            Margin="5,0,24,0"
-                            AutomationProperties.Name="HamburgerToggleButton"
-                            IsChecked="False"
-                            Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+        <ScrollViewer
+                Grid.Column="0"
+                x:Name="sv"
+                VerticalScrollBarVisibility="Auto"
+                HorizontalScrollBarVisibility="Auto">
+            <Border BorderBrush="Yellow" BorderThickness="2">
+                <controls:TreeSKElement TreeRender="{Binding Render,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </Border>
+        </ScrollViewer>
     </Grid>
 </UserControl>
