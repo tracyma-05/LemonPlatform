@@ -29,8 +29,4 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="Infrastructures\Messages\" />
-	</ItemGroup>
-
 </Project>

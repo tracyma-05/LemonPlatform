@@ -65,7 +65,7 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
                         Y = info.Height - yOffset * i - yRaw,
                         LineColor = SKColors.Gray,
                         CircleColor = SKColors.Blue,
-                        TextColor = SKColors.Red,
+                        TextColor = SKColors.White,
                     };
 
                     if (i > 0)
@@ -77,7 +77,7 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
                             Y = info.Height - yOffset * (i - 1) - yRaw,
                             LineColor = SKColors.Gray,
                             CircleColor = SKColors.Blue,
-                            TextColor = SKColors.Red,
+                            TextColor = SKColors.White,
                         };
                     }
 
