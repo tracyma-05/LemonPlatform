@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.DataStructure.Views
 {
-    public partial class AVLTreeView : UserControl, ISingletonDependency
+    public partial class AVLTreeView : Page, ISingletonDependency
     {
         public AVLTreeView()
         {

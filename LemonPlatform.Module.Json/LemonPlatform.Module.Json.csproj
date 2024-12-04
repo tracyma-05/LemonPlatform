@@ -13,10 +13,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-
 		<ProjectReference Include="..\LemonPlatform.Core\LemonPlatform.Core.csproj">
 			<Private>false</Private>
 			<ExcludeAssets>runtime</ExcludeAssets>
 		</ProjectReference>
 	</ItemGroup>
+
 </Project>

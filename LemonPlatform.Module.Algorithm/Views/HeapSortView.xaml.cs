@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.Algorithm.Views
 {
-    public partial class HeapSortView : UserControl, ISingletonDependency
+    public partial class HeapSortView : Page, ISingletonDependency
     {
         public HeapSortView()
         {

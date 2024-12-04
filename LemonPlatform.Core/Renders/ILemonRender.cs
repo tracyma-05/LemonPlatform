@@ -6,7 +6,5 @@ namespace LemonPlatform.Core.Renders
     {
         void PaintSurface(SKSurface surface, SKImageInfo info);
         event EventHandler RefreshRequested;
-        int Width { get; set; }
-        int Height { get; set; }
     }
 }

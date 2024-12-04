@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.Algorithm.Views
 {
-    public partial class MergeRecursionSortView : UserControl, ISingletonDependency
+    public partial class MergeRecursionSortView : Page, ISingletonDependency
     {
         public MergeRecursionSortView()
         {

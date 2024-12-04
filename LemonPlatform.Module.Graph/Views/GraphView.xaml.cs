@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.Graph.Views
 {
-    public partial class GraphView : UserControl, ISingletonDependency
+    public partial class GraphView : Page, ISingletonDependency
     {
         public GraphView()
         {

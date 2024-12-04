@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.Visualization.Views
 {
-    public partial class SnowFlakeView : UserControl, ISingletonDependency
+    public partial class SnowFlakeView : Page, ISingletonDependency
     {
         public SnowFlakeView()
         {

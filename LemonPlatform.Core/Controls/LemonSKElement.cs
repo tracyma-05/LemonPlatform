@@ -9,7 +9,7 @@ namespace LemonPlatform.Core.Controls
     {
         protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
         {
-            Render.PaintSurface(e.Surface, e.Info);
+            Render?.PaintSurface(e.Surface, e.Info);
         }
 
         public ILemonRender Render

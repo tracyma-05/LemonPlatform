@@ -52,7 +52,7 @@ namespace LemonPlatform.Core.Models
         private object CreateContent()
         {
             var view = IocManager.Instance.ServiceProvider.GetRequiredService(_contentType);
-            if (view is UserControl control)
+            if (view is Page control)
             {
                 if (control.DataContext is null)
                 {

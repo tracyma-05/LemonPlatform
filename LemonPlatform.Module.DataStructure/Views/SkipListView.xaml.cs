@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.DataStructure.Views
 {
-    public partial class SkipListView : UserControl, ISingletonDependency
+    public partial class SkipListView : Page, ITransientDependency
     {
         public SkipListView()
         {

@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.Algorithm.Views
 {
-    public partial class QuickRandomPivotSortView : UserControl, ISingletonDependency
+    public partial class QuickRandomPivotSortView : Page, ISingletonDependency
     {
         public QuickRandomPivotSortView()
         {

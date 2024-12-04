@@ -6,7 +6,7 @@ using LemonPlatform.Module.DataStructure.DataRenders;
 namespace LemonPlatform.Module.DataStructure.ViewModels
 {
     [ObservableObject]
-    public partial class SkipListViewModel : ISingletonDependency
+    public partial class SkipListViewModel : ITransientDependency
     {
         public SkipListViewModel(SkipListRender render)
         {

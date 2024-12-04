@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.Algorithm.Views
 {
-    public partial class ShellSortView : UserControl, ISingletonDependency
+    public partial class ShellSortView : Page, ISingletonDependency
     {
         public ShellSortView()
         {

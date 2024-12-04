@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.Game.Views
 {
-    public partial class MineSweeperView : UserControl, ISingletonDependency
+    public partial class MineSweeperView : Page, ISingletonDependency
     {
         public MineSweeperView()
         {

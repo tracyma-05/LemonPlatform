@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.Algorithm.Views
 {
-    public partial class QuickTwoWaysSortView : UserControl, ISingletonDependency
+    public partial class QuickTwoWaysSortView : Page, ISingletonDependency
     {
         public QuickTwoWaysSortView()
         {

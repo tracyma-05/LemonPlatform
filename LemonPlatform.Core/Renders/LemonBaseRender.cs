@@ -12,35 +12,6 @@ namespace LemonPlatform.Core.Renders
         public virtual int RangeMin { get; set; } = 0;
         public virtual int RangeMax { get; set; } = 100;
 
-        private int _width;
-        public virtual int Width
-        {
-            get => _width;
-            set
-            {
-                if (_width != value)
-                {
-                    _width = value;
-                    RefreshRequested?.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
-
-        private int _height;
-        public virtual int Height
-        {
-            get => _height;
-            set
-            {
-                if (_height != value)
-                {
-                    _height = value;
-                    RefreshRequested?.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
-
-
         public virtual void PaintSurface(SKSurface surface, SKImageInfo info)
         {
             if (!Keys.Any())
@@ -48,12 +19,11 @@ namespace LemonPlatform.Core.Renders
                 InitRawData();
             }
 
-            InitCanvasData();
-
             SKCanvas canvas = surface.Canvas;
             canvas.Clear();
 
-            DrawInCanvas(canvas);
+            InitCanvasData(canvas, info);
+            DrawInCanvas(canvas, info);
         }
 
         /// <summary>
@@ -64,13 +34,13 @@ namespace LemonPlatform.Core.Renders
         /// <summary>
         /// step 2: init canvas data
         /// </summary>
-        public abstract void InitCanvasData();
+        public abstract void InitCanvasData(SKCanvas canvas, SKImageInfo info);
 
         /// <summary>
         /// step 3: draw image in canvas
         /// </summary>
         /// <param name="canvas"></param>
-        public abstract void DrawInCanvas(SKCanvas canvas);
+        public abstract void DrawInCanvas(SKCanvas canvas, SKImageInfo info);
 
         /// <summary>
         /// keys for data

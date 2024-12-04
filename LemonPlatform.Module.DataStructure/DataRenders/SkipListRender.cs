@@ -23,9 +23,9 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
             }
             else
             {
-                for (var i = RangeMin; i < RangeMax; i++)
+                for (var i = 0; i < InitCount; i++)
                 {
-                    var random = Random.Next(0, 100);
+                    var random = Random.Next(RangeMin, RangeMax);
                     CoreData.Add(random);
                     Keys.Add(random);
                 }
@@ -33,7 +33,7 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
         }
 
         private List<List<LemonSKPoint>> _points;
-        public override void InitCanvasData()
+        public override void InitCanvasData(SKCanvas canvas, SKImageInfo info)
         {
             var radius = 20;
             var xOffset = 50;
@@ -62,7 +62,7 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
                     {
                         Key = val,
                         X = x,
-                        Y = Height - yOffset * i - yRaw,
+                        Y = info.Height - yOffset * i - yRaw,
                         LineColor = SKColors.Gray,
                         CircleColor = SKColors.Blue,
                         TextColor = SKColors.Red,
@@ -74,7 +74,7 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
                         {
                             Key = val,
                             X = x,
-                            Y = Height - yOffset * (i - 1) - yRaw,
+                            Y = info.Height - yOffset * (i - 1) - yRaw,
                             LineColor = SKColors.Gray,
                             CircleColor = SKColors.Blue,
                             TextColor = SKColors.Red,
@@ -88,7 +88,7 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
             }
         }
 
-        public override void DrawInCanvas(SKCanvas canvas)
+        public override void DrawInCanvas(SKCanvas canvas, SKImageInfo info)
         {
             foreach (var point in _points)
             {

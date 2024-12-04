@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.Algorithm.Views
 {
-    public partial class BubbleCockTailSortView : UserControl, ISingletonDependency
+    public partial class BubbleCockTailSortView : Page, ISingletonDependency
     {
         public BubbleCockTailSortView()
         {
