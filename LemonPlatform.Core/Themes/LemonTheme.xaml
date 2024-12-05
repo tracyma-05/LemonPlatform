@@ -14,9 +14,16 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBodyMediumTextBlock}">
-        <!--<Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />-->
-        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="{materialDesign:MaterialDesignFont}" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
+        <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+        <Setter Property="FontWeight" Value="Light" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="{materialDesign:MaterialDesignFont}" />
     </Style>
 
