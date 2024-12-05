@@ -9,7 +9,7 @@ namespace LemonPlatform.Core.Helpers
 {
     public class ScreenShotHelper
     {
-        public static void ScreenShot(Control control)
+        public static void ScreenShot(Frame control)
         {
             var waterMark = $"Lemon Platform  Power By @Tracy Ma";
             var capturedImage = CaptureControlToSKBitmap(control);
@@ -57,7 +57,7 @@ namespace LemonPlatform.Core.Helpers
             return bitmap;
         }
 
-        public static SKBitmap CaptureControlToSKBitmap(Control control)
+        public static SKBitmap CaptureControlToSKBitmap(Frame control)
         {
             var size = new Size(control.RenderSize.Width, control.RenderSize.Height);
             control.Measure(size);

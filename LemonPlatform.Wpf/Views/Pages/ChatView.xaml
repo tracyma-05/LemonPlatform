@@ -92,11 +92,11 @@
                       VerticalScrollBarVisibility="Auto">
             <Frame NavigationUIVisibility="Hidden"
                    Content="{Binding CurrentChat, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}"
-                   Background="{DynamicResource MaterialDesign.Brush.Background }" >
+                   Background="{DynamicResource MaterialDesign.Brush.Background}" >
                 <Frame.ContextMenu>
-                    <ContextMenu>
+                    <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
                         <MenuItem Header="Screen Shot" 
-                                  Command="{Binding ScreenShotCommand}" 
+                                  Command="{Binding ScreenShotCommand}"
                                   CommandParameter="{Binding PlacementTarget, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                     </ContextMenu>
                 </Frame.ContextMenu>

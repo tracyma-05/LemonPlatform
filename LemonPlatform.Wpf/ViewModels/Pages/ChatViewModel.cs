@@ -59,7 +59,7 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         private string _searchKeyword;
 
         [RelayCommand]
-        private void ScreenShot(Control control)
+        private void ScreenShot(Frame control)
         {
             ScreenShotHelper.ScreenShot(control);
         }
