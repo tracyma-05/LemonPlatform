@@ -52,9 +52,10 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
 
         public override bool Contains(int key)
         {
-
             var result = CoreData.Find(key, out var data);
             _path = CoreData.Paths["Find"];
+
+            RefreshRequested?.Invoke(this, EventArgs.Empty);
 
             StartBallAnimation();
             return result;

@@ -270,6 +270,8 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
 
             current = current.Forwards[0];
 
+            path[0].Add(item);
+
             // Return true if we found the element; false otherwise
             if (current != null && current.Value.IsEqualTo(item))
             {
