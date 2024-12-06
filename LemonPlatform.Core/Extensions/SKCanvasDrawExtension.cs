@@ -11,7 +11,7 @@ namespace LemonPlatform.Core.Extensions
             var radius = 20;
             using var circlePaint = new SKPaint
             {
-                Color = SKColors.Blue,
+                Color = node.CircleColor,
                 Style = SKPaintStyle.Fill,
                 IsAntialias = true,
                 StrokeWidth = 2

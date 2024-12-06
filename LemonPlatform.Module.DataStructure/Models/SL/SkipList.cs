@@ -15,6 +15,8 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
         private readonly int MaxLevel = 32;
         private readonly double Probability = 0.5;
 
+        public Dictionary<string, Dictionary<int, HashSet<T>>> Paths = new Dictionary<string, Dictionary<int, HashSet<T>>>();
+
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
@@ -78,16 +80,30 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
         {
             var current = _firstNode;
             var toBeUpdated = new SkipListNode<T>[MaxLevel];
+            var result = new Dictionary<int, HashSet<T>>();
 
             // Get nodes for updated
             for (int i = _currentMaxLevel - 1; i >= 0; --i)
             {
+                var data = new HashSet<T>();
                 while (current.Forwards[i] != null && current.Forwards[i].Value.IsLessThan(item))
                 {
+                    if (current != _firstNode)
+                    {
+                        data.Add(current.Value);
+                    }
+
                     current = current.Forwards[i];
+                    data.Add(current.Value);
                 }
 
                 toBeUpdated[i] = current;
+                if (current != _firstNode)
+                {
+                    data.Add(current.Value);
+                }
+
+                result[i] = data;
             }
 
             // Desired position to insert key
@@ -116,6 +132,9 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
 
                 ++_count;
             }
+
+            result[0].Add(item);
+            Paths["Add"] = result;
         }
 
         /// <summary>
@@ -134,17 +153,31 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
             // Find the node in each of the levels
             var current = _firstNode;
             var toBeUpdated = new SkipListNode<T>[MaxLevel];
+            var result = new Dictionary<int, HashSet<T>>();
 
             // Walk after all the nodes that have values less than the node we are looking for.
             // Mark all nodes as toBeUpdated.
             for (int i = _currentMaxLevel - 1; i >= 0; --i)
             {
+                var data = new HashSet<T>();
                 while (current.Forwards[i] != null && current.Forwards[i].Value.IsLessThan(item))
                 {
+                    if (current != _firstNode)
+                    {
+                        data.Add(current.Value);
+                    }
+
                     current = current.Forwards[i];
+                    data.Add(current.Value);
                 }
 
                 toBeUpdated[i] = current;
+                if (current != _firstNode)
+                {
+                    data.Add(current.Value);
+                }
+
+                result[i] = data;
             }
 
             current = current.Forwards[0];
@@ -178,6 +211,7 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
 
             // Assign the deleted output parameter to the node.Value
             deleted = current.Value;
+            Paths["Remove"] = result;
             return true;
         }
 
@@ -196,6 +230,7 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
         {
             result = default;
             var current = _firstNode;
+            var path = new Dictionary<int, HashSet<T>>();
 
             // If find null element then check first element after first node
             if (item == null)
@@ -213,10 +248,24 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
             // Walk after all the nodes that have values less than the node we are looking for
             for (int i = _currentMaxLevel - 1; i >= 0; --i)
             {
+                var data = new HashSet<T>();
                 while (current.Forwards[i] != null && current.Forwards[i].Value.IsLessThan(item))
                 {
+                    if (current != _firstNode)
+                    {
+                        data.Add(current.Value);
+                    }
+
                     current = current.Forwards[i];
+                    data.Add(current.Value);
                 }
+
+                if (current != _firstNode)
+                {
+                    data.Add(current.Value);
+                }
+
+                path[i] = data;
             }
 
             current = current.Forwards[0];
@@ -225,9 +274,11 @@ namespace LemonPlatform.Module.DataStructure.Models.SL
             if (current != null && current.Value.IsEqualTo(item))
             {
                 result = current.Value;
+                Paths["Find"] = path;
                 return true;
             }
 
+            Paths["Find"] = path;
             return false;
         }
 

@@ -5,6 +5,7 @@ using LemonPlatform.Core.Models;
 using LemonPlatform.Core.Renders;
 using LemonPlatform.Module.DataStructure.Models.SL;
 using SkiaSharp;
+using System.Windows.Threading;
 
 namespace LemonPlatform.Module.DataStructure.DataRenders
 {
@@ -12,8 +13,10 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
     {
         public override event EventHandler RefreshRequested;
         public override ICollection<int> Keys { get; set; } = new HashSet<int>();
-
         private bool _reInit;
+        private Dictionary<int, HashSet<int>> _path;
+        private List<LemonSKPoint> _pathPoint = new List<LemonSKPoint>();
+
         public override bool ReInit
         {
             get => _reInit;
@@ -29,19 +32,62 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
         {
             CoreData.Add(key);
             Keys.Add(key);
+
+            _path = CoreData.Paths["Add"];
             RefreshRequested?.Invoke(this, EventArgs.Empty);
+
+            StartBallAnimation();
         }
 
         public override void Remove(int key)
         {
-            CoreData.Remove(key);
+            CoreData.Remove(key, out int deleted);
             Keys.Remove(key);
+
+            _path = CoreData.Paths["Remove"];
             RefreshRequested?.Invoke(this, EventArgs.Empty);
+
+            StartBallAnimation();
         }
 
         public override bool Contains(int key)
         {
-            return CoreData.Find(key, out var result);
+
+            var result = CoreData.Find(key, out var data);
+            _path = CoreData.Paths["Find"];
+
+            StartBallAnimation();
+            return result;
+        }
+
+        private void StartBallAnimation()
+        {
+            IsAnimating = true;
+            int index = 0;
+            var animationTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(1000)
+            };
+
+            animationTimer.Tick += (s, e) =>
+            {
+                if (index < _pathPoint.Count)
+                {
+                    AnimatingPoint = _pathPoint[index];
+
+                    index++;
+                    RefreshRequested?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+                    animationTimer.Stop();
+                    IsAnimating = false;
+                    AnimatingPoint = null;
+                    RefreshRequested?.Invoke(this, EventArgs.Empty);
+                }
+            };
+
+            animationTimer.Start();
         }
 
         private List<List<LemonSKPoint>> _points;
@@ -75,6 +121,7 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
             var xOffset = 50;
             var yOffset = 80;
             var yRaw = 50;
+            _pathPoint = new List<LemonSKPoint>();
 
             var node = CoreData.Root;
             if (node == null) return;
@@ -118,6 +165,19 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
                     }
 
                     _points[i].Add(currentPoint);
+
+                    if (_path != null && _path.ContainsKey(i) && _path[i].Count > 0 && _path[i].TryGetValue(currentPoint.Key, out int value))
+                    {
+                        _pathPoint.Add(new LemonSKPoint
+                        {
+                            Key = val,
+                            X = x,
+                            Y = info.Height - yOffset * i - yRaw,
+                            LineColor = SKColors.Red,
+                            CircleColor = SKColors.Red,
+                            TextColor = SKColors.White,
+                        });
+                    }
                 }
 
                 count++;

@@ -34,7 +34,7 @@ namespace LemonPlatform.Module.DataStructure.ViewModels
         {
             Response = $"Add Step:{Environment.NewLine}";
             Render.Add(Key);
-            Input = string.Join(',', Render.Keys);
+            UpdateInput();
         }
 
         [RelayCommand]
@@ -42,7 +42,7 @@ namespace LemonPlatform.Module.DataStructure.ViewModels
         {
             Response = $"Remove Step:{Environment.NewLine}";
             Render.Remove(Key);
-            Input = string.Join(',', Render.Keys);
+            UpdateInput();
         }
 
         [RelayCommand]
@@ -61,5 +61,17 @@ namespace LemonPlatform.Module.DataStructure.ViewModels
             Render.Keys = numbers;
             Render.ReInit = true;
         }
+
+        #region private
+
+        private void UpdateInput()
+        {
+            if (Render.Keys.Any())
+            {
+                Input = string.Join(',', Render.Keys);
+            }
+        }
+
+        #endregion
     }
 }

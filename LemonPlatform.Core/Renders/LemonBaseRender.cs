@@ -1,4 +1,6 @@
-﻿using SkiaSharp;
+﻿using LemonPlatform.Core.Extensions;
+using LemonPlatform.Core.Models;
+using SkiaSharp;
 
 namespace LemonPlatform.Core.Renders
 {
@@ -11,6 +13,8 @@ namespace LemonPlatform.Core.Renders
         public virtual int InitCount { get; set; } = 15;
         public virtual int RangeMin { get; set; } = 0;
         public virtual int RangeMax { get; set; } = 100;
+        public virtual bool IsAnimating { get; set; } = false;
+        public virtual LemonSKPoint? AnimatingPoint { get; set; } = null;
 
         public virtual void PaintSurface(SKSurface surface, SKImageInfo info)
         {
@@ -20,6 +24,11 @@ namespace LemonPlatform.Core.Renders
 
             InitCanvasData(canvas, info);
             DrawInCanvas(canvas, info);
+
+            if (IsAnimating && AnimatingPoint != null)
+            {
+                canvas.DrawLemonCircle(AnimatingPoint);
+            }
         }
 
         /// <summary>
