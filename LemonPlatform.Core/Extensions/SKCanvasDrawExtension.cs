@@ -70,5 +70,24 @@ namespace LemonPlatform.Core.Extensions
 
             canvas.DrawLine(start, end, linePaint);
         }
+
+        public static void DrawLemonHeight(this SKCanvas canvas, LemonSKPoint node)
+        {
+            using var textPaint = new SKPaint
+            {
+                Color = node.HeightColor,
+                IsAntialias = true,
+                TextSize = 10,
+                TextAlign = SKTextAlign.Center
+            };
+
+            var text = node.Height.ToString();
+            var textBounds = new SKRect();
+            textPaint.MeasureText(text, ref textBounds);
+            var textX = (float)node.X;
+            var textY = (float)(node.Y - 20 - 3);
+
+            canvas.DrawText(text, textX, textY, textPaint);
+        }
     }
 }

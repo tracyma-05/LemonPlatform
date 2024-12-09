@@ -16,7 +16,6 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
         private bool _reInit;
         private Dictionary<int, HashSet<int>> _path;
         private List<LemonSKPoint> _pathPoint = new List<LemonSKPoint>();
-
         public override bool ReInit
         {
             get => _reInit;
