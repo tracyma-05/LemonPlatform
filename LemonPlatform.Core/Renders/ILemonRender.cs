@@ -8,5 +8,6 @@ namespace LemonPlatform.Core.Renders
         void PaintSurface(SKSurface surface, SKImageInfo info);
         event EventHandler RefreshRequested;
         bool ReInit { get; set; }
+        int Delay { get; set; }
     }
 }

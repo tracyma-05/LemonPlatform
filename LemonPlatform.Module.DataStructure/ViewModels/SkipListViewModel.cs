@@ -11,7 +11,9 @@ namespace LemonPlatform.Module.DataStructure.ViewModels
     {
         public SkipListViewModel(SkipListRender render)
         {
+            Delay = 1000;
             Render = render;
+            Render.Delay = Delay;
         }
 
         [ObservableProperty]

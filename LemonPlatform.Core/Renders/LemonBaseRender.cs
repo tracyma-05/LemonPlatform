@@ -55,5 +55,6 @@ namespace LemonPlatform.Core.Renders
         public abstract ICollection<int> Keys { get; set; }
 
         public abstract bool ReInit { get; set; }
+        public abstract int Delay { get; set; }
     }
 }

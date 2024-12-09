@@ -13,9 +13,10 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
     {
         public override event EventHandler RefreshRequested;
         public override ICollection<int> Keys { get; set; } = new HashSet<int>();
-        private bool _reInit;
         private Dictionary<int, HashSet<int>> _path;
         private List<LemonSKPoint> _pathPoint = new List<LemonSKPoint>();
+
+        private bool _reInit;
         public override bool ReInit
         {
             get => _reInit;
@@ -23,6 +24,18 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
             {
                 if (_reInit == value) return;
                 _reInit = value;
+                RefreshRequested?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private int _delay;
+        public override int Delay
+        {
+            get => _delay;
+            set
+            {
+                if (_delay == value) return;
+                _delay = value;
                 RefreshRequested?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -66,7 +79,7 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
             int index = 0;
             var animationTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(1000)
+                Interval = TimeSpan.FromMilliseconds(Delay)
             };
 
             animationTimer.Tick += (s, e) =>
