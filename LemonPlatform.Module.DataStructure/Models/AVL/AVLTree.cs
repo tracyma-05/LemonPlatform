@@ -1,4 +1,6 @@
-﻿namespace LemonPlatform.Module.DataStructure.Models.AVL
+﻿using SkiaSharp;
+
+namespace LemonPlatform.Module.DataStructure.Models.AVL
 {
     public class AVLTree<TKey, TValue> where TKey : IComparable<TKey>
     {
