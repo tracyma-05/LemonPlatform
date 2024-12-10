@@ -180,18 +180,18 @@ namespace LemonPlatform.Module.DataStructure.Models.AVL
             {
                 if (isDebug)
                 {
-                    UpdateColor(node, SKColors.Brown);
+                    UpdateColor(node.Left, SKColors.Brown);
                     eventHandler.Invoke(this, EventArgs.Empty);
                     await Task.Delay(delay);
                 }
 
                 DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - LR");
-                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - Left Rotate");
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Left.Key} - Left Rotate");
 
                 node.Left = LeftRotate(node.Left);
                 if (isDebug)
                 {
-                    UpdateColor(node, SKColors.Green);
+                    UpdateColor(node.Left, SKColors.Green);
                     eventHandler.Invoke(this, EventArgs.Empty);
                     await Task.Delay(delay);
                 }
@@ -213,18 +213,18 @@ namespace LemonPlatform.Module.DataStructure.Models.AVL
             {
                 if (isDebug)
                 {
-                    UpdateColor(node, SKColors.Brown);
+                    UpdateColor(node.Right, SKColors.Brown);
                     eventHandler.Invoke(this, EventArgs.Empty);
                     await Task.Delay(delay);
                 }
 
                 DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - RL");
-                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - Right Rotate");
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Right.Key} - Right Rotate");
 
                 node.Right = RightRotate(node.Right);
                 if (isDebug)
                 {
-                    UpdateColor(node, SKColors.Green);
+                    UpdateColor(node.Right, SKColors.Green);
                     eventHandler.Invoke(this, EventArgs.Empty);
                     await Task.Delay(delay);
                 }

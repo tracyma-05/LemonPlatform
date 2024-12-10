@@ -11,8 +11,6 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
     {
         public override event EventHandler RefreshRequested;
         public override ICollection<int> Keys { get; set; } = new HashSet<int>();
-        private Dictionary<int, HashSet<int>> _path;
-        private List<LemonSKPoint> _pathPoint = new List<LemonSKPoint>();
 
         #region properties
 
@@ -56,9 +54,8 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
 
         public override async void Add(int key)
         {
-            await CoreData.Add(key, 0, Delay, IsDebug, RefreshRequested);
             Keys.Add(key);
-
+            await CoreData.Add(key, 0, Delay, IsDebug, RefreshRequested);
             RefreshRequested?.Invoke(this, EventArgs.Empty);
         }
 
@@ -196,9 +193,8 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
 
         public override void Remove(int key)
         {
-            CoreData.Remove(key);
             Keys.Remove(key);
-
+            CoreData.Remove(key);
             RefreshRequested?.Invoke(this, EventArgs.Empty);
         }
     }
