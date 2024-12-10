@@ -1,12 +1,47 @@
 ﻿<Page x:Class="LemonPlatform.Module.Algorithm.Views.SelectionSortView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:LemonPlatform.Module.Algorithm.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LemonPlatform.Module.Algorithm.Views"
+      xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+      mc:Ignorable="d" 
+      d:DesignHeight="450"
+      d:DesignWidth="800">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <GroupBox Header="Configuration" Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Count: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBox Width="40" Height="30" Margin="10" Text="{Binding Count,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Bound: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBox Width="40" Height="30" Margin="10" Text="{Binding Bound,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Delay: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBox Width="40" Height="30" Margin="10" Text="{Binding Delay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Data Type: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <ComboBox Width="120" Margin="10" Height="30"
+                          ItemsSource="{Binding DataTypes}"
+                          SelectedItem="{Binding SelectDataTypeItem, Mode = TwoWay, UpdateSourceTrigger = PropertyChanged}">
+                    </ComboBox>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Command" Margin="5">
+                <Button Command="{Binding RunCommand}" Width="80" Content="Run" Height="30" Margin="10"/>
+            </GroupBox>
+
+        </StackPanel>
+        <lvc:CartesianChart
+            Grid.Row="1"
+            Series="{Binding Series,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            YAxes="{Binding Y,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+        </lvc:CartesianChart>
     </Grid>
 </Page>

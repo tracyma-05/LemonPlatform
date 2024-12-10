@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace LemonPlatform.Module.Algorithm.Views
 {
-    public partial class SelectionSortView : Page, ISingletonDependency
+    public partial class SelectionSortView : Page, ITransientDependency
     {
         public SelectionSortView()
         {
