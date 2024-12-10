@@ -56,5 +56,6 @@ namespace LemonPlatform.Core.Renders
 
         public abstract bool ReInit { get; set; }
         public abstract int Delay { get; set; }
+        public abstract bool IsDebug { get; set; }
     }
 }

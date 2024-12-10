@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LemonPlatform.Module.DataStructure.Views"
       xmlns:controls="clr-namespace:LemonPlatform.Core.Controls;assembly=LemonPlatform.Core"
+      xmlns:converters="clr-namespace:LemonPlatform.Core.Converters;assembly=LemonPlatform.Core"
       mc:Ignorable="d" 
       Loaded="Page_Loaded"
       d:DesignHeight="450" 
@@ -19,6 +20,9 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Delay: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <TextBox Width="40" Height="30" Margin="10" Text="{Binding Delay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="IsDebug: " Margin="10 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IsDebug,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </GroupBox>
 
@@ -43,7 +47,10 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <GroupBox Header="Raw Data" Grid.Row="0" Margin="3">
+                <GroupBox Header="Raw Data"
+                          Grid.Row="0"
+                          MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.5-5}"
+                          Margin="3">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="4*"/>
@@ -63,12 +70,16 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Header="Response" Grid.Row="1" Margin="3">
+                <GroupBox 
+                    Header="Response"
+                    MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.5-5}"
+                    Grid.Row="1"
+                    Margin="3">
                     <TextBox 
                         Text="{Binding Response}" 
                         TextWrapping="Wrap" 
                         AcceptsReturn="True"
-                        AcceptsTab="True"
+                        AcceptsTab="True" 
                         HorizontalScrollBarVisibility="Auto"
                         VerticalScrollBarVisibility="Auto" 
                         VerticalContentAlignment="Top"/>

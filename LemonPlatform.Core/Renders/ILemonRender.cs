@@ -9,5 +9,6 @@ namespace LemonPlatform.Core.Renders
         event EventHandler RefreshRequested;
         bool ReInit { get; set; }
         int Delay { get; set; }
+        bool IsDebug { get; set; }
     }
 }

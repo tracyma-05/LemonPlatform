@@ -14,6 +14,8 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
         private Dictionary<int, HashSet<int>> _path;
         private List<LemonSKPoint> _pathPoint = new List<LemonSKPoint>();
 
+        #region properties
+
         private bool _reInit;
         public override bool ReInit
         {
@@ -38,9 +40,23 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
             }
         }
 
-        public override void Add(int key)
+        private bool _isDebug;
+        public override bool IsDebug
         {
-            CoreData.Add(key, 0);
+            get => _isDebug;
+            set
+            {
+                if (_isDebug == value) return;
+                _isDebug = value;
+                RefreshRequested?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        #endregion
+
+        public override async void Add(int key)
+        {
+            await CoreData.Add(key, 0, Delay, IsDebug, RefreshRequested);
             Keys.Add(key);
 
             RefreshRequested?.Invoke(this, EventArgs.Empty);
@@ -65,7 +81,7 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
                     Y = node.Y,
                     Key = node.Key,
                     Height = node.Height,
-                    CircleColor = SKColors.Blue,
+                    CircleColor = node.CircleSKColor,
                     LineColor = SKColors.Gray,
                     TextColor = SKColors.White,
                     HeightColor = SKColors.Blue
@@ -82,7 +98,7 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
                         Y = node.Left.Y,
                         Key = node.Left.Key,
                         Height = node.Left.Height,
-                        CircleColor = SKColors.Blue,
+                        CircleColor = node.Left.CircleSKColor,
                         LineColor = SKColors.Gray,
                         TextColor = SKColors.White,
                     };
@@ -99,7 +115,7 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
                         Y = node.Right.Y,
                         Key = node.Right.Key,
                         Height = node.Right.Height,
-                        CircleColor = SKColors.Blue,
+                        CircleColor = node.Right.CircleSKColor,
                         LineColor = SKColors.Gray,
                         TextColor = SKColors.White,
                     };
@@ -150,14 +166,14 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
             }
         }
 
-        public override void InitRawData()
+        public override async void InitRawData()
         {
             if (ReInit && Keys.Any())
             {
                 CoreData = new AVLTree<int, int>();
                 foreach (var item in Keys)
                 {
-                    CoreData.Add(item, 0);
+                    await CoreData.Add(item, 0, Delay, IsDebug, RefreshRequested);
                 }
 
                 ReInit = false;
@@ -167,7 +183,7 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
                 for (var i = 0; i < InitCount; i++)
                 {
                     var random = Random.Next(RangeMin, RangeMax);
-                    CoreData.Add(random, 0);
+                    await CoreData.Add(random, 0, Delay, IsDebug, RefreshRequested);
                     Keys.Add(random);
                 }
             }

@@ -1,10 +1,13 @@
-﻿namespace LemonPlatform.Module.DataStructure.Models.AVL
+﻿using SkiaSharp;
+
+namespace LemonPlatform.Module.DataStructure.Models.AVL
 {
     public class AVLNode<TKey, TValue> where TKey : IComparable<TKey>
     {
         public TKey Key { get; set; }
 
         public TValue Value { get; set; }
+        public SKColor CircleSKColor { get; set; } = SKColors.Blue;
 
         public AVLNode<TKey, TValue>? Left { get; set; }
 

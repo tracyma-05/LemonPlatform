@@ -1,4 +1,6 @@
-﻿using SkiaSharp;
+﻿using LemonPlatform.Module.DataStructure.Helpers;
+using LemonPlatform.Module.DataStructure.Messages;
+using SkiaSharp;
 
 namespace LemonPlatform.Module.DataStructure.Models.AVL
 {
@@ -63,12 +65,34 @@ namespace LemonPlatform.Module.DataStructure.Models.AVL
             return x;
         }
 
-        public void Add(TKey key, TValue value)
+        public async Task Add(TKey key, TValue value, int delay, bool isDebug, EventHandler eventHandler)
         {
-            _root = Add(_root, key, value);
+            _root = await Add(_root, key, value, delay, isDebug, eventHandler);
         }
 
-        private AVLNode<TKey, TValue> Add(AVLNode<TKey, TValue>? node, TKey key, TValue value)
+        private void UpdateColor(AVLNode<TKey, TValue>? nodeRoot, SKColor color)
+        {
+            var queue = new Queue<AVLNode<TKey, TValue>>();
+            nodeRoot.CircleSKColor = color;
+            queue.Enqueue(nodeRoot);
+            while (queue.Count > 0)
+            {
+                var node = queue.Dequeue();
+                if (node.Left != null)
+                {
+                    node.Left.CircleSKColor = color;
+                    queue.Enqueue(node.Left);
+                }
+
+                if (node.Right != null)
+                {
+                    node.Right.CircleSKColor = color;
+                    queue.Enqueue(node.Right);
+                }
+            }
+        }
+
+        private async Task<AVLNode<TKey, TValue>> Add(AVLNode<TKey, TValue>? node, TKey key, TValue value, int delay, bool isDebug, EventHandler eventHandler)
         {
             if (node == null)
             {
@@ -76,46 +100,145 @@ namespace LemonPlatform.Module.DataStructure.Models.AVL
                 return new AVLNode<TKey, TValue>(key, value);
             }
 
+            DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - Add Key {key}");
+            UpdateColor(node, SKColors.Blue);
+
+            if (isDebug)
+            {
+                node.CircleSKColor = SKColors.Red;
+                eventHandler.Invoke(this, EventArgs.Empty);
+                await Task.Delay(delay);
+            }
+
             if (key.CompareTo(node.Key) < 0)
             {
-                node.Left = Add(node.Left, key, value);
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - Add Left");
+                node.Left = await Add(node.Left, key, value, delay, isDebug, eventHandler);
             }
             else if (key.CompareTo(node.Key) > 0)
             {
-                node.Right = Add(node.Right, key, value);
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - Add Right");
+                node.Right = await Add(node.Right, key, value, delay, isDebug, eventHandler);
             }
             else
             {
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - Update Value");
                 node.Value = value;
             }
 
+            node.CircleSKColor = SKColors.Blue;
             node.Height = Math.Max(GetHeight(node.Left), GetHeight(node.Right)) + 1;
             var balanceFactor = GetBalanceFactor(node);
 
             // LL
             if (balanceFactor > 1 && GetBalanceFactor(node.Left) >= 0)
             {
-                return RightRotate(node);
+                if (isDebug)
+                {
+                    UpdateColor(node, SKColors.Brown);
+                    eventHandler.Invoke(this, EventArgs.Empty);
+                    await Task.Delay(delay);
+                }
+
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - LL");
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - Right Rotate");
+                var result = RightRotate(node);
+                if (isDebug)
+                {
+                    UpdateColor(node, SKColors.Green);
+                    eventHandler.Invoke(this, EventArgs.Empty);
+                    await Task.Delay(delay);
+                }
+
+                return result;
             }
 
             // RR
             if (balanceFactor < -1 && GetBalanceFactor(node.Right) <= 0)
             {
-                return LeftRotate(node);
+                if (isDebug)
+                {
+                    UpdateColor(node, SKColors.Brown);
+                    eventHandler.Invoke(this, EventArgs.Empty);
+                    await Task.Delay(delay);
+                }
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - RR");
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - Left Rotate");
+                var result = LeftRotate(node);
+                if (isDebug)
+                {
+                    UpdateColor(node, SKColors.Green);
+                    eventHandler.Invoke(this, EventArgs.Empty);
+                    await Task.Delay(delay);
+                }
+
+                return result;
             }
 
             // LR
             if (balanceFactor > 1 && GetBalanceFactor(node.Left) < 0)
             {
+                if (isDebug)
+                {
+                    UpdateColor(node, SKColors.Brown);
+                    eventHandler.Invoke(this, EventArgs.Empty);
+                    await Task.Delay(delay);
+                }
+
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - LR");
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - Left Rotate");
+
                 node.Left = LeftRotate(node.Left);
-                return RightRotate(node);
+                if (isDebug)
+                {
+                    UpdateColor(node, SKColors.Green);
+                    eventHandler.Invoke(this, EventArgs.Empty);
+                    await Task.Delay(delay);
+                }
+
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - Right Rotate");
+                var result = RightRotate(node);
+                if (isDebug)
+                {
+                    UpdateColor(node, SKColors.Yellow);
+                    eventHandler.Invoke(this, EventArgs.Empty);
+                    await Task.Delay(delay);
+                }
+
+                return result;
             }
 
             // RL
             if (balanceFactor < -1 && GetBalanceFactor(node.Right) > 0)
             {
+                if (isDebug)
+                {
+                    UpdateColor(node, SKColors.Brown);
+                    eventHandler.Invoke(this, EventArgs.Empty);
+                    await Task.Delay(delay);
+                }
+
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - RL");
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - Right Rotate");
+
                 node.Right = RightRotate(node.Right);
-                return LeftRotate(node);
+                if (isDebug)
+                {
+                    UpdateColor(node, SKColors.Green);
+                    eventHandler.Invoke(this, EventArgs.Empty);
+                    await Task.Delay(delay);
+                }
+
+                DataMessageHelper.SendMessage(RenderType.AVLTree, $"{node.Key} - Left Rotate");
+                var result = LeftRotate(node);
+                if (isDebug)
+                {
+                    UpdateColor(node, SKColors.Yellow);
+                    eventHandler.Invoke(this, EventArgs.Empty);
+                    await Task.Delay(delay);
+                }
+
+                return result;
             }
 
             return node;

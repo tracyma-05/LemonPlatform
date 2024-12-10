@@ -16,6 +16,8 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
         private Dictionary<int, HashSet<int>> _path;
         private List<LemonSKPoint> _pathPoint = new List<LemonSKPoint>();
 
+        #region properties
+
         private bool _reInit;
         public override bool ReInit
         {
@@ -39,6 +41,20 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
                 RefreshRequested?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        private bool _isDebug;
+        public override bool IsDebug
+        {
+            get => _isDebug;
+            set
+            {
+                if (_isDebug == value) return;
+                _isDebug = value;
+                RefreshRequested?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        #endregion
 
         public override void Add(int key)
         {
