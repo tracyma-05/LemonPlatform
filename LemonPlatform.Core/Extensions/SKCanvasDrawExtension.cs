@@ -89,5 +89,11 @@ namespace LemonPlatform.Core.Extensions
 
             canvas.DrawText(text, textX, textY, textPaint);
         }
+
+        public static void PutImage(this SKCanvas canvas, int x, int y, string imageUrl)
+        {
+            using var bitMap = SKBitmap.Decode(imageUrl);
+            canvas.DrawBitmap(bitMap, x, y);
+        }
     }
 }
