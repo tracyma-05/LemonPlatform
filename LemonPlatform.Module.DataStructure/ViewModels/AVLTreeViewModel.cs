@@ -49,6 +49,7 @@ namespace LemonPlatform.Module.DataStructure.ViewModels
         {
             Response = $"Add Step:{Environment.NewLine}";
             Render.Add(Key);
+            Render.Keys.Add(Key);
             UpdateInput();
         }
 
@@ -57,6 +58,7 @@ namespace LemonPlatform.Module.DataStructure.ViewModels
         {
             Response = $"Remove Step:{Environment.NewLine}";
             Render.Remove(Key);
+            Render.Keys.Remove(Key);
             UpdateInput();
         }
 
