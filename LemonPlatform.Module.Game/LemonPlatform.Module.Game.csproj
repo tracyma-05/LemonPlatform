@@ -21,40 +21,40 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="Resources\0.png">
+	  <None Update="MineSweepers\Resources\0.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Resources\1.png">
+	  <None Update="MineSweepers\Resources\1.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Resources\2.png">
+	  <None Update="MineSweepers\Resources\2.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Resources\3.png">
+	  <None Update="MineSweepers\Resources\3.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Resources\4.png">
+	  <None Update="MineSweepers\Resources\4.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Resources\5.png">
+	  <None Update="MineSweepers\Resources\5.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Resources\6.png">
+	  <None Update="MineSweepers\Resources\6.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Resources\7.png">
+	  <None Update="MineSweepers\Resources\7.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Resources\8.png">
+	  <None Update="MineSweepers\Resources\8.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Resources\block.png">
+	  <None Update="MineSweepers\Resources\block.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Resources\flag.png">
+	  <None Update="MineSweepers\Resources\flag.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Resources\mine.png">
+	  <None Update="MineSweepers\Resources\mine.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>

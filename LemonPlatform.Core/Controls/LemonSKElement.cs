@@ -21,28 +21,14 @@ namespace LemonPlatform.Core.Controls
         public static readonly DependencyProperty RenderProperty =
             DependencyProperty.Register("Render", typeof(ILemonRender), typeof(LemonSKElement), new PropertyMetadata(RenderChanged));
 
-        private static LemonSKElement? _dataStructureSKElement;
         private static void RenderChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is LemonSKElement)
+            var element = d as LemonSKElement;
+            if (e.NewValue != null)
             {
-                _dataStructureSKElement = (LemonSKElement)d;
+                var render = e.NewValue as ILemonRender;
+                render.RefreshRequested += (s, e) => element?.InvalidateVisual();
             }
-
-            if (e.OldValue != null && e.OldValue is ILemonRender oldRender)
-            {
-                oldRender.RefreshRequested -= RenderRefreshRequest;
-            }
-
-            if (e.NewValue != null && e.NewValue is ILemonRender newRender)
-            {
-                newRender.RefreshRequested += RenderRefreshRequest;
-            }
-        }
-
-        private static void RenderRefreshRequest(object? sender, EventArgs e)
-        {
-            _dataStructureSKElement?.InvalidateVisual();
         }
     }
 }

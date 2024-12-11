@@ -1,8 +1,8 @@
-﻿using LemonPlatform.Core.Enums;
+﻿using LemonPlatform.Core;
+using LemonPlatform.Core.Enums;
 using LemonPlatform.Core.Models;
-using LemonPlatform.Core;
-using Microsoft.Extensions.DependencyInjection;
 using LemonPlatform.Module.Game.Views;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LemonPlatform.Module.Game
 {
@@ -13,6 +13,7 @@ namespace LemonPlatform.Module.Game
             return new List<PluginItem>
             {
                 new PluginItem("Mine Sweeper", typeof(MineSweeperView), "Mine", "#052E24", "mine sweeper", PluginType.Games),
+                new PluginItem("Puzzle", typeof(APuzzleADayView), "Puzzle", "#052E24", "a puzzle a day", PluginType.Games),
             };
         }
 

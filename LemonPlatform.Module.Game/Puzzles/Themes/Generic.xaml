@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/LemonPlatform.Module.Game;component/Puzzles/Themes/Internal/PuzzlePanel.xaml"/>
+        <ResourceDictionary Source="/LemonPlatform.Module.Game;component/Puzzles/Themes/Internal/CalendarBox.xaml"/>
+        <ResourceDictionary Source="/LemonPlatform.Module.Game;component/Puzzles/Themes/Internal/CalendarBoxItem.xaml"/>
+        <ResourceDictionary Source="/LemonPlatform.Module.Game;component/Puzzles/Themes/Internal/DayOfWeek.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

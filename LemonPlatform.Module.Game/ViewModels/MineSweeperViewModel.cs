@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using LemonPlatform.Core.Extensions;
 using LemonPlatform.Core.Infrastructures.Denpendency;
-using LemonPlatform.Module.Game.Data;
+using LemonPlatform.Module.Game.MineSweepers.Data;
 using SkiaSharp;
 using System.Windows;
 using System.Windows.Input;

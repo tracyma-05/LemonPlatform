@@ -3,11 +3,11 @@ using LemonPlatform.Core.Helpers;
 using System.IO;
 using System.Reflection;
 
-namespace LemonPlatform.Module.Game.Data
+namespace LemonPlatform.Module.Game.MineSweepers.Data
 {
     public class MineSweeperData
     {
-        private static string _imageUrlBase = $"{AssemblyDirectory}\\Resources";
+        private static string _imageUrlBase = $"{AssemblyDirectory}\\MineSweepers\\Resources";
         public static string BlockImageUrl = $"{_imageUrlBase}\\block.png";
         public static string FlagImageUrl = $"{_imageUrlBase}\\flag.png";
         public static string MineImageUrl = $"{_imageUrlBase}\\mine.png";
