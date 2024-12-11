@@ -47,9 +47,9 @@ namespace LemonPlatform.Core.Renders
         /// <param name="canvas"></param>
         public abstract void DrawInCanvas(SKCanvas canvas, SKImageInfo info);
 
-        public abstract void Add(int key);
-        public abstract void Remove(int key);
-        public abstract bool Contains(int key);
+        public abstract Task AddAsync(int key);
+        public abstract Task RemoveAsync(int key);
+        public abstract Task<bool> Contains(int key);
         public abstract bool IsEmpty();
 
         public abstract ICollection<int> Keys { get; set; }

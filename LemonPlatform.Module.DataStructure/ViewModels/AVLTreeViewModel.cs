@@ -47,28 +47,28 @@ namespace LemonPlatform.Module.DataStructure.ViewModels
         #region Command
 
         [RelayCommand]
-        private void Add()
+        private async Task Add(CancellationToken token)
         {
             Response = $"Add Step:{Environment.NewLine}";
-            Render.Add(Key);
+            await Render.AddAsync(Key);
             Render.Keys.Add(Key);
             UpdateInput();
         }
 
         [RelayCommand]
-        private void Remove()
+        private async Task Remove(CancellationToken token)
         {
             Response = $"Remove Step:{Environment.NewLine}";
-            Render.Remove(Key);
+            await Render.RemoveAsync(Key);
             Render.Keys.Remove(Key);
             UpdateInput();
         }
 
         [RelayCommand]
-        private void Find()
+        private async Task Find(CancellationToken token)
         {
             Response = $"Find Step:{Environment.NewLine}";
-            var result = Render.Contains(Key);
+            var result = await Render.Contains(Key);
             Response += $"Is {Key} exist: {result.ToString()}{Environment.NewLine}";
         }
 
@@ -83,65 +83,65 @@ namespace LemonPlatform.Module.DataStructure.ViewModels
         }
 
         [RelayCommand]
-        private void LL()
+        private async Task LL(CancellationToken token)
         {
             Input = "10";
             LoadCommand.Execute(null);
 
             IsDebug = true;
             Key = 9;
-            AddCommand.Execute(Key);
+            await AddCommand.ExecuteAsync(Key);
 
             Key = 8;
-            AddCommand.Execute(Key);
+            await AddCommand.ExecuteAsync(Key);
             Input = "10,9,8";
             IsDebug = false;
         }
 
         [RelayCommand]
-        private void RR()
+        private async Task RR(CancellationToken token)
         {
             Input = "8";
             LoadCommand.Execute(null);
 
             IsDebug = true;
             Key = 9;
-            AddCommand.Execute(Key);
+            await AddCommand.ExecuteAsync(Key);
 
             Key = 10;
-            AddCommand.Execute(Key);
+            await AddCommand.ExecuteAsync(Key);
             Input = "8,9,10";
             IsDebug = false;
         }
 
         [RelayCommand]
-        private void LR()
+        private async Task LR(CancellationToken token)
         {
             Input = "15";
             LoadCommand.Execute(null);
 
             IsDebug = true;
             Key = 9;
-            AddCommand.Execute(Key);
+            await AddCommand.ExecuteAsync(Key);
 
             Key = 10;
-            AddCommand.Execute(Key);
+            await AddCommand.ExecuteAsync(Key);
             Input = "15,9,10";
             IsDebug = false;
         }
 
         [RelayCommand]
-        private void RL()
+        private async Task RL(CancellationToken token)
         {
             Input = "10";
             LoadCommand.Execute(null);
 
             IsDebug = true;
             Key = 15;
-            AddCommand.Execute(Key);
+            await AddCommand.ExecuteAsync(Key);
 
             Key = 11;
-            AddCommand.Execute(Key);
+            await AddCommand.ExecuteAsync(Key);
             Input = "10,15,11";
             IsDebug = false;
         }

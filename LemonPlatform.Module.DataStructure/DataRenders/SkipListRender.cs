@@ -56,10 +56,11 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
 
         #endregion
 
-        public override void Add(int key)
+        public override async Task AddAsync(int key)
         {
-            CoreData.Add(key);
+            await Task.Delay(Delay);
             Keys.Add(key);
+            CoreData.Add(key);
 
             _path = CoreData.Paths["Add"];
             RefreshRequested?.Invoke(this, EventArgs.Empty);
@@ -67,10 +68,11 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
             StartBallAnimation();
         }
 
-        public override void Remove(int key)
+        public override async Task RemoveAsync(int key)
         {
-            CoreData.Remove(key, out int deleted);
+            await Task.Delay(Delay);
             Keys.Remove(key);
+            CoreData.Remove(key, out int deleted);
 
             _path = CoreData.Paths["Remove"];
             RefreshRequested?.Invoke(this, EventArgs.Empty);
@@ -78,8 +80,9 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
             StartBallAnimation();
         }
 
-        public override bool Contains(int key)
+        public override async Task<bool> Contains(int key)
         {
+            await Task.Delay(Delay);
             var result = CoreData.Find(key, out var data);
             _path = CoreData.Paths["Find"];
 

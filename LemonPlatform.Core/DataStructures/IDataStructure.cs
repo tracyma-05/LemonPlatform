@@ -2,13 +2,13 @@
 {
     public interface IDataStructure
     {
-        void Add(int key);
+        Task AddAsync(int key);
 
-        void Remove(int key);
+        Task RemoveAsync(int key);
 
         bool IsEmpty();
 
-        bool Contains(int key);
+        Task<bool> Contains(int key);
 
         ICollection<int> Keys { get; set; }
     }

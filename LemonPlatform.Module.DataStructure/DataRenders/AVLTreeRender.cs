@@ -52,16 +52,16 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
 
         #endregion
 
-        public override async void Add(int key)
+        public override async Task AddAsync(int key)
         {
             Keys.Add(key);
             await CoreData.Add(key, 0, Delay, IsDebug, RefreshRequested);
             RefreshRequested?.Invoke(this, EventArgs.Empty);
         }
 
-        public override bool Contains(int key)
+        public override async Task<bool> Contains(int key)
         {
-            return CoreData.Contains(key);
+            return await CoreData.Contains(key);
         }
 
         public override void DrawInCanvas(SKCanvas canvas, SKImageInfo info)
@@ -191,10 +191,10 @@ namespace LemonPlatform.Module.DataStructure.DataRenders
             return CoreData.IsEmpty;
         }
 
-        public override void Remove(int key)
+        public override async Task RemoveAsync(int key)
         {
             Keys.Remove(key);
-            CoreData.Remove(key);
+            await CoreData.Remove(key, Delay, IsDebug, RefreshRequested);
             RefreshRequested?.Invoke(this, EventArgs.Empty);
         }
     }

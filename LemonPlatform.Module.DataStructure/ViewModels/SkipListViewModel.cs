@@ -32,26 +32,26 @@ namespace LemonPlatform.Module.DataStructure.ViewModels
         private string _response;
 
         [RelayCommand]
-        private void Add()
+        private async Task Add(CancellationToken token)
         {
             Response = $"Add Step:{Environment.NewLine}";
-            Render.Add(Key);
+            await Render.AddAsync(Key);
             UpdateInput();
         }
 
         [RelayCommand]
-        private void Remove()
+        private async Task Remove(CancellationToken token)
         {
             Response = $"Remove Step:{Environment.NewLine}";
-            Render.Remove(Key);
+            await Render.RemoveAsync(Key);
             UpdateInput();
         }
 
         [RelayCommand]
-        private void Find()
+        private async Task Find(CancellationToken token)
         {
             Response = $"Find Step:{Environment.NewLine}";
-            var result = Render.Contains(Key);
+            var result = await Render.Contains(Key);
             Response += $"Is {Key} exist: {result.ToString()}{Environment.NewLine}";
         }
 
