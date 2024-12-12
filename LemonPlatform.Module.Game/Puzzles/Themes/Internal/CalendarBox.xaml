@@ -4,7 +4,6 @@
     xmlns:local="clr-namespace:LemonPlatform.Module.Game.Puzzles.Controls">
 
     <Style TargetType="{x:Type local:CalendarBox}">
-        <Setter Property="SelectedValuePath" Value="DateFormat"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CalendarBox}">

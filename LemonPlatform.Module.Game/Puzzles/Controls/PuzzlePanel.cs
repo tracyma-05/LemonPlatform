@@ -31,14 +31,14 @@ namespace LemonPlatform.Module.Game.Puzzles.Controls
             GenerateCalendar(SelectedDate ?? DateTime.Now);
         }
 
-        public IList<PuzzleItem>  PuzzleItems
+        public IList<PuzzleItem> PuzzleItems
         {
             get { return (IList<PuzzleItem>)GetValue(PuzzleItemsProperty); }
             set { SetValue(PuzzleItemsProperty, value); }
         }
 
         public static readonly DependencyProperty PuzzleItemsProperty =
-            DependencyProperty.Register("PuzzleItems", typeof(int), typeof(PuzzlePanel), new PropertyMetadata(null));
+            DependencyProperty.Register("PuzzleItems", typeof(IList<PuzzleItem>), typeof(PuzzlePanel), new PropertyMetadata(OnSelectedDateChanged));
 
 
         private CalendarBox _calendarBox;
@@ -52,7 +52,7 @@ namespace LemonPlatform.Module.Game.Puzzles.Controls
 
         private void GenerateCalendar(DateTime current)
         {
-            if (PuzzleItems == null || !PuzzleItems.Any()) return;
+            if (PuzzleItems == null || !PuzzleItems.Any() || _calendarBox == null) return;
 
             _calendarBox.Items.Clear();
             foreach (var item in PuzzleItems)
@@ -63,34 +63,9 @@ namespace LemonPlatform.Module.Game.Puzzles.Controls
                 {
                     boxItem.Content = item.Content;
                 }
+
+                _calendarBox.Items.Add(boxItem);
             }
-
-            //_calendarBox.Items.Clear();
-
-            //var fDayOfMonth = new DateTime(current.Year, current.Month, 1);
-            //var lDayOfMonth = fDayOfMonth.AddMonths(1).AddDays(-1);
-
-            //var fOffset = (int)fDayOfMonth.DayOfWeek;
-            //var lOffset = 6 - (int)lDayOfMonth.DayOfWeek;
-
-            //var fDay = fDayOfMonth.AddDays(-fOffset);
-            //var lDay = lDayOfMonth.AddDays(lOffset);
-
-            //for (DateTime day = fDay; day <= lDay; day = day.AddDays(1))
-            //{
-            //    var boxItem = new CalendarBoxItem();
-            //    boxItem.Date = day;
-            //    boxItem.DateFormat = day.ToString("yyyyMMdd");
-            //    boxItem.Content = day.Day;
-            //    boxItem.IsCurrentMonth = day.Month == current.Month;
-
-            //    _calendarBox.Items.Add(boxItem);
-            //}
-
-            //if (SelectedDate != null)
-            //{
-            //    _calendarBox.SelectedValue = SelectedDate.Value.ToString("yyyyMMdd");
-            //}
         }
     }
 }

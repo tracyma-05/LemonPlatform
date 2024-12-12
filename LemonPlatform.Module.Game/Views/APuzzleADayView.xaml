@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="15" Grid.Row="0">
             <TextBlock Text="Select Date:" TextAlignment="Center" VerticalAlignment="Center" FontSize="12" FontFamily="Segoe UI Black" Margin="10 0"/>
-            <DatePicker Name="datePicker"/>
+            <DatePicker Name="datePicker" SelectedDate="{Binding SelectedDate}"/>
 
             <Separator BorderBrush="Gray" BorderThickness="1" Margin="10 0">
                 <Separator.LayoutTransform>
@@ -36,7 +36,7 @@
             </Button>
         </StackPanel>
         <Border Margin="20" Grid.Row="1" BorderBrush="Gray" BorderThickness="2" >
-            <controls:PuzzlePanel SelectedDate="{Binding ElementName=datePicker,Path=SelectedDate}"/>
+            <controls:PuzzlePanel SelectedDate="{Binding ElementName=datePicker,Path=SelectedDate}" PuzzleItems="{Binding PuzzleItems}"/>
         </Border>
         <Grid Grid.Row="2" Margin="10" >
             <Grid.ColumnDefinitions>
