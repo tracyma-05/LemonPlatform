@@ -90,7 +90,7 @@ namespace LemonPlatform.Module.Game.ViewModels
 
                 if (needMark.Contains(item))
                 {
-                    puzzle.Background = Brushes.Green;
+                    puzzle.Background = Brushes.LightGray;
                 }
 
                 result.Add(puzzle);

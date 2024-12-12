@@ -7,6 +7,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
 		<EnableDynamicLoading>true</EnableDynamicLoading>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<OutputPath>$(SolutionDir)LemonPlatform.Wpf/bin/$(Configuration)/$(TargetFramework)/modules/$(AssemblyName)</OutputPath>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>

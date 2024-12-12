@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:LemonPlatform.Module.Game.Puzzles.Controls">
 
     <Style TargetType="{x:Type local:PuzzlePanel}">
-        <Setter Property="Background" Value="#151515"/>
+        <Setter Property="Background" Value="{DynamicResource MaterialDesignCardBackground}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:PuzzlePanel}">

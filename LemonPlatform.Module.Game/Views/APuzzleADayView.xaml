@@ -35,9 +35,7 @@
                 <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Button>
         </StackPanel>
-        <Border Margin="20" Grid.Row="1" BorderBrush="Gray" BorderThickness="2" >
-            <controls:PuzzlePanel SelectedDate="{Binding ElementName=datePicker,Path=SelectedDate}" PuzzleItems="{Binding PuzzleItems}"/>
-        </Border>
+        <controls:PuzzlePanel Grid.Row="1" SelectedDate="{Binding ElementName=datePicker,Path=SelectedDate}" PuzzleItems="{Binding PuzzleItems}"/>
         <Grid Grid.Row="2" Margin="10" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
