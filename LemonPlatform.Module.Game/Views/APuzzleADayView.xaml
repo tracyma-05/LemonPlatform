@@ -31,9 +31,8 @@
 
             <TextBlock Text="Select Puzzle:" TextAlignment="Center" VerticalAlignment="Center" FontSize="12" FontFamily="Segoe UI Black" Margin="10 0"/>
             <ComboBox ItemsSource="{Binding PuzzleTypes}" SelectedItem="{Binding SelectPuzzleTypeItem}"/>
-            <Button Margin="10 0 0 0" Command="{Binding SearchCommand}">
-                <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Button>
+            <Button Margin="10 0 0 0" Command="{Binding SearchOneCommand}" Content="Search One"/>
+            <Button Margin="10 0 0 0" Command="{Binding SearchAllCommand}" Content="Search All"/>
         </StackPanel>
         <controls:PuzzlePanel
             Grid.Row="1" 

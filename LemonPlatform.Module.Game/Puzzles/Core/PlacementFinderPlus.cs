@@ -3,21 +3,20 @@ using LemonPlatform.Module.Game.Puzzles.Core.Desks;
 using LemonPlatform.Module.Game.Puzzles.Core.Figures;
 using LemonPlatform.Module.Game.Puzzles.Helpers;
 using LemonPlatform.Module.Game.Puzzles.Models;
-using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace LemonPlatform.Module.Game.Puzzles.Core
 {
     public static class PlacementFinderPlus
     {
-        public static async Task<List<ulong[]>> FindAllAsync(DateTime dateTime, PuzzleType puzzleType)
+        public static async Task<List<ulong[]>> FindAllAsync(DateTime dateTime, PuzzleType puzzleType, int count = -1)
         {
-            return await Task.Run(() => FindAll(dateTime, puzzleType));
+            return await Task.Run(() => FindAll(dateTime, puzzleType, count));
         }
 
         /// <summary>
         /// Finds all suitable placements of pieces on the board (brute force)
         /// </summary>
-        public static unsafe List<ulong[]> FindAll(DateTime dateTime, PuzzleType puzzleType)
+        public static unsafe List<ulong[]> FindAll(DateTime dateTime, PuzzleType puzzleType, int count = -1)
         {
             // create a board with occupied cells
             var markedPoints = DateHelper.GetDateMarkedPoints(dateTime, puzzleType);
@@ -43,7 +42,7 @@ namespace LemonPlatform.Module.Game.Puzzles.Core
                 index++;
             }
 
-            RecursivePlacement(result, desk, allFigurePlacements, allFigurePlacementsCounts.ToArray(), 0, currentPlacements);
+            RecursivePlacement(result, desk, allFigurePlacements, allFigurePlacementsCounts.ToArray(), 0, currentPlacements, count);
 
             return result;
 
@@ -51,14 +50,20 @@ namespace LemonPlatform.Module.Game.Puzzles.Core
 
         #region private
 
-        static unsafe void RecursivePlacement(List<ulong[]> result, ulong desk, ulong*[] figurePlacements, int[] figurePlacementsCounts, int depth, ulong[] currentPlacements)
+        static unsafe void RecursivePlacement(List<ulong[]> result, ulong desk, ulong*[] figurePlacements, int[] figurePlacementsCounts, int depth, ulong[] currentPlacements, int count = -1)
         {
+            if (count != -1 && result.Count == count)
+            {
+                return;
+            }
+
             if (depth == figurePlacements.Length)
             {
                 // placed all the figures
                 // save a copy of the current placement
                 result.Add((ulong[])currentPlacements.Clone());
                 MessageHelper.SendStatusBarTextMessage($"Find one solution, total: {result.Count}");
+
                 return;
             }
 
@@ -69,7 +74,7 @@ namespace LemonPlatform.Module.Game.Puzzles.Core
                     desk |= figurePlacements[depth][i];
                     currentPlacements[depth] = figurePlacements[depth][i];
 
-                    RecursivePlacement(result, desk, figurePlacements, figurePlacementsCounts, depth + 1, currentPlacements);
+                    RecursivePlacement(result, desk, figurePlacements, figurePlacementsCounts, depth + 1, currentPlacements, count);
 
                     // We remove the figure and try further
                     desk &= ~figurePlacements[depth][i];

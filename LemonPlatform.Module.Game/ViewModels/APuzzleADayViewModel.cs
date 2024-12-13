@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using LemonPlatform.Core.Helpers;
 using LemonPlatform.Core.Infrastructures.Denpendency;
-using LemonPlatform.Core.Models;
 using LemonPlatform.Module.Game.Puzzles.Core;
 using LemonPlatform.Module.Game.Puzzles.Models;
 using System.Collections.ObjectModel;
@@ -64,22 +63,17 @@ namespace LemonPlatform.Module.Game.ViewModels
         private int _resultIndex;
 
         [RelayCommand]
-        private async Task Search(CancellationToken token)
+        private async Task SearchAll(CancellationToken token)
         {
-            MessageHelper.SendBusyMessage(new BusyItem
-            {
-                IsBusy = true,
-                Command = SearchCommand
-            });
-
             var models = await GetFigureModelAsync();
             UpdateDesk(models);
+        }
 
-            MessageHelper.SendBusyMessage(new BusyItem
-            {
-                IsBusy = false,
-                Command = SearchCommand
-            });
+        [RelayCommand]
+        private async Task SearchOne(CancellationToken token)
+        {
+            var models = await GetFigureModelAsync(count: 1);
+            UpdateDesk(models);
         }
 
         [RelayCommand(CanExecute = nameof(CanPreExecute))]
@@ -157,12 +151,12 @@ namespace LemonPlatform.Module.Game.ViewModels
             return result;
         }
 
-        private async Task<List<DeskModel>?> GetFigureModelAsync(int resultIndex = 0)
+        private async Task<List<DeskModel>?> GetFigureModelAsync(int count = -1, int resultIndex = 0)
         {
             if (!SelectedDate.HasValue) return null; ;
             var puzzleType = (PuzzleType)Enum.Parse(typeof(PuzzleType), SelectPuzzleTypeItem);
 
-            var resultPlus = await PlacementFinderPlus.FindAllAsync(SelectedDate.Value, puzzleType);
+            var resultPlus = await PlacementFinderPlus.FindAllAsync(SelectedDate.Value, puzzleType, count);
             if (!resultPlus.Any()) return null;
             Results = resultPlus;
             ResultIndex = 0;
@@ -253,7 +247,7 @@ namespace LemonPlatform.Module.Game.ViewModels
 
         private bool CanNextExecute()
         {
-            return Results != null && ResultIndex <= Results.Count - 1 && ResultIndex >= 0;
+            return Results != null && ResultIndex <= Results.Count - 1 && ResultIndex >= 0 && Results.Count >= 2;
         }
 
         #endregion
