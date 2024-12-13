@@ -1,7 +1,9 @@
-﻿using LemonPlatform.Module.Game.Puzzles.Core.Desks;
+﻿using LemonPlatform.Core.Helpers;
+using LemonPlatform.Module.Game.Puzzles.Core.Desks;
 using LemonPlatform.Module.Game.Puzzles.Core.Figures;
 using LemonPlatform.Module.Game.Puzzles.Helpers;
 using LemonPlatform.Module.Game.Puzzles.Models;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace LemonPlatform.Module.Game.Puzzles.Core
 {
@@ -56,6 +58,7 @@ namespace LemonPlatform.Module.Game.Puzzles.Core
                 // placed all the figures
                 // save a copy of the current placement
                 result.Add((ulong[])currentPlacements.Clone());
+                MessageHelper.SendStatusBarTextMessage($"Find one solution, total: {result.Count}");
                 return;
             }
 

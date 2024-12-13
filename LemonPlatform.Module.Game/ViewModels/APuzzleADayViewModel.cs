@@ -91,6 +91,8 @@ namespace LemonPlatform.Module.Game.ViewModels
             {
                 ResultIndex = 0;
             }
+
+            MessageHelper.SendStatusBarTextMessage($"{SelectedDate?.ToString("yyyy-MM-dd")} total solutions is: {Results.Count}, current: {ResultIndex + 1}");
         }
 
         [RelayCommand(CanExecute = nameof(CanNextExecute))]
@@ -102,6 +104,8 @@ namespace LemonPlatform.Module.Game.ViewModels
             {
                 ResultIndex = Results.Count;
             }
+
+            MessageHelper.SendStatusBarTextMessage($"{SelectedDate?.ToString("yyyy-MM-dd")} total solutions is: {Results.Count}, current: {ResultIndex + 1}");
         }
 
         #region private
