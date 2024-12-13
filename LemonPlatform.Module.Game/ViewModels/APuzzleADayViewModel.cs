@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using LemonPlatform.Core.Helpers;
 using LemonPlatform.Core.Infrastructures.Denpendency;
 using LemonPlatform.Module.Game.Puzzles.Core;
+using LemonPlatform.Module.Game.Puzzles.Core.Figures;
 using LemonPlatform.Module.Game.Puzzles.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
@@ -21,6 +22,7 @@ namespace LemonPlatform.Module.Game.ViewModels
             SelectedDate = DateTime.Now;
 
             InitPuzzleItems();
+            InitDesks();
         }
 
         [ObservableProperty]
@@ -41,11 +43,18 @@ namespace LemonPlatform.Module.Game.ViewModels
 
         partial void OnSelectPuzzleTypeItemChanged(string? oldValue, string newValue)
         {
-            if (!string.IsNullOrEmpty(newValue)) InitPuzzleItems();
+            if (!string.IsNullOrEmpty(newValue))
+            {
+                InitPuzzleItems();
+                InitDesks();
+            };
         }
 
         [ObservableProperty]
         private ObservableCollection<PuzzleItem> _puzzleItems;
+
+        [ObservableProperty]
+        private ObservableCollection<Desk> _desks;
 
         /// <summary>
         /// store the results
@@ -166,7 +175,7 @@ namespace LemonPlatform.Module.Game.ViewModels
             foreach (var solution in solution1)
             {
                 var bin = solution.ToString("b").PadLeft(64, '0');
-                for (int i = 0; i < bin.Count(); i++)
+                for (var i = 0; i < bin.Count(); i++)
                 {
                     var item = bin[i].ToString();
                     if (item == "1")
@@ -238,6 +247,47 @@ namespace LemonPlatform.Module.Game.ViewModels
             }
 
             PuzzleItems = [.. data];
+        }
+
+        private void InitDesks()
+        {
+            var puzzleType = (PuzzleType)Enum.Parse(typeof(PuzzleType), SelectPuzzleTypeItem);
+            var desks = FigurePlus.GetBundles(puzzleType);
+            var result = new List<Desk>();
+            var colorIndex = 0;
+            foreach (var item in desks)
+            {
+                var puzzles = new PuzzleItem[16];
+                for (int i = 0; i < 16; i++)
+                {
+                    puzzles[i] = new PuzzleItem
+                    {
+                        Background = Brushes.Transparent
+                    };
+                }
+
+                var desk = new Desk { DeskItems = puzzles };
+                var rows = item._rows;
+                for (var j = 0; j < rows.Count(); j++)
+                {
+                    var bin = rows[j].ToString("b").PadLeft(4, '0');
+                    for (var i = 0; i < bin.Count(); i++)
+                    {
+                        var data = bin[i].ToString();
+                        if (data == "1")
+                        {
+                            var index = i + j * 4;
+                            PuzzleConstants.ColorMapping.TryGetValue(colorIndex, out var color);
+                            puzzles[index].Background = color;
+                        }
+                    }
+                }
+
+                result.Add(desk);
+                colorIndex++;
+            }
+
+            Desks = new ObservableCollection<Desk>(result);
         }
 
         private bool CanPreExecute()

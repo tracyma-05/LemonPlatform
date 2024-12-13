@@ -41,6 +41,25 @@ namespace LemonPlatform.Module.Game.Puzzles.Controls
             DependencyProperty.Register("PuzzleItems", typeof(IList<PuzzleItem>), typeof(PuzzlePanel), new PropertyMetadata(OnSelectedDateChanged));
 
 
+        public int Rows 
+        {
+            get { return (int)GetValue(RowsProperty); }
+            set { SetValue(RowsProperty, value); }
+        }
+
+        public static readonly DependencyProperty RowsProperty =
+            DependencyProperty.Register("Rows", typeof(int), typeof(CalendarBox), new PropertyMetadata(8));
+
+        public int Columns
+        {
+            get { return (int)GetValue(ColumnsProperty); }
+            set { SetValue(ColumnsProperty, value); }
+        }
+
+        public static readonly DependencyProperty ColumnsProperty =
+            DependencyProperty.Register("Columns", typeof(int), typeof(CalendarBox), new PropertyMetadata(8));
+
+
         private CalendarBox _calendarBox;
         public override void OnApplyTemplate()
         {

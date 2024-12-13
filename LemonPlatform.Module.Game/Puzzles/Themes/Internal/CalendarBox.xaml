@@ -14,7 +14,9 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="8" Rows="8"/>
+                    <UniformGrid 
+                        Columns="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:PuzzlePanel}}, Path=Columns}"
+                        Rows="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:PuzzlePanel}}, Path=Rows}"/>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>

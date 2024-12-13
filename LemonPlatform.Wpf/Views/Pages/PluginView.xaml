@@ -95,7 +95,6 @@
                     <WrapPanel HorizontalAlignment="Stretch" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
-
         </ListBox>
     </Grid>
 </UserControl>
