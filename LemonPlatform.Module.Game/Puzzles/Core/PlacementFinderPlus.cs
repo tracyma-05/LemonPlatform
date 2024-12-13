@@ -5,12 +5,17 @@ using LemonPlatform.Module.Game.Puzzles.Models;
 
 namespace LemonPlatform.Module.Game.Puzzles.Core
 {
-    public static unsafe class PlacementFinderPlus
+    public static class PlacementFinderPlus
     {
+        public static async Task<List<ulong[]>> FindAllAsync(DateTime dateTime, PuzzleType puzzleType)
+        {
+            return await Task.Run(() => FindAll(dateTime, puzzleType));
+        }
+
         /// <summary>
         /// Finds all suitable placements of pieces on the board (brute force)
         /// </summary>
-        public static List<ulong[]> FindAll(DateTime dateTime, PuzzleType puzzleType)
+        public static unsafe List<ulong[]> FindAll(DateTime dateTime, PuzzleType puzzleType)
         {
             // create a board with occupied cells
             var markedPoints = DateHelper.GetDateMarkedPoints(dateTime, puzzleType);
@@ -44,7 +49,7 @@ namespace LemonPlatform.Module.Game.Puzzles.Core
 
         #region private
 
-        static void RecursivePlacement(List<ulong[]> result, ulong desk, ulong*[] figurePlacements, int[] figurePlacementsCounts, int depth, ulong[] currentPlacements)
+        static unsafe void RecursivePlacement(List<ulong[]> result, ulong desk, ulong*[] figurePlacements, int[] figurePlacementsCounts, int depth, ulong[] currentPlacements)
         {
             if (depth == figurePlacements.Length)
             {
@@ -70,7 +75,7 @@ namespace LemonPlatform.Module.Game.Puzzles.Core
             }
         }
 
-        private static void Copy(List<ulong>[] source, ulong* destination)
+        private unsafe static void Copy(List<ulong>[] source, ulong* destination)
         {
             var offset = 0;
             foreach (var figureKindPlacements in source)

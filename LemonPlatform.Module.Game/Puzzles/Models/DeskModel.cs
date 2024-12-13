@@ -7,7 +7,5 @@ namespace LemonPlatform.Module.Game.Puzzles.Models
         public int RowNumber { get; set; }
         public int ColumnNumber { get; set; }
         public Brush Background { get; set; } = Brushes.Transparent;
-        public bool Colorful { get; set; }
-        public string? Text { get; set; }
     }
 }
