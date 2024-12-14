@@ -45,23 +45,23 @@ namespace LemonPlatform.Wpf
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            var handler = _host.Services.GetRequiredService<LemonExceptionHandler>();
+            ExceptionHandler(handler);
+
             AutoStartHelper.SetMeAutoStart();
             ApplicationHelper.CheckApplicationMutex();
 
             var splashScreen = new SplashScreen("Resources/Images/lemon.png");
             splashScreen.Show(true, true);
 
+            var dbContext = _host.Services.GetRequiredService<LemonDbContext>();
+            InitializeDatabase(dbContext);
+
             await _host.StartAsync();
 
             var isDark = await GetThemeAsync();
             ThemeHelper.SetLemonTheme(isDark);
             SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
-
-            var handler = _host.Services.GetRequiredService<LemonExceptionHandler>();
-            ExceptionHandler(handler);
-
-            var dbContext = _host.Services.GetRequiredService<LemonDbContext>();
-            InitializeDatabase(dbContext);
 
             await SetHistoryChatAsync();
 
