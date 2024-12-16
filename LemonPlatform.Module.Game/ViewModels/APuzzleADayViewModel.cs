@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using LemonPlatform.Core.Helpers;
 using LemonPlatform.Core.Infrastructures.Denpendency;
 using LemonPlatform.Module.Game.Puzzles.Core;
+using LemonPlatform.Module.Game.Puzzles.Core.Desks;
 using LemonPlatform.Module.Game.Puzzles.Core.Figures;
 using LemonPlatform.Module.Game.Puzzles.Models;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ namespace LemonPlatform.Module.Game.ViewModels
     public partial class APuzzleADayViewModel : ITransientDependency
     {
         private readonly int _deskSize = 8;
+        private ulong? _desk;
         public APuzzleADayViewModel()
         {
             var names = EnumHelper.GetEnumNames<PuzzleType>();
@@ -125,26 +127,59 @@ namespace LemonPlatform.Module.Game.ViewModels
             }
 
             var kindIndex = (desk.KindIndex + 1) % desk.AllKinds.Count();
-            var rows = desk.AllKinds[kindIndex]._rows;
-            for (var j = 0; j < rows.Count(); j++)
+            var rows = desk.AllKinds[kindIndex].FigurePoints;
+            for (var i = 0; i < rows.Count(); i++)
             {
-                var bin = rows[j].ToString("b").PadLeft(4, '0');
-                for (var i = 0; i < bin.Count(); i++)
+                var data = rows[i].ToString();
+                if (data == "1")
                 {
-                    var data = bin[i].ToString();
-                    if (data == "1")
-                    {
-                        var internalIndex = i + j * 4;
-                        PuzzleConstants.ColorMapping.TryGetValue(index, out var color);
-                        puzzles[internalIndex].Background = color;
-                    }
+                    PuzzleConstants.ColorMapping.TryGetValue(desk.Index, out var color);
+                    puzzles[i].Background = color;
                 }
             }
 
-            desk.DeskItems = [..puzzles];
+            desk.DeskItems = [.. puzzles];
             desk.KindIndex = kindIndex;
 
             Desks[index] = desk;
+        }
+
+        public void Drop(Desk rawDesk, int row, int column)
+        {
+            if (string.IsNullOrEmpty(SelectPuzzleTypeItem) || !SelectedDate.HasValue) return;
+
+            var type = (PuzzleType)Enum.Parse(typeof(PuzzleType), SelectPuzzleTypeItem);
+            _desk ??= DeskPlus.CreateDesk(SelectedDate.Value, type);
+            var figure = rawDesk.AllKinds[rawDesk.KindIndex];
+            var newDesk = DeskPlus.GetFigurePlacement(_desk.Value, figure, row, column);
+            if (newDesk == null)
+            {
+                MessageHelper.SendSnackMessage("Can't place here, please change it.");
+                return;
+            }
+
+            var models = new List<DeskModel>();
+            var bin = newDesk.Value.ToString("b").PadLeft(64, '0');
+            for (var i = 0; i < bin.Count(); i++)
+            {
+                var item = bin[i].ToString();
+                if (item == "1")
+                {
+                    var itemRow = 7 - i / 8;
+                    var iteColumn = 7 - i % 8;
+
+                    PuzzleConstants.ColorMapping.TryGetValue(rawDesk.Index, out var color);
+                    models.Add(new DeskModel
+                    {
+                        RowNumber = itemRow,
+                        ColumnNumber = iteColumn,
+                        Background = color!,
+                    });
+                }
+            }
+
+            UpdateDesk(models);
+            _desk = newDesk;
         }
 
         #region private
@@ -310,19 +345,14 @@ namespace LemonPlatform.Module.Game.ViewModels
                     AllKinds = item.GetKinds().ToArray()
                 };
 
-                var rows = item._rows;
-                for (var j = 0; j < rows.Count(); j++)
+                var rows = desk.AllKinds[0].FigurePoints;
+                for (var i = 0; i < rows.Count(); i++)
                 {
-                    var bin = rows[j].ToString("b").PadLeft(4, '0');
-                    for (var i = 0; i < bin.Count(); i++)
+                    var data = rows[i].ToString();
+                    if (data == "1")
                     {
-                        var data = bin[i].ToString();
-                        if (data == "1")
-                        {
-                            var index = i + j * 4;
-                            PuzzleConstants.ColorMapping.TryGetValue(colorIndex, out var color);
-                            puzzles[index].Background = color;
-                        }
+                        PuzzleConstants.ColorMapping.TryGetValue(colorIndex, out var color);
+                        puzzles[i].Background = color;
                     }
                 }
 

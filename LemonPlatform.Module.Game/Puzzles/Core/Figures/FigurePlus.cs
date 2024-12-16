@@ -1,4 +1,5 @@
 ﻿using LemonPlatform.Module.Game.Puzzles.Core.Desks;
+using System.Drawing;
 using System.Text;
 
 namespace LemonPlatform.Module.Game.Puzzles.Core.Figures
@@ -11,12 +12,14 @@ namespace LemonPlatform.Module.Game.Puzzles.Core.Figures
 
         public readonly int Width;
         public readonly int Height;
+        public readonly byte[] FigurePoints;
 
         public FigurePlus(params byte[] points)
         {
             if (points.Length != Size * Size)
                 throw new ArgumentException("Must be " + Size * Size + " Points", nameof(points));
             _rows = new byte[Size];
+            FigurePoints = points;
 
             for (var i = 0; i < Size; i++)
                 _rows[i] = (byte)(points[i * Size] | (points[i * Size + 1] << 1) | (points[i * Size + 2] << 2) | (points[i * Size + 3] << 3));

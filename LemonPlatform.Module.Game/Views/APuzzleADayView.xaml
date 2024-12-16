@@ -43,6 +43,8 @@
                     x:Name="desk"
                     Margin="10"
                     RequestBringIntoView="ListBox_RequestBringIntoView"
+                    AllowDrop="True"
+                    MouseMove="desk_MouseMove"
                     ItemsSource="{Binding Desks}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -80,6 +82,8 @@
                     Width="{Binding RelativeSource={RelativeSource Self}, Path=Height}"
                     SelectedDate="{Binding ElementName=datePicker,Path=SelectedDate}" 
                     PuzzleItems="{Binding PuzzleItems}"
+                    AllowDrop="True"
+                    Drop="PuzzlePanel_Drop"
                     Rows="8"
                     Columns="8"
                     Margin="20" />

@@ -1,4 +1,5 @@
 ﻿using LemonPlatform.Module.Game.Puzzles.Core.Figures;
+using LemonPlatform.Module.Game.Puzzles.Helpers;
 using LemonPlatform.Module.Game.Puzzles.Models;
 using System.Text;
 
@@ -34,6 +35,14 @@ namespace LemonPlatform.Module.Game.Puzzles.Core.Desks
         /// 10000001
         /// </summary>
         private static ulong SeedWithOutWeek = 18442523052882362753L;
+
+        public static ulong CreateDesk(DateTime dateTime, PuzzleType puzzleType)
+        {
+            var markedPoints = DateHelper.GetDateMarkedPoints(dateTime, puzzleType);
+            var desk = CreateDesk(markedPoints, puzzleType);
+
+            return desk;
+        }
 
         public static ulong CreateDesk(IEnumerable<DeskPoint> markedPoints, PuzzleType puzzle)
         {
@@ -73,22 +82,35 @@ namespace LemonPlatform.Module.Game.Puzzles.Core.Desks
         /// <summary>
         /// Returns theoretical options for placing a piece on the board
         /// </summary>
-        private static List<ulong> GetFigurePlacements(ulong desk, FigurePlus figure)
+        public static List<ulong> GetFigurePlacements(ulong desk, FigurePlus figure)
         {
             // we generate all possible placements of the figure on the board, taking into account the dimensions
             var rows = Size + 1 - figure.Height;
             var columns = Size + 1 - figure.Width;
+            var data = new Dictionary<string, ulong>();
 
             var placements = new List<ulong>(rows * columns);
             for (var row = 0; row < rows; row++)
                 for (var column = 0; column < columns; column++)
                 {
                     var figureMask = figure.GetMask(row, column);
-                    if ((desk & figureMask) == 0) // a piece in this position can be placed on the board
+                    if ((desk & figureMask) == 0)
+                    {
                         placements.Add(figureMask);
+                        data.Add($"{row}-{column}", figureMask);
+                    }
                 }
 
             return placements;
+        }
+
+        public static ulong? GetFigurePlacement(ulong desk, FigurePlus figure, int row, int column)
+        {
+            var figureMask = figure.GetMask(row, column);
+            if ((desk & figureMask) == 0) // a piece in this position can be placed on the board
+                return figureMask;
+
+            return null;
         }
 
 
@@ -103,7 +125,6 @@ namespace LemonPlatform.Module.Game.Puzzles.Core.Desks
         {
             return desk | figure.GetMask(row, column);
         }
-
 
         public static string ToString(ulong[] placements)
         {
