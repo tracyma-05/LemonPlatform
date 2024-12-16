@@ -46,15 +46,22 @@
                     ItemsSource="{Binding Desks}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <controls:PuzzlePanel 
-                                Height="150"
-                                PuzzleItems="{Binding DeskItems}"
-                                Width="{Binding RelativeSource={RelativeSource Self}, Path=Height}"
-                                SelectedDate="{Binding ElementName=datePicker,Path=SelectedDate}"
-                                Rows="4"
-                                Columns="4"/>
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <controls:PuzzlePanel 
+                                    Height="150"
+                                    PuzzleItems="{Binding DeskItems}"
+                                    Width="{Binding RelativeSource={RelativeSource Self}, Path=Height}"
+                                    SelectedDate="{Binding ElementName=datePicker,Path=SelectedDate}"
+                                    Rows="4"
+                                    Columns="4"/>
+                                <Button Content="Rotate" 
+                                        Command="{Binding DataContext.RotateCommand,RelativeSource={RelativeSource AncestorType=Page}}" 
+                                        CommandParameter="{Binding Index}" 
+                                        Margin="10"/>
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"/>

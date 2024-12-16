@@ -1,7 +1,20 @@
-﻿namespace LemonPlatform.Module.Game.Puzzles.Models
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LemonPlatform.Module.Game.Puzzles.Core.Figures;
+using System.Collections.ObjectModel;
+
+namespace LemonPlatform.Module.Game.Puzzles.Models
 {
-    public class Desk
+    [ObservableObject]
+    public partial class Desk
     {
-        public IEnumerable<PuzzleItem> DeskItems { get; set; }
+        [ObservableProperty]
+        private ObservableCollection<PuzzleItem> _deskItems;
+
+        [ObservableProperty]
+        private int _index;
+
+        public FigurePlus[] AllKinds { get; set; }
+
+        public int KindIndex { get; set; } = 0;
     }
 }

@@ -111,6 +111,42 @@ namespace LemonPlatform.Module.Game.ViewModels
             MessageHelper.SendStatusBarTextMessage($"{SelectedDate?.ToString("yyyy-MM-dd")} total solutions is: {Results.Count}, current: {ResultIndex + 1}");
         }
 
+        [RelayCommand]
+        private void Rotate(int index)
+        {
+            var desk = Desks[index];
+            var puzzles = new PuzzleItem[16];
+            for (int i = 0; i < 16; i++)
+            {
+                puzzles[i] = new PuzzleItem
+                {
+                    Background = Brushes.Transparent
+                };
+            }
+
+            var kindIndex = (desk.KindIndex + 1) % desk.AllKinds.Count();
+            var rows = desk.AllKinds[kindIndex]._rows;
+            for (var j = 0; j < rows.Count(); j++)
+            {
+                var bin = rows[j].ToString("b").PadLeft(4, '0');
+                for (var i = 0; i < bin.Count(); i++)
+                {
+                    var data = bin[i].ToString();
+                    if (data == "1")
+                    {
+                        var internalIndex = i + j * 4;
+                        PuzzleConstants.ColorMapping.TryGetValue(index, out var color);
+                        puzzles[internalIndex].Background = color;
+                    }
+                }
+            }
+
+            desk.DeskItems = [..puzzles];
+            desk.KindIndex = kindIndex;
+
+            Desks[index] = desk;
+        }
+
         #region private
 
         private void InitPuzzleItems()
@@ -255,6 +291,7 @@ namespace LemonPlatform.Module.Game.ViewModels
             var desks = FigurePlus.GetBundles(puzzleType);
             var result = new List<Desk>();
             var colorIndex = 0;
+            var itemIndex = 0;
             foreach (var item in desks)
             {
                 var puzzles = new PuzzleItem[16];
@@ -266,7 +303,13 @@ namespace LemonPlatform.Module.Game.ViewModels
                     };
                 }
 
-                var desk = new Desk { DeskItems = puzzles };
+                var desk = new Desk
+                {
+                    DeskItems = [.. puzzles],
+                    Index = itemIndex++,
+                    AllKinds = item.GetKinds().ToArray()
+                };
+
                 var rows = item._rows;
                 for (var j = 0; j < rows.Count(); j++)
                 {
