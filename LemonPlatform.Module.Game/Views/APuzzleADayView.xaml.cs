@@ -1,4 +1,5 @@
 ﻿using LemonPlatform.Core.Infrastructures.Denpendency;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -20,6 +21,11 @@ namespace LemonPlatform.Module.Game.Views
 
                 desk.RaiseEvent(eventArg);
             };
+        }
+
+        private void ListBox_RequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

@@ -42,6 +42,7 @@
                 <ListBox 
                     x:Name="desk"
                     Margin="10"
+                    RequestBringIntoView="ListBox_RequestBringIntoView"
                     ItemsSource="{Binding Desks}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
