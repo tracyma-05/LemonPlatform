@@ -31,14 +31,14 @@ namespace LemonPlatform.Module.Game.Puzzles.Controls
             GenerateCalendar(SelectedDate ?? DateTime.Now);
         }
 
-        public IList<PuzzleItem> PuzzleItems
+        public IList<DeskModel> PuzzleItems
         {
-            get { return (IList<PuzzleItem>)GetValue(PuzzleItemsProperty); }
+            get { return (IList<DeskModel>)GetValue(PuzzleItemsProperty); }
             set { SetValue(PuzzleItemsProperty, value); }
         }
 
         public static readonly DependencyProperty PuzzleItemsProperty =
-            DependencyProperty.Register("PuzzleItems", typeof(IList<PuzzleItem>), typeof(PuzzlePanel), new PropertyMetadata(OnSelectedDateChanged));
+            DependencyProperty.Register("PuzzleItems", typeof(IList<DeskModel>), typeof(PuzzlePanel), new PropertyMetadata(OnSelectedDateChanged));
 
 
         public int Rows 

@@ -8,7 +8,7 @@ namespace LemonPlatform.Module.Game.Puzzles.Models
     public partial class Desk
     {
         [ObservableProperty]
-        private ObservableCollection<PuzzleItem> _deskItems;
+        private ObservableCollection<DeskModel> _deskItems;
 
         [ObservableProperty]
         private int _index;

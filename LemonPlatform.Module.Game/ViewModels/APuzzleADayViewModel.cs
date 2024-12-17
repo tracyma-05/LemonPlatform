@@ -5,6 +5,7 @@ using LemonPlatform.Core.Infrastructures.Denpendency;
 using LemonPlatform.Module.Game.Puzzles.Core;
 using LemonPlatform.Module.Game.Puzzles.Core.Desks;
 using LemonPlatform.Module.Game.Puzzles.Core.Figures;
+using LemonPlatform.Module.Game.Puzzles.Helpers;
 using LemonPlatform.Module.Game.Puzzles.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
@@ -53,7 +54,7 @@ namespace LemonPlatform.Module.Game.ViewModels
         }
 
         [ObservableProperty]
-        private ObservableCollection<PuzzleItem> _puzzleItems;
+        private ObservableCollection<DeskModel> _puzzleItems;
 
         [ObservableProperty]
         private ObservableCollection<Desk> _desks;
@@ -117,10 +118,10 @@ namespace LemonPlatform.Module.Game.ViewModels
         private void Rotate(int index)
         {
             var desk = Desks[index];
-            var puzzles = new PuzzleItem[16];
+            var puzzles = new DeskModel[16];
             for (int i = 0; i < 16; i++)
             {
-                puzzles[i] = new PuzzleItem
+                puzzles[i] = new DeskModel
                 {
                     Background = Brushes.Transparent
                 };
@@ -148,8 +149,8 @@ namespace LemonPlatform.Module.Game.ViewModels
         {
             if (string.IsNullOrEmpty(SelectPuzzleTypeItem) || !SelectedDate.HasValue) return;
 
-            var type = (PuzzleType)Enum.Parse(typeof(PuzzleType), SelectPuzzleTypeItem);
-            _desk ??= DeskPlus.CreateDesk(SelectedDate.Value, type);
+            var puzzleType = (PuzzleType)Enum.Parse(typeof(PuzzleType), SelectPuzzleTypeItem);
+            _desk ??= DeskPlus.CreateDesk(SelectedDate.Value, puzzleType);
             var figure = rawDesk.AllKinds[rawDesk.KindIndex];
             var newDesk = DeskPlus.GetFigurePlacement(_desk.Value, figure, row, column);
             if (newDesk == null)
@@ -160,6 +161,7 @@ namespace LemonPlatform.Module.Game.ViewModels
 
             var models = new List<DeskModel>();
             var bin = newDesk.Value.ToString("b").PadLeft(64, '0');
+            var keyDic = puzzleType == PuzzleType.WithWeek ? PuzzleConstants.ItemWithWeek : PuzzleConstants.ItemWithOutWeek;
             for (var i = 0; i < bin.Count(); i++)
             {
                 var item = bin[i].ToString();
@@ -174,12 +176,13 @@ namespace LemonPlatform.Module.Game.ViewModels
                         RowNumber = itemRow,
                         ColumnNumber = iteColumn,
                         Background = color!,
+                        Content = keyDic.GetValueOrDefault($"{row}-{column}")
                     });
                 }
             }
 
-            UpdateDesk(models);
-            _desk = newDesk;
+            _desk |= newDesk;
+            UpdateDesk(models, _desk);
         }
 
         #region private
@@ -193,42 +196,54 @@ namespace LemonPlatform.Module.Game.ViewModels
             PuzzleItems = [.. data];
         }
 
-        private PuzzleItem[]? GetPuzzleItems()
+        private DeskModel[]? GetPuzzleItems(ulong? desk = null)
         {
             if (string.IsNullOrEmpty(SelectPuzzleTypeItem) || !SelectedDate.HasValue) return null;
 
-            var type = (PuzzleType)Enum.Parse(typeof(PuzzleType), SelectPuzzleTypeItem);
-            var data = type == PuzzleType.WithWeek ? PuzzleConstants.PuzzleWithWeekData : PuzzleConstants.PuzzleWithoutWeekData;
-            var day = SelectedDate.Value.Day;
-            var week = (int)SelectedDate.Value.DayOfWeek;
-            var month = SelectedDate.Value.Month;
-            var needMark = new[] { PuzzleConstants.MonthData[month - 1], day.ToString(), PuzzleConstants.WeekData[week] };
+            var puzzleType = (PuzzleType)Enum.Parse(typeof(PuzzleType), SelectPuzzleTypeItem);
+            var markedPoints = DateHelper.GetDateMarkedPoints(SelectedDate.Value, puzzleType);
+            desk ??= DeskPlus.CreateDesk(markedPoints, puzzleType);
+            if (desk == null) return null;
 
-            var result = new PuzzleItem[64];
-            var index = 0;
-            foreach (var item in data)
+            var deskBinary = desk.Value.ToString("b").PadLeft(64, '0');
+            var result = new List<DeskModel>();
+            var keyDic = puzzleType == PuzzleType.WithWeek ? PuzzleConstants.ItemWithWeek : PuzzleConstants.ItemWithOutWeek;
+
+            for (int i = deskBinary.Count() - 1; i >= 0; i--)
             {
-                var puzzle = new PuzzleItem
-                {
-                    Content = item,
-                    Background = Brushes.Transparent
-                };
+                var item = deskBinary[i];
+                var row = 7 - i / 8;
+                var column = 7 - i % 8;
 
-                if (string.IsNullOrEmpty(item))
+                var currentPoint = new DeskPoint(row, column);
+                result.Add(new DeskModel
                 {
-                    puzzle.Background = Brushes.Gray;
-                }
-
-                if (needMark.Contains(item))
-                {
-                    puzzle.Background = Brushes.LightGray;
-                }
-
-                result[index] = puzzle;
-                index++;
+                    RowNumber = row,
+                    ColumnNumber = column,
+                    Background = InitDeskBackground(item.ToString(), currentPoint, markedPoints),
+                    Content = keyDic.GetValueOrDefault($"{row}-{column}")
+                });
             }
 
-            return result;
+            return result.ToArray();
+        }
+
+        private Brush InitDeskBackground(string val, DeskPoint currentPoint, IEnumerable<DeskPoint> markedPoints)
+        {
+            if (val == "0")
+            {
+                return Brushes.Transparent;
+            }
+
+            foreach (var item in markedPoints)
+            {
+                if (currentPoint.Row == item.Row && currentPoint.Column == item.Column + 1)
+                {
+                    return Brushes.LightGray;
+                }
+            }
+
+            return Brushes.Gray;
         }
 
         private async Task<List<DeskModel>?> GetFigureModelAsync(int count = -1, int resultIndex = 0)
@@ -302,22 +317,21 @@ namespace LemonPlatform.Module.Game.ViewModels
             return models;
         }
 
-        private void UpdateDesk(IEnumerable<DeskModel>? models)
+        private void UpdateDesk(IEnumerable<DeskModel>? models, ulong? desk = null)
         {
             if (models == null || !models.Any())
             {
                 return;
             }
 
-            var data = GetPuzzleItems();
-            if (data == null) return;
+            var puzzleItems = PuzzleItems.Select(x=>x).ToArray();
             foreach (var item in models)
             {
                 var modelIndex = item.ColumnNumber + item.RowNumber * _deskSize;
-                data[modelIndex].Background = item.Background;
+                puzzleItems[modelIndex].Background = item.Background;
             }
 
-            PuzzleItems = [.. data];
+            PuzzleItems = [.. puzzleItems];
         }
 
         private void InitDesks()
@@ -329,10 +343,10 @@ namespace LemonPlatform.Module.Game.ViewModels
             var itemIndex = 0;
             foreach (var item in desks)
             {
-                var puzzles = new PuzzleItem[16];
+                var puzzles = new DeskModel[16];
                 for (int i = 0; i < 16; i++)
                 {
-                    puzzles[i] = new PuzzleItem
+                    puzzles[i] = new DeskModel
                     {
                         Background = Brushes.Transparent
                     };
