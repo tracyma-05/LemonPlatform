@@ -13,6 +13,38 @@ namespace LemonPlatform.Module.Game.Puzzles.Core
             return await Task.Run(() => FindAll(dateTime, puzzleType, count));
         }
 
+        public static async Task<List<ulong[]>> FindScheduleAllAsync(ulong desk, FigurePlus[] bundles, int count = -1)
+        {
+            return await Task.Run(() => FindScheduleAll(desk, bundles, count));
+        }
+
+        public static unsafe List<ulong[]> FindScheduleAll(ulong desk, FigurePlus[] bundles, int count = -1)
+        {
+            // create a board with occupied cells
+            ulong*[] allFigurePlacements = new ulong*[bundles.Length];
+            var allFigurePlacementsCounts = new List<int> { };
+            var result = new List<ulong[]>();
+            var currentPlacements = new ulong[bundles.Length];
+            var index = 0;
+
+            foreach (var item in bundles)
+            {
+                var figureKindsPlacements = DeskPlus.GetFigureKindsPlacements(desk, item, out var figurePlacementsCount);
+#pragma warning disable CA2014
+                var figurePlacements = stackalloc ulong[figurePlacementsCount];
+#pragma warning restore CA2014
+                Copy(figureKindsPlacements, figurePlacements);
+
+                allFigurePlacements[index] = figurePlacements;
+                allFigurePlacementsCounts.Add(figurePlacementsCount);
+                index++;
+            }
+
+            RecursivePlacement(result, desk, allFigurePlacements, allFigurePlacementsCounts.ToArray(), 0, currentPlacements, count);
+
+            return result;
+        }
+
         /// <summary>
         /// Finds all suitable placements of pieces on the board (brute force)
         /// </summary>
@@ -45,7 +77,6 @@ namespace LemonPlatform.Module.Game.Puzzles.Core
             RecursivePlacement(result, desk, allFigurePlacements, allFigurePlacementsCounts.ToArray(), 0, currentPlacements, count);
 
             return result;
-
         }
 
         #region private

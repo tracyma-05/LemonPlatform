@@ -17,6 +17,8 @@ namespace LemonPlatform.Module.Game.ViewModels
     {
         private readonly int _deskSize = 8;
         private ulong? _desk;
+        private readonly HashSet<int> _placedIndex = new HashSet<int>();
+
         public APuzzleADayViewModel()
         {
             var names = EnumHelper.GetEnumNames<PuzzleType>();
@@ -34,7 +36,7 @@ namespace LemonPlatform.Module.Game.ViewModels
         {
             if (newValue.HasValue)
             {
-                InitPuzzleItems();
+                ClearAll();
             }
         }
 
@@ -48,7 +50,7 @@ namespace LemonPlatform.Module.Game.ViewModels
         {
             if (!string.IsNullOrEmpty(newValue))
             {
-                InitPuzzleItems();
+                ClearAll();
                 InitDesks();
             };
         }
@@ -74,18 +76,45 @@ namespace LemonPlatform.Module.Game.ViewModels
         [NotifyCanExecuteChangedFor(nameof(NextCommand))]
         private int _resultIndex;
 
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SearchScheduleOneCommand))]
+        [NotifyCanExecuteChangedFor(nameof(SearchScheduleAllCommand))]
+        private bool _isSchedule;
+
         [RelayCommand]
-        private async Task SearchAll(CancellationToken token)
+        private async Task SearchRandomAll(CancellationToken token)
         {
             var models = await GetFigureModelAsync();
             UpdateDesk(models);
         }
 
         [RelayCommand]
-        private async Task SearchOne(CancellationToken token)
+        private async Task SearchRandomOne(CancellationToken token)
         {
             var models = await GetFigureModelAsync(count: 1);
             UpdateDesk(models);
+        }
+
+        [RelayCommand(CanExecute = nameof(CanScheduleExecute))]
+        private async Task SearchScheduleAll(CancellationToken token)
+        {
+            var models = await GetScheduleFigureModelAsync();
+            UpdateDesk(models, _desk);
+        }
+
+        [RelayCommand(CanExecute = nameof(CanScheduleExecute))]
+        private async Task SearchScheduleOne(CancellationToken token)
+        {
+            var models = await GetScheduleFigureModelAsync(count: 1);
+            UpdateDesk(models, _desk);
+        }
+
+        [RelayCommand]
+        private void ClearAll()
+        {
+            _desk = null;
+            _placedIndex.Clear();
+            InitPuzzleItems();
         }
 
         [RelayCommand(CanExecute = nameof(CanPreExecute))]
@@ -106,6 +135,7 @@ namespace LemonPlatform.Module.Game.ViewModels
         {
             var models = GetDeskModels(++ResultIndex);
             UpdateDesk(models);
+
             if (Results != null && ResultIndex >= Results.Count)
             {
                 ResultIndex = Results.Count;
@@ -148,6 +178,11 @@ namespace LemonPlatform.Module.Game.ViewModels
         public void Drop(Desk rawDesk, int row, int column)
         {
             if (string.IsNullOrEmpty(SelectPuzzleTypeItem) || !SelectedDate.HasValue) return;
+            if (_placedIndex.Contains(rawDesk.Index))
+            {
+                MessageHelper.SendSnackMessage("This item had put in desk, please change one to put.");
+                return;
+            }
 
             var puzzleType = (PuzzleType)Enum.Parse(typeof(PuzzleType), SelectPuzzleTypeItem);
             _desk ??= DeskPlus.CreateDesk(SelectedDate.Value, puzzleType);
@@ -182,6 +217,7 @@ namespace LemonPlatform.Module.Game.ViewModels
             }
 
             _desk |= newDesk;
+            _placedIndex.Add(rawDesk.Index);
             UpdateDesk(models, _desk);
         }
 
@@ -285,11 +321,91 @@ namespace LemonPlatform.Module.Game.ViewModels
             return models;
         }
 
+        private async Task<List<DeskModel>?> GetScheduleFigureModelAsync(int count = -1, int resultIndex = 0)
+        {
+            if (_desk == null) return null;
+
+            var puzzleType = (PuzzleType)Enum.Parse(typeof(PuzzleType), SelectPuzzleTypeItem);
+            var bundles = new List<FigurePlus>();
+            var colorMapping = new Dictionary<int, Brush>();
+            var bundleIndex = 0;
+            var colorIndex = 0;
+            foreach (var item in FigurePlus.GetBundles(puzzleType))
+            {
+                if (!_placedIndex.Contains(bundleIndex))
+                {
+                    bundles.Add(item);
+                    PuzzleConstants.ColorMapping.TryGetValue(bundleIndex, out var color);
+                    colorMapping.Add(colorIndex, color);
+                    colorIndex++;
+                }
+
+                bundleIndex++;
+            }
+
+            var resultPlus = await PlacementFinderPlus.FindScheduleAllAsync(_desk.Value, bundles.ToArray(), count);
+            if (!resultPlus.Any()) return null;
+
+            Results = resultPlus;
+            ResultIndex = 0;
+            var solution1 = Results[resultIndex];
+            var models = new List<DeskModel>();
+            var index = 0;
+            foreach (var solution in solution1)
+            {
+                var bin = solution.ToString("b").PadLeft(64, '0');
+                for (var i = 0; i < bin.Count(); i++)
+                {
+                    var item = bin[i].ToString();
+                    if (item == "1")
+                    {
+                        var row = 7 - i / 8;
+                        var column = 7 - i % 8;
+
+                        colorMapping.TryGetValue(index, out var color);
+                        models.Add(new DeskModel
+                        {
+                            RowNumber = row,
+                            ColumnNumber = column,
+                            Background = color!,
+                        });
+                    }
+                }
+
+                index++;
+            }
+
+            return models;
+        }
+
         private IEnumerable<DeskModel> GetDeskModels(int currentIndex)
         {
+            var puzzleType = (PuzzleType)Enum.Parse(typeof(PuzzleType), SelectPuzzleTypeItem);
             var current = Results[currentIndex];
             var models = new List<DeskModel>();
             var index = 0;
+            var colorMapping = new Dictionary<int, Brush>();
+            if (IsSchedule && _desk != null && _placedIndex.Any())
+            {
+                var bundleIndex = 0;
+                var colorIndex = 0;
+                foreach (var item in FigurePlus.GetBundles(puzzleType))
+                {
+                    if (!_placedIndex.Contains(bundleIndex))
+                    {
+                        PuzzleConstants.ColorMapping.TryGetValue(bundleIndex, out var color);
+                        colorMapping.Add(colorIndex, color);
+                        colorIndex++;
+                    }
+
+                    bundleIndex++;
+                }
+            }
+            else
+            {
+                colorMapping = PuzzleConstants.ColorMapping;
+            }
+
             foreach (var solution in current)
             {
                 var bin = solution.ToString("b").PadLeft(64, '0');
@@ -301,7 +417,7 @@ namespace LemonPlatform.Module.Game.ViewModels
                         var row = 7 - i / 8;
                         var column = 7 - i % 8;
 
-                        PuzzleConstants.ColorMapping.TryGetValue(index, out var color);
+                        colorMapping.TryGetValue(index, out var color);
                         models.Add(new DeskModel
                         {
                             RowNumber = row,
@@ -321,10 +437,13 @@ namespace LemonPlatform.Module.Game.ViewModels
         {
             if (models == null || !models.Any())
             {
+                var message = "There is no solution.";
+                MessageHelper.SendStatusBarTextMessage(message);
+                MessageHelper.SendSnackMessage(message);
                 return;
             }
 
-            var puzzleItems = PuzzleItems.Select(x=>x).ToArray();
+            var puzzleItems = PuzzleItems.Select(x => x).ToArray();
             foreach (var item in models)
             {
                 var modelIndex = item.ColumnNumber + item.RowNumber * _deskSize;
@@ -384,7 +503,12 @@ namespace LemonPlatform.Module.Game.ViewModels
 
         private bool CanNextExecute()
         {
-            return Results != null && ResultIndex <= Results.Count - 1 && ResultIndex >= 0 && Results.Count >= 2;
+            return Results != null && ResultIndex < Results.Count - 1 && ResultIndex >= 0 && Results.Count >= 2;
+        }
+
+        private bool CanScheduleExecute()
+        {
+            return IsSchedule;
         }
 
         #endregion
