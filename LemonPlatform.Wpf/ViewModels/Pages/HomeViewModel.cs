@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using LemonPlatform.Core.Infrastructures.Denpendency;
 using LemonPlatform.Core.Services;
+using LemonPlatform.CustomControls.Controls.ScreenCuts;
+using System.Windows;
 
 namespace LemonPlatform.Wpf.ViewModels.Pages
 {
@@ -17,6 +19,29 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         private async Task GetJobs(CancellationToken token)
         {
             var jobs = await _jobService.GetAllJobDetailsAsync();
+        }
+
+        [RelayCommand]
+        private void ScreenCapture()
+        {
+            var screenCapture = new ScreenCapture();
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+
+            Thread.Sleep(300);
+
+            screenCapture.CaptureCompleted += ScreenCaptureSnapCompleted;
+            screenCapture.CaptureCanceled += ScreenCaptureSnapCanceled;
+            screenCapture.Capture();
+        }
+
+        private void ScreenCaptureSnapCanceled()
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Normal;
+        }
+
+        private void ScreenCaptureSnapCompleted(System.Windows.Media.Imaging.CroppedBitmap bitmap)
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Normal;
         }
     }
 }

@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="pack://application:,,,/LemonPlatform.Core;component/Themes/LemonTheme.xaml" />
                 <ResourceDictionary Source="/Resources/NotifyIconResources.xaml" />
                 <ResourceDictionary Source="/LemonPlatform.BusyIndicator;component/Theme/Default.xaml"/>
+                <ResourceDictionary Source="/LemonPlatform.CustomControls;component/Themes/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

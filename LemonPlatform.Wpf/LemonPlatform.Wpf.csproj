@@ -29,6 +29,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\LemonPlatform.BusyIndicator\LemonPlatform.BusyIndicator.csproj" />
 		<ProjectReference Include="..\LemonPlatform.Core\LemonPlatform.Core.csproj" />
+		<ProjectReference Include="..\LemonPlatform.CustomControls\LemonPlatform.CustomControls.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
