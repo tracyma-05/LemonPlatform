@@ -9,7 +9,7 @@ using LemonPlatform.Module.DataStructure.Messages;
 namespace LemonPlatform.Module.DataStructure.ViewModels
 {
     [ObservableObject]
-    public partial class AVLTreeViewModel : ITransientDependency, IRecipient<RenderMessage>
+    public partial class AVLTreeViewModel : ISingletonDependency, IRecipient<RenderMessage>
     {
         public AVLTreeViewModel(AVLTreeRender render)
         {
