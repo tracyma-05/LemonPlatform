@@ -122,12 +122,9 @@ namespace LemonPlatform.Module.Game.ViewModels
         {
             var models = GetDeskModels(--ResultIndex);
             UpdateDesk(models);
-            if (ResultIndex <= 0)
-            {
-                ResultIndex = 0;
-            }
+            ResultIndex = Math.Max(ResultIndex, 0);
 
-            MessageHelper.SendStatusBarTextMessage($"{SelectedDate?.ToString("yyyy-MM-dd")} total solutions is: {Results.Count}, current: {ResultIndex + 1}");
+            SendStatusMessage();
         }
 
         [RelayCommand(CanExecute = nameof(CanNextExecute))]
@@ -135,28 +132,16 @@ namespace LemonPlatform.Module.Game.ViewModels
         {
             var models = GetDeskModels(++ResultIndex);
             UpdateDesk(models);
+            ResultIndex = Math.Min(ResultIndex, Results?.Count ?? 0);
 
-            if (Results != null && ResultIndex >= Results.Count)
-            {
-                ResultIndex = Results.Count;
-            }
-
-            MessageHelper.SendStatusBarTextMessage($"{SelectedDate?.ToString("yyyy-MM-dd")} total solutions is: {Results.Count}, current: {ResultIndex + 1}");
+            SendStatusMessage();
         }
 
         [RelayCommand]
         private void Rotate(int index)
         {
             var desk = Desks[index];
-            var puzzles = new DeskModel[16];
-            for (int i = 0; i < 16; i++)
-            {
-                puzzles[i] = new DeskModel
-                {
-                    Background = Brushes.Transparent
-                };
-            }
-
+            var puzzles = CreateDemoDeskModels();
             var kindIndex = (desk.KindIndex + 1) % desk.AllKinds.Count();
             var rows = desk.AllKinds[kindIndex].FigurePoints;
             for (var i = 0; i < rows.Count(); i++)
@@ -177,6 +162,8 @@ namespace LemonPlatform.Module.Game.ViewModels
 
         public void Drop(Desk rawDesk, int row, int column)
         {
+            if (_desk == null && !_placedIndex.Any()) ClearAll();
+
             if (string.IsNullOrEmpty(SelectPuzzleTypeItem) || !SelectedDate.HasValue) return;
             if (_placedIndex.Contains(rawDesk.Index))
             {
@@ -266,20 +253,11 @@ namespace LemonPlatform.Module.Game.ViewModels
 
         private Brush InitDeskBackground(string val, DeskPoint currentPoint, IEnumerable<DeskPoint> markedPoints)
         {
-            if (val == "0")
-            {
-                return Brushes.Transparent;
-            }
+            if (val == "0") return Brushes.Transparent;
 
-            foreach (var item in markedPoints)
-            {
-                if (currentPoint.Row == item.Row && currentPoint.Column == item.Column + 1)
-                {
-                    return Brushes.LightGray;
-                }
-            }
-
-            return Brushes.Gray;
+            return markedPoints.Any(item => currentPoint.Row == item.Row && currentPoint.Column == item.Column + 1)
+                ? Brushes.LightGray
+                : Brushes.Gray;
         }
 
         private async Task<List<DeskModel>?> GetFigureModelAsync(int count = -1, int resultIndex = 0)
@@ -508,7 +486,17 @@ namespace LemonPlatform.Module.Game.ViewModels
 
         private bool CanScheduleExecute()
         {
-            return IsSchedule;
+            return IsSchedule && _desk != null && _placedIndex.Any();
+        }
+
+        private void SendStatusMessage()
+        {
+            MessageHelper.SendStatusBarTextMessage($"{SelectedDate?.ToString("yyyy-MM-dd")} total solutions: {Results?.Count}, current: {ResultIndex + 1}");
+        }
+
+        private DeskModel[] CreateDemoDeskModels()
+        {
+            return Enumerable.Range(0, 16).Select(_ => new DeskModel { Background = Brushes.Transparent }).ToArray();
         }
 
         #endregion
