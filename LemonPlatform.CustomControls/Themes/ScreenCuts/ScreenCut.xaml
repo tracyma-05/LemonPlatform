@@ -6,18 +6,58 @@
     <Color x:Key="SC.BlackColor">#000000</Color>
     <Color x:Key="SC.BackgroundSoldColor" >#FFEBF4FF</Color>
 
+    <SolidColorBrush x:Key="SC.PrimaryNormalColorBrush" Color="{StaticResource SC.PrimaryNormalColor}" />
+    <SolidColorBrush x:Key="SC.BlackSolidColorBrush" Color="{StaticResource SC.BlackColor}" />
+    <SolidColorBrush x:Key="SC.BackgroundSoldColorBrush" Color="{StaticResource SC.BackgroundSoldColor}" />
+
     <DropShadowEffect x:Key="SC.PopupShadowDepth"
                       BlurRadius="12"
                       Opacity="0.1"
                       ShadowDepth="2"
                       Color="{StaticResource SC.BlackColor}"/>
 
-    <Style x:Key="ScreenCutEllipseStyle" TargetType="{x:Type Ellipse}">
+    <FontFamily x:Key="SC.NormalFontFamily">
+        Helvetica Neue For Number, 
+        -apple-system, 
+        BlinkMacSystemFont, 
+        Segoe UI,
+        Roboto, 
+        PingFang SC, 
+        Hiragino Sans GB, 
+        Microsoft YaHei, 
+        Helvetica Neue, 
+        Helvetica, Arial, 
+        sans-serif
+    </FontFamily>
 
-    </Style>
+    <Geometry x:Key="SC.ArrowBranchesGeometry">M458.361,207.01328 L574.12778,224.42874 574,184 458.361,204.52536</Geometry>
+    <Geometry x:Key="SC.ArrowGeometry">M2.8421711E-14,30 L30,15 2.8421711E-14,3.5527137E-15 5.3751788,15 z</Geometry>
+    <ControlTemplate x:Key="SC.PART_DrawArrow" TargetType="{x:Type Control}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="15" />
+            </Grid.ColumnDefinitions>
+            <Path
+                Height="8"
+                Margin="0,0,-7,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Data="{StaticResource SC.ArrowBranchesGeometry}"
+                Fill="{TemplateBinding Background}"
+                Stretch="Fill" />
+            <Path
+                Grid.Column="1"
+                Width="15"
+                Height="15"
+                Data="{StaticResource SC.ArrowGeometry}"
+                Fill="{TemplateBinding Background}"
+                Stretch="Fill" />
+        </Grid>
+    </ControlTemplate>
 
     <Style x:Key="ScreenCutRectangleStyle" TargetType="{x:Type Rectangle}">
-        <Setter Property="Fill" Value="{DynamicResource SC.BlackColor}"/>
+        <Setter Property="Fill" Value="{DynamicResource SC.BlackSolidColorBrush}"/>
         <Setter Property="Opacity" Value="0.3"/>
     </Style>
 
@@ -43,18 +83,47 @@
                             <Rectangle x:Name="PART_RectangleBottom" Style="{DynamicResource ScreenCutRectangleStyle}"/>
                             <Border x:Name="PART_Border"
                                     Background="Transparent"
-                                    BorderBrush="{DynamicResource SC.PrimaryNormalColor}"
+                                    BorderBrush="{DynamicResource SC.PrimaryNormalColorBrush}"
                                     BorderThickness="2"
                                     Cursor="SizeAll"/>
                             <Border x:Name="PART_EditBar"
                                     Panel.ZIndex="99"
-                                    Background="{DynamicResource SC.BackgroundSoldColor}"
+                                    Background="{DynamicResource SC.BackgroundSoldColorBrush}"
                                     Effect="{StaticResource SC.PopupShadowDepth}"
                                     Visibility="Hidden">
-                                
+                                <WrapPanel Margin="10,5" VerticalAlignment="Center">
+                                    <RadioButton x:Name="PART_RadioButtonRectangle" Margin="4,0" ToolTip="Rectangle"/>
+                                    <RadioButton x:Name="PART_RadioButtonEllipse" Margin="4,0" ToolTip="Ellipse"/>
+                                    <RadioButton x:Name="PART_RadioButtonArrow" Margin="4,0" ToolTip="Arrow"/>
+                                    <RadioButton x:Name="PART_RadioButtonInk" Margin="4,0" ToolTip="Ink"/>
+                                    <RadioButton x:Name="PART_RadioButtonText" Margin="4,0" ToolTip="Text"/>
 
-
+                                    <Button x:Name="PART_ButtonSave" Margin="4,0" ToolTip="Save" />
+                                    <Button x:Name="PART_ButtonComplete" Margin="4,0" ToolTip="Save" />
+                                    <Button x:Name="PART_ButtonCancel" Margin="4,0" ToolTip="Save" />
+                                </WrapPanel>
                             </Border>
+
+                            <Popup 
+                                x:Name="PART_Popup"
+                                AllowsTransparency="True"
+                                Placement="Bottom"
+                                VerticalOffset="10">
+                                <Border
+                                    x:Name="PART_PopupBorder"
+                                    Margin="10 30 10 10"
+                                    Background="#FFEBF4FF">
+                                    <WrapPanel
+                                        x:Name="PART_WrapPanelColor"
+                                        Margin="10"
+                                        VerticalAlignment="Center">
+                                        <RadioButton Margin="4,0" Background="Red" IsChecked="True"/>
+                                        <RadioButton Margin="4,0" Background="DodgerBlue"/>
+                                        <RadioButton Margin="4,0" Background="LimeGreen"/>
+                                        <RadioButton Margin="4,0" Background="Yellow"/>
+                                    </WrapPanel>
+                                </Border>
+                            </Popup>
                         </Canvas>
                     </AdornerDecorator>
                 </ControlTemplate>

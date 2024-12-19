@@ -104,6 +104,7 @@ namespace LemonPlatform.CustomControls.Controls.ScreenCuts
             {
                 var element = AdornedElement as FrameworkElement;
                 if (element == null) return;
+                Resize(element);
                 switch (thumb.VerticalAlignment)
                 {
                     case VerticalAlignment.Top:
@@ -171,7 +172,7 @@ namespace LemonPlatform.CustomControls.Controls.ScreenCuts
             var ellipse = new FrameworkElementFactory(typeof(Ellipse));
             ellipse.SetValue(Shape.FillProperty, brush);
             ellipse.SetValue(Shape.StrokeProperty, ControlsHelper.PrimaryNormalBrush);
-            ellipse.SetValue(Shape.StrokeThicknessProperty, 2);
+            ellipse.SetValue(Shape.StrokeThicknessProperty, (double)2);
 
             return ellipse;
         }
