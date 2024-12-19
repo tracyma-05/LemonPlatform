@@ -355,6 +355,27 @@ namespace LemonPlatform.CustomControls.Controls.ScreenCuts
             }
         }
 
+        protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+            if (e.Source is ToggleButton) return;
+            if (pointStart == pointEnd) return;
+            var fElement = e.Source as FrameworkElement;
+            if (fElement != null && fElement.Tag == null) SelectElement();
+            isMouseUp = true;
+            if (_screenCutMouseType != ScreenCutMouseType.Default)
+            {
+                if (_screenCutMouseType == ScreenCutMouseType.MoveMouse) EditBarPosition();
+                if (_radioButtonRectangle.IsChecked != true
+                    && _radioButtonEllipse.IsChecked != true
+                    && _radioButtonArrow.IsChecked != true
+                    && _radioButtonText.IsChecked != true
+                    && _radioButtonInk.IsChecked != true)
+                    _screenCutMouseType = ScreenCutMouseType.Default;
+                else
+                    DisposeControl();
+            }
+        }
+
         private void DrawInkControl(Point current)
         {
             CheckPoint(current);
@@ -425,8 +446,8 @@ namespace LemonPlatform.CustomControls.Controls.ScreenCuts
             controlArrow.RenderTransform = rotate;
             rotate.Angle = ControlsHelper.CalculateAngle(vPoint, current);
             if (current.X < rect.Left
-                || current.X > rect.Right 
-                || current.Y < rect.Top 
+                || current.X > rect.Right
+                || current.Y < rect.Top
                 || current.Y > rect.Bottom)
             {
                 if (current.X >= vPoint.X && current.Y < vPoint.Y)

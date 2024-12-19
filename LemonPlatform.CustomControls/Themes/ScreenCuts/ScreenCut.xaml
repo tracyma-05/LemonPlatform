@@ -5,7 +5,12 @@
     <Color x:Key="SC.PrimaryNormalColor" >#409EFF</Color>
     <Color x:Key="SC.BlackColor">#000000</Color>
     <Color x:Key="SC.BackgroundSoldColor" >#FFEBF4FF</Color>
+    <Color x:Key="SC.DefaultBorderBrushColor" >#FFC6E2FF</Color>
+    <Color x:Key="SC.MaskColor">#696969</Color>
 
+    <SolidColorBrush x:Key="SC.MaskColorBrush" Opacity="0.5" Color="{StaticResource SC.MaskColor}" />
+    <SolidColorBrush x:Key="SC.DefaultBorderBrushSolidColorBrush" Color="{StaticResource SC.DefaultBorderBrushColor}" />
+    <SolidColorBrush x:Key="SC.DefaultBackgroundSolidColorBrush" Color="{StaticResource SC.DefaultBorderBrushColor}" />
     <SolidColorBrush x:Key="SC.PrimaryNormalColorBrush" Color="{StaticResource SC.PrimaryNormalColor}" />
     <SolidColorBrush x:Key="SC.BlackSolidColorBrush" Color="{StaticResource SC.BlackColor}" />
     <SolidColorBrush x:Key="SC.BackgroundSoldColorBrush" Color="{StaticResource SC.BackgroundSoldColor}" />
@@ -32,6 +37,17 @@
 
     <Geometry x:Key="SC.ArrowBranchesGeometry">M458.361,207.01328 L574.12778,224.42874 574,184 458.361,204.52536</Geometry>
     <Geometry x:Key="SC.ArrowGeometry">M2.8421711E-14,30 L30,15 2.8421711E-14,3.5527137E-15 5.3751788,15 z</Geometry>
+
+    <Geometry x:Key="SC.EditSquare">M18,18H6V6H18M18,4H6A2,2 0 0,0 4,6V18A2,2 0 0,0 6,20H18A2,2 0 0,0 20,18V6C20,4.89 19.1,4 18,4Z</Geometry>
+    <Geometry x:Key="SC.EditEllipse">M12,6C16.41,6 20,8.69 20,12C20,15.31 16.41,18 12,18C7.59,18 4,15.31 4,12C4,8.69 7.59,6 12,6M12,4C6.5,4 2,7.58 2,12C2,16.42 6.5,20 12,20C17.5,20 22,16.42 22,12C22,7.58 17.5,4 12,4Z</Geometry>
+    <Geometry x:Key="SC.EditArrow">M5,17.59L15.59,7H9V5H19V15H17V8.41L6.41,19L5,17.59Z</Geometry>
+    <Geometry x:Key="SC.EditInk">M20.71,4.63L19.37,3.29C19,2.9 18.35,2.9 17.96,3.29L9,12.25L11.75,15L20.71,6.04C21.1,5.65 21.1,5 20.71,4.63M7,14A3,3 0 0,0 4,17C4,18.31 2.84,19 2,19C2.92,20.22 4.5,21 6,21A4,4 0 0,0 10,17A3,3 0 0,0 7,14Z</Geometry>
+    <Geometry x:Key="SC.EditText">M2 4C2 2.9 2.9 2 4 2H8V4H4V8H2V4M22 20C22 21.11 21.11 22 20 22H16V20H20V16H22V20M4 22C2.9 22 2 21.11 2 20V16H4V20H8V22H4M20 2C21.11 2 22 2.9 22 4V8H20V4H16V2H20M9 7V9H11V17H13V9H15V7H9Z</Geometry>
+
+    <Geometry x:Key="SC.BtnSave">M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z</Geometry>
+    <Geometry x:Key="SC.BtnComplete">M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z</Geometry>
+    <Geometry x:Key="SC.BtnCancel">M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z</Geometry>
+
     <ControlTemplate x:Key="SC.PART_DrawArrow" TargetType="{x:Type Control}">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -61,9 +77,67 @@
         <Setter Property="Opacity" Value="0.3"/>
     </Style>
 
+    <Style x:Key="SC.PathRadioButton" TargetType="{x:Type RadioButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FrameworkElement.OverridesDefaultStyle" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Border Background="Transparent">
+                        <ContentPresenter
+                            x:Name="PART_ContentPresenter"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                            Opacity="0.8"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style
+        x:Key="SC.PathButton"
+        TargetType="{x:Type Button}">
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="Transparent">
+                        <ContentPresenter
+                            x:Name="PART_ContentPresenter"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Opacity=".8" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="{x:Type controls:ScreenCut}">
         <Setter Property="WindowState" Value="Maximized"/>
         <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome GlassFrameThickness="0" CornerRadius="0" UseAeroCaptionButtons="False"/>
@@ -92,15 +166,39 @@
                                     Effect="{StaticResource SC.PopupShadowDepth}"
                                     Visibility="Hidden">
                                 <WrapPanel Margin="10,5" VerticalAlignment="Center">
-                                    <RadioButton x:Name="PART_RadioButtonRectangle" Margin="4,0" ToolTip="Rectangle"/>
-                                    <RadioButton x:Name="PART_RadioButtonEllipse" Margin="4,0" ToolTip="Ellipse"/>
-                                    <RadioButton x:Name="PART_RadioButtonArrow" Margin="4,0" ToolTip="Arrow"/>
-                                    <RadioButton x:Name="PART_RadioButtonInk" Margin="4,0" ToolTip="Ink"/>
-                                    <RadioButton x:Name="PART_RadioButtonText" Margin="4,0" ToolTip="Text"/>
+                                    <RadioButton x:Name="PART_RadioButtonRectangle" Style="{DynamicResource SC.PathRadioButton}" Margin="4,0" ToolTip="Rectangle">
+                                        <Path Width="25" Height="25" Data="{StaticResource SC.EditSquare}" Fill="{StaticResource SC.PrimaryNormalColorBrush}"/>
+                                    </RadioButton>
+                                    <RadioButton x:Name="PART_RadioButtonEllipse" Style="{DynamicResource SC.PathRadioButton}" Margin="4,0" ToolTip="Ellipse">
+                                        <Path Width="25" Height="25" Data="{StaticResource SC.EditEllipse}" Fill="{StaticResource SC.PrimaryNormalColorBrush}"/>
+                                    </RadioButton>
+                                    <RadioButton x:Name="PART_RadioButtonArrow" Style="{DynamicResource SC.PathRadioButton}" Margin="4,0" ToolTip="Arrow">
+                                        <Path Width="25" Height="25" Data="{StaticResource SC.EditArrow}" Fill="{StaticResource SC.PrimaryNormalColorBrush}"/>
+                                    </RadioButton>
+                                    <RadioButton x:Name="PART_RadioButtonInk" Style="{DynamicResource SC.PathRadioButton}" Margin="4,0" ToolTip="Ink">
+                                        <Path Width="25" Height="25" Data="{StaticResource SC.EditInk}" Fill="{StaticResource SC.PrimaryNormalColorBrush}"/>
+                                    </RadioButton>
+                                    <RadioButton x:Name="PART_RadioButtonText" Style="{DynamicResource SC.PathRadioButton}" Margin="4,0" ToolTip="Text">
+                                        <Path Width="25" Height="25" Data="{StaticResource SC.EditText}" Fill="{StaticResource SC.PrimaryNormalColorBrush}"/>
+                                    </RadioButton>
 
-                                    <Button x:Name="PART_ButtonSave" Margin="4,0" ToolTip="Save" />
-                                    <Button x:Name="PART_ButtonComplete" Margin="4,0" ToolTip="Save" />
-                                    <Button x:Name="PART_ButtonCancel" Margin="4,0" ToolTip="Save" />
+                                    <Rectangle
+                                        Width="1"
+                                        Height="18"
+                                        Margin="4,0"
+                                        Stroke="{DynamicResource SC.PrimaryNormalColorBrush}" />
+
+                                    <Button x:Name="PART_ButtonSave" Style="{StaticResource SC.PathButton}" Margin="4,0" ToolTip="Save">
+                                        <Path Width="25" Height="25" Data="{StaticResource SC.BtnSave}" Fill="{StaticResource SC.PrimaryNormalColorBrush}"/>
+                                    </Button>
+
+                                    <Button x:Name="PART_ButtonCancel" Style="{StaticResource SC.PathButton}" Margin="4,0" ToolTip="Cancel" >
+                                        <Path Width="25" Height="25" Data="{StaticResource SC.BtnCancel}" Fill="Red"/>
+                                    </Button>
+
+                                    <Button x:Name="PART_ButtonComplete" Style="{StaticResource SC.PathButton}" Margin="4,0" ToolTip="Complete" >
+                                        <Path Width="25" Height="25" Data="{StaticResource SC.BtnComplete}" Fill="Green"/>
+                                    </Button>
                                 </WrapPanel>
                             </Border>
 
