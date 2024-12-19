@@ -201,6 +201,9 @@ namespace LemonPlatform.CustomControls.Controls.ScreenCuts
             _canvas.Background = new ImageBrush(ConvertBitmap(CopyScreen()));
             _border.Opacity = 0;
 
+            _rectangleLeft.Width = bounds.Width;
+            _rectangleLeft.Height = bounds.Height;
+
             Loaded += ScreenCut_Loaded;
             _controlTemplate = (ControlTemplate)FindResource("SC.PART_DrawArrow");
         }

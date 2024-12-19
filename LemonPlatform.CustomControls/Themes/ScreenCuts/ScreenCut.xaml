@@ -74,7 +74,7 @@
 
     <Style x:Key="ScreenCutRectangleStyle" TargetType="{x:Type Rectangle}">
         <Setter Property="Fill" Value="{DynamicResource SC.BlackSolidColorBrush}"/>
-        <Setter Property="Opacity" Value="0.3"/>
+        <Setter Property="Opacity" Value="0.5"/>
     </Style>
 
     <Style x:Key="SC.PathRadioButton" TargetType="{x:Type RadioButton}">
