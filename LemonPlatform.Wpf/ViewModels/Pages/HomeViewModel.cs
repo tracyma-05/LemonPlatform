@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using LemonPlatform.Core.Infrastructures.Denpendency;
 using LemonPlatform.Core.Services;
-using LemonPlatform.CustomControls.Controls.ScreenCuts;
 using System.Windows;
 
 namespace LemonPlatform.Wpf.ViewModels.Pages
@@ -24,7 +23,7 @@ namespace LemonPlatform.Wpf.ViewModels.Pages
         [RelayCommand]
         private void ScreenCapture()
         {
-            var screenCapture = new ScreenCapture();
+            var screenCapture = CustomControls.Controls.ScreenCuts.ScreenCapture.GetInstance(true);
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
 
             Thread.Sleep(300);

@@ -7,6 +7,10 @@ namespace LemonPlatform.CustomControls.Controls.ScreenCuts
     {
         private readonly bool _copyToClipboard;
         private readonly List<ScreenCut> _screenCuts = new List<ScreenCut>();
+        private bool isCapturing;
+
+        private static ScreenCapture _instance;
+        private static readonly object _lock = new object();
 
         #region delegate & event
 
@@ -18,7 +22,23 @@ namespace LemonPlatform.CustomControls.Controls.ScreenCuts
 
         #endregion
 
-        public ScreenCapture(bool copyToClipboard = true)
+        public static ScreenCapture GetInstance(bool copyToClipboard = true)
+        {
+            if (_instance == null)
+            {
+                lock (_lock)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new ScreenCapture(copyToClipboard);
+                    }
+                }
+            }
+
+            return _instance;
+        }
+
+        private ScreenCapture(bool copyToClipboard = true)
         {
             _copyToClipboard = copyToClipboard;
             for (int i = 0; i < Screen.AllScreens.Length; i++)
@@ -30,11 +50,23 @@ namespace LemonPlatform.CustomControls.Controls.ScreenCuts
 
         public void Capture()
         {
+            if (isCapturing) return;
+            if (!_screenCuts.Any())
+            {
+                for (int i = 0; i < Screen.AllScreens.Length; i++)
+                {
+                    var screenCut = CaptureScreen(i);
+                    _screenCuts.Add(screenCut);
+                }
+            }
+
             foreach (var screen in _screenCuts)
             {
                 screen.Show();
                 screen.Activate();
             }
+
+            isCapturing = true;
         }
 
         private ScreenCut CaptureScreen(int index)
@@ -54,17 +86,20 @@ namespace LemonPlatform.CustomControls.Controls.ScreenCuts
 
             CloseScreenCuts();
             ScreenCut.ClearCaptureScreenId();
+            isCapturing = false;
         }
 
         private void ScreenCutCutCanceled()
         {
             CaptureCanceled?.Invoke();
+            isCapturing = false;
         }
 
         private void ScreenCutCutCompleted(CroppedBitmap bitmap)
         {
             CaptureCompleted?.Invoke(bitmap);
             if (_copyToClipboard) Clipboard.SetImage(bitmap);
+            isCapturing = false;
         }
 
         private void CloseScreenCuts()
@@ -76,6 +111,7 @@ namespace LemonPlatform.CustomControls.Controls.ScreenCuts
             }
 
             _screenCuts.Clear();
+            isCapturing = false;
         }
     }
 }

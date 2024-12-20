@@ -133,6 +133,59 @@
         </Setter>
     </Style>
 
+    <Style
+        x:Key="SC.ColorRadioButton"
+        TargetType="{x:Type RadioButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FrameworkElement.OverridesDefaultStyle" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="Width" Value="15" />
+        <Setter Property="Height" Value="15" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Border
+                        x:Name="PART_Border"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="0"
+                        CornerRadius="7">
+                        <Ellipse
+                            x:Name="PART_Ellipse"
+                            Width="7"
+                            Height="7"
+                            Fill="{DynamicResource SC.BackgroundSolidColorBrush}"
+                            Visibility="Collapsed" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Ellipse" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked" />
+                                <VisualState x:Name="Indeterminate" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value="0.8" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="{x:Type controls:ScreenCut}">
         <Setter Property="WindowState" Value="Maximized"/>
         <Setter Property="WindowStyle" Value="None"/>
@@ -215,10 +268,10 @@
                                         x:Name="PART_WrapPanelColor"
                                         Margin="10"
                                         VerticalAlignment="Center">
-                                        <RadioButton Margin="4,0" Background="Red" IsChecked="True"/>
-                                        <RadioButton Margin="4,0" Background="DodgerBlue"/>
-                                        <RadioButton Margin="4,0" Background="LimeGreen"/>
-                                        <RadioButton Margin="4,0" Background="Yellow"/>
+                                        <RadioButton Margin="4,0" Style="{StaticResource SC.ColorRadioButton}" Background="Red" IsChecked="True"/>
+                                        <RadioButton Margin="4,0" Style="{StaticResource SC.ColorRadioButton}" Background="DodgerBlue"/>
+                                        <RadioButton Margin="4,0" Style="{StaticResource SC.ColorRadioButton}" Background="LimeGreen"/>
+                                        <RadioButton Margin="4,0" Style="{StaticResource SC.ColorRadioButton}" Background="Yellow"/>
                                     </WrapPanel>
                                 </Border>
                             </Popup>
