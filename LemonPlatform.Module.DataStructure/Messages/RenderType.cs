@@ -3,6 +3,7 @@
     public enum RenderType
     {
         AVLTree,
-        SkipList
+        SkipList,
+        RBTree
     }
 }
