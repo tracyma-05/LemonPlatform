@@ -3,6 +3,7 @@
     public enum RBTreeColor
     {
         Red = 0,
-        Black = 1
+        Black = 1,
+        Debug = 2
     }
 }

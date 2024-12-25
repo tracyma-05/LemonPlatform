@@ -73,18 +73,19 @@ namespace LemonPlatform.Module.DataStructure.Models.RB
             node.Right.Color = RBTreeColor.Black;
         }
 
-        public void Add(TKey key, TValue value)
+        public async Task Add(TKey key, TValue value, int delay, bool isDebug, EventHandler eventHandler)
         {
             if (_root != null)
             {
                 DataMessageHelper.SendMessage(RenderType.RBTree, $"{_root.Key} - Origin Root");
             }
 
-            _root = Add(_root, key, value);
+            _root = await Add(_root, key, value, delay, isDebug, eventHandler);
             _root.Color = RBTreeColor.Black;
+            eventHandler.Invoke(this, EventArgs.Empty);
         }
 
-        private RBTreeNode<TKey, TValue> Add(RBTreeNode<TKey, TValue> node, TKey key, TValue value)
+        private async Task<RBTreeNode<TKey, TValue>> Add(RBTreeNode<TKey, TValue> node, TKey key, TValue value, int delay, bool isDebug, EventHandler eventHandler)
         {
             if (node == null)
             {
@@ -93,16 +94,16 @@ namespace LemonPlatform.Module.DataStructure.Models.RB
             }
 
             DataMessageHelper.SendMessage(RenderType.RBTree, $"{node.Key} - Add Key {key}");
-
+            await DebugRBTreeAsync(node, delay, isDebug, eventHandler);
             if (key.CompareTo(node.Key) < 0)
             {
                 DataMessageHelper.SendMessage(RenderType.RBTree, $"{node.Key} - Add Left");
-                node.Left = Add(node.Left, key, value);
+                node.Left = await Add(node.Left, key, value, delay, isDebug, eventHandler);
             }
             else if (key.CompareTo(node.Key) > 0)
             {
                 DataMessageHelper.SendMessage(RenderType.RBTree, $"{node.Key} - Add Right");
-                node.Right = Add(node.Right, key, value);
+                node.Right = await Add(node.Right, key, value, delay, isDebug, eventHandler);
             }
             else
             {
@@ -112,23 +113,38 @@ namespace LemonPlatform.Module.DataStructure.Models.RB
 
             if (IsRed(node.Right) && !IsRed(node.Left))
             {
+                await DebugRBTreeAsync(node, delay, isDebug, eventHandler);
                 DataMessageHelper.SendMessage(RenderType.RBTree, $"{node.Key} - Left Rotate");
                 node = LeftRotate(node);
             }
 
             if (IsRed(node.Left) && IsRed(node.Left.Left))
             {
+                await DebugRBTreeAsync(node, delay, isDebug, eventHandler);
                 DataMessageHelper.SendMessage(RenderType.RBTree, $"{node.Key} - Right Rotate");
                 node = RightRotate(node);
             }
 
             if (IsRed(node.Left) && IsRed(node.Right))
             {
+                await DebugRBTreeAsync(node, delay, isDebug, eventHandler);
                 DataMessageHelper.SendMessage(RenderType.RBTree, $"{node.Key} - Flip Color");
                 FlipColor(node);
             }
 
             return node;
+        }
+
+        private async Task DebugRBTreeAsync(RBTreeNode<TKey, TValue>? node, int delay, bool isDebug, EventHandler eventHandler)
+        {
+            if (isDebug)
+            {
+                var origin = node.Color;
+                node.Color = RBTreeColor.Debug;
+                eventHandler.Invoke(this, EventArgs.Empty);
+                await Task.Delay(delay);
+                node.Color = origin;
+            }
         }
     }
 }
