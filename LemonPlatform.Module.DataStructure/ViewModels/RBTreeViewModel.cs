@@ -27,6 +27,11 @@ namespace LemonPlatform.Module.DataStructure.ViewModels
         [ObservableProperty]
         private int _delay;
 
+        partial void OnDelayChanged(int oldValue, int newValue)
+        {
+            if (Render != null) Render.Delay = Delay;
+        }
+
         [ObservableProperty]
         private bool _isDebug;
 
