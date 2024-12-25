@@ -37,7 +37,9 @@
 
             <GroupBox Header="Demo" Margin="5">
                 <StackPanel Orientation="Horizontal">
-                    <Button Command="{Binding LLCommand}" Width="50" Content="LL" Height="30" Margin="10"/>
+                    <Button Command="{Binding LRCommand}" Width="50" Content="LR" Height="30" Margin="10"/>
+                    <Button Command="{Binding RRCommand}" Width="50" Content="RR" Height="30" Margin="10"/>
+                    <Button Command="{Binding FCCommand}" Width="50" Content="FC" Height="30" Margin="10"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>

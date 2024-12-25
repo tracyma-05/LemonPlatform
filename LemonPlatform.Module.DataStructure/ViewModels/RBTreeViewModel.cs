@@ -80,6 +80,57 @@ namespace LemonPlatform.Module.DataStructure.ViewModels
             Render.ReInit = true;
         }
 
+        [RelayCommand]
+        private async Task LR(CancellationToken token)
+        {
+            Input = "8";
+            LoadCommand.Execute(null);
+
+            IsDebug = true;
+            Key = 9;
+            await AddCommand.ExecuteAsync(Key);
+
+            Key = 10;
+            await AddCommand.ExecuteAsync(Key);
+
+            Key = 11;
+            await AddCommand.ExecuteAsync(Key);
+            Input = "8,9,10,11";
+            IsDebug = false;
+        }
+
+        [RelayCommand]
+        private async Task RR(CancellationToken token)
+        {
+            Input = "10";
+            LoadCommand.Execute(null);
+
+            IsDebug = true;
+            Key = 9;
+            await AddCommand.ExecuteAsync(Key);
+
+            Key = 8;
+            await AddCommand.ExecuteAsync(Key);
+            Input = "10,9,8";
+            IsDebug = false;
+        }
+
+        [RelayCommand]
+        private async Task FC(CancellationToken token)
+        {
+            Input = "8";
+            LoadCommand.Execute(null);
+
+            IsDebug = true;
+            Key = 9;
+            await AddCommand.ExecuteAsync(Key);
+
+            Key = 10;
+            await AddCommand.ExecuteAsync(Key);
+            Input = "8,9,10";
+            IsDebug = false;
+        }
+
         #region private
 
         private void UpdateInput()
