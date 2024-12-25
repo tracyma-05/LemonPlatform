@@ -12,8 +12,8 @@ namespace LemonPlatform.Module.Game
         {
             return new List<PluginItem>
             {
-                new PluginItem("Mine Sweeper", typeof(MineSweeperView), "Mine", "#052E24", "mine sweeper", PluginType.Games),
-                new PluginItem("Puzzle", typeof(APuzzleADayView), "Puzzle", "#052E24", "a puzzle a day", PluginType.Games),
+                new PluginItem("Mine Sweeper", typeof(MineSweeperView), "Mine", "#edd1d8", "mine sweeper", PluginType.Games),
+                new PluginItem("Puzzle", typeof(APuzzleADayView), "Puzzle", "#cca4e3", "a puzzle a day", PluginType.Games),
             };
         }
 

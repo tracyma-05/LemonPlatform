@@ -12,7 +12,7 @@ namespace LemonPlatform.Module.Visualization
         {
             return new List<PluginItem>
             {
-                new PluginItem("Snow Flake", typeof(SnowFlakeView), "Snowflake", "#FAA570", "fractal drawing with snow flake.", PluginType.Visualization),
+                new PluginItem("Snow Flake", typeof(SnowFlakeView), "Snowflake", "#e29c45", "fractal drawing with snow flake.", PluginType.Visualization),
             };
         }
 
