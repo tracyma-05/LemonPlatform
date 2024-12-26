@@ -9,18 +9,18 @@
 ***Lemon Platform*** is a WPF-based plugin development framework that facilitates the integration of custom features. The framework currently supports various functionalities, such as visualization of **sorting algorithms**, visualization of **data structures**, and games like ***Minesweeper*** and ***A Puzzle A Day***.
 ## :sparkles:Features
 
-## :star:ToDo
+## :star:Modules
 - **Data Structures**
-	- [x] Skip List
-	- [x] Red Black Tree
-	- [x] AVL Tree
+	- [x] [Skip List](documents/data-structure/skip-list.md)
+	- [x] [Red Black Tree](documents/data-structure/red-black-tree.md)
+	- [x] [AVL Tree](documents/data-structure/avl-tree.md)
 	- [ ] Balance Tree
 	- [ ] Max Heap
 	
 - **Algorithm**
 	- [ ] Bubble Sort
 	- [ ] Bubble Sort(v2)
-	- [x] Selection Sort
+	- [x] [Selection Sort](documents/aggorithm/selection-sort.md)
 	- [ ] Shell Sort
 	- [ ] Insert Sort(v1)
 	- [ ] Insert Sort(v2)
@@ -36,8 +36,8 @@
 	- [ ] Graph
 
 - **Game**
-	- [x] Puzzle
-	- [x] Mine Sweeper
+	- [x] [A Puzzle A Day](documents/game/a-puzzle-a-day.md)
+	- [x] [Mine Sweeper](documents/game/mine-sweeper.md)
 
 - **Visualization**
 	- [ ] Snow Flake

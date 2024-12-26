@@ -7,8 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Wpf", "LemonP
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{838AA830-DD75-40C1-A9A1-20737F519241}"
 	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Core", "LemonPlatform.Core\LemonPlatform.Core.csproj", "{A508B86C-B60C-48CC-9AE4-6F9E79F860A4}"
@@ -32,6 +36,42 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Module.Visualization", "LemonPlatform.Module.Visualization\LemonPlatform.Module.Visualization.csproj", "{0871854B-29C1-4F1F-B776-EE5391A98CFD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.CustomControls", "LemonPlatform.CustomControls\LemonPlatform.CustomControls.csproj", "{AEFBE653-F75B-4A4C-A004-76A7F32CFD44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documents", "documents", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "algorithm", "algorithm", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		documents\algorithm\selection-sort.md = documents\algorithm\selection-sort.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data-structure", "data-structure", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		documents\data-structure\avl-tree.md = documents\data-structure\avl-tree.md
+		documents\data-structure\red-black-tree.md = documents\data-structure\red-black-tree.md
+		documents\data-structure\skip-list.md = documents\data-structure\skip-list.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game", "game", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		documents\game\a-puzzle-a-day.md = documents\game\a-puzzle-a-day.md
+		documents\game\mine-sweeper.md = documents\game\mine-sweeper.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "graph", "graph", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		documents\graph\graph.md = documents\graph\graph.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tool", "tool", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		documents\tool\compare.md = documents\tool\compare.md
+		documents\tool\json-extract.md = documents\tool\json-extract.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualization", "visualization", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		documents\visualization\snow-flake.md = documents\visualization\snow-flake.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +132,7 @@ Global
 		{65F714C0-178B-455F-AE0C-6FF46F788E0A} = {AAFD7BE3-FDF6-4AF8-8A3A-F7A71DADB287}
 		{0871854B-29C1-4F1F-B776-EE5391A98CFD} = {AAFD7BE3-FDF6-4AF8-8A3A-F7A71DADB287}
 		{AEFBE653-F75B-4A4C-A004-76A7F32CFD44} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F28D13C-E0E5-4BFE-AAB8-83F44715B622}
