@@ -73,6 +73,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualization", "visualizat
 		documents\visualization\snow-flake.md = documents\visualization\snow-flake.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "skip-list", "skip-list", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		documents\data-structure\resources\skip-list\sl-add.gif = documents\data-structure\resources\skip-list\sl-add.gif
+		documents\data-structure\resources\skip-list\sl-find.gif = documents\data-structure\resources\skip-list\sl-find.gif
+		documents\data-structure\resources\skip-list\sl-position.jpg = documents\data-structure\resources\skip-list\sl-position.jpg
+		documents\data-structure\resources\skip-list\sl-remove.gif = documents\data-structure\resources\skip-list\sl-remove.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "avl-tree", "avl-tree", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
