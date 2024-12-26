@@ -85,6 +85,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "skip-list", "skip-list", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "avl-tree", "avl-tree", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "features", "features", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		resources\features\chat.png = resources\features\chat.png
+		resources\features\home.png = resources\features\home.png
+		resources\features\log.png = resources\features\log.png
+		resources\features\plugin.png = resources\features\plugin.png
+		resources\features\schedule.png = resources\features\schedule.png
+		resources\features\setting.png = resources\features\setting.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
