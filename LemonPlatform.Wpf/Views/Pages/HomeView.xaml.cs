@@ -1,4 +1,5 @@
 ﻿using LemonPlatform.Core.Infrastructures.Denpendency;
+using LemonPlatform.Wpf.Helpers;
 using LemonPlatform.Wpf.ViewModels.Pages;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,6 +9,8 @@ namespace LemonPlatform.Wpf.Views.Pages
 {
     public partial class HomeView : UserControl, ITransientDependency
     {
+        private const string GitHubUrl = "https://github.com/tracyma-05/LemonPlatform";
+        private const string EmailUrl = "mailto://zhongbin_ma@outlook.com";
         public HomeView(HomeViewModel model)
         {
             InitializeComponent();
@@ -22,5 +25,9 @@ namespace LemonPlatform.Wpf.Views.Pages
                 popup.IsOpen = true;
             }
         }
+
+        private void GitHubButton_OnClick(object sender, RoutedEventArgs e) => LinkHelper.OpenInBrowser(GitHubUrl);
+
+        private void EmailButton_OnClick(object sender, RoutedEventArgs e) => LinkHelper.OpenInBrowser(EmailUrl);
     }
 }
