@@ -21,24 +21,31 @@ namespace LemonPlatform.Core.Services
             var jobDetails = new List<JobDetailDto>();
             foreach (var jobKey in jobKeys)
             {
-                var jobDetail = await scheduler.GetJobDetail(jobKey);
-                var dto = new JobDetailDto
+                try
                 {
-                    JobKey = jobKey,
-                    JobType = jobDetail.JobType.FullName,
-                    Durable = jobDetail.Durable,
-                    PersistJobDataAfterExecution = jobDetail.PersistJobDataAfterExecution,
-                    Description = jobDetail.Description
-                };
+                    var jobDetail = await scheduler.GetJobDetail(jobKey);
+                    var dto = new JobDetailDto
+                    {
+                        JobKey = jobKey,
+                        JobType = jobDetail.JobType.FullName,
+                        Durable = jobDetail.Durable,
+                        PersistJobDataAfterExecution = jobDetail.PersistJobDataAfterExecution,
+                        Description = jobDetail.Description
+                    };
 
-                var triggers = await scheduler.GetTriggersOfJob(jobKey);
-                if (triggers != null && triggers.Any())
-                {
-                    var state = await scheduler.GetTriggerState(triggers.First().Key);
-                    dto.TriggerState = state;
+                    var triggers = await scheduler.GetTriggersOfJob(jobKey);
+                    if (triggers != null && triggers.Any())
+                    {
+                        var state = await scheduler.GetTriggerState(triggers.First().Key);
+                        dto.TriggerState = state;
+                    }
+
+                    jobDetails.Add(dto);
                 }
-
-                jobDetails.Add(dto);
+                catch
+                {
+                    await scheduler.DeleteJob(jobKey);
+                }
             }
 
             return jobDetails;
