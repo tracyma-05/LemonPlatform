@@ -119,6 +119,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{
 		documents\algorithm\resources\selection-run.gif = documents\algorithm\resources\selection-run.gif
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mine-sweeper", "mine-sweeper", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		documents\game\resources\mine-sweeper\mine-sweeper.gif = documents\game\resources\mine-sweeper\mine-sweeper.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "a-puzzle-a-day", "a-puzzle-a-day", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		documents\game\resources\a-puzzle-a-day\configuration.gif = documents\game\resources\a-puzzle-a-day\configuration.gif
+		documents\game\resources\a-puzzle-a-day\random-all.gif = documents\game\resources\a-puzzle-a-day\random-all.gif
+		documents\game\resources\a-puzzle-a-day\random-one.gif = documents\game\resources\a-puzzle-a-day\random-one.gif
+		documents\game\resources\a-puzzle-a-day\schedule-all.gif = documents\game\resources\a-puzzle-a-day\schedule-all.gif
+		documents\game\resources\a-puzzle-a-day\schedule-one.gif = documents\game\resources\a-puzzle-a-day\schedule-one.gif
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -184,7 +200,7 @@ Global
 		{5F8B10AF-05FC-4A63-AB76-6AD1D48251BD} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
 		{9CA3846C-9F11-42F5-9C2B-A9B7BB9BC7B2} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
 		{9791E918-8EAB-41D0-9502-98AE013305E6} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
-		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {6262CD5B-66FE-47B6-BD88-FF34DD81209F}
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F28D13C-E0E5-4BFE-AAB8-83F44715B622}
