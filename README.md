@@ -10,7 +10,7 @@
 ## :sparkles:Features
 ### Home Page
 Welcome Page and we can get some guide in this page, here is the screen shot:
-![Home](resources/features/home.png)
+![Home](/resources/features/home.png)
 
 ### Chat Page
 All the chat items, you can add new chat and remove any chat in this page. Chat history will save in local sqlite data base, and recover it in next open.
