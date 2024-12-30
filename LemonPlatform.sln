@@ -37,45 +37,53 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Module.Visual
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.CustomControls", "LemonPlatform.CustomControls\LemonPlatform.CustomControls.csproj", "{AEFBE653-F75B-4A4C-A004-76A7F32CFD44}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documents", "documents", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documents", "documents", "{CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "algorithm", "algorithm", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "algorithm", "algorithm", "{6262CD5B-66FE-47B6-BD88-FF34DD81209F}"
 	ProjectSection(SolutionItems) = preProject
 		documents\algorithm\selection-sort.md = documents\algorithm\selection-sort.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data-structure", "data-structure", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data-structure", "data-structure", "{5E4B1E50-D56F-41CF-B772-945EBF86AC6A}"
 	ProjectSection(SolutionItems) = preProject
 		documents\data-structure\avl-tree.md = documents\data-structure\avl-tree.md
 		documents\data-structure\red-black-tree.md = documents\data-structure\red-black-tree.md
 		documents\data-structure\skip-list.md = documents\data-structure\skip-list.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game", "game", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game", "game", "{D61A29DC-FF49-42D1-8E59-7FE3EF0D26CC}"
 	ProjectSection(SolutionItems) = preProject
 		documents\game\a-puzzle-a-day.md = documents\game\a-puzzle-a-day.md
 		documents\game\mine-sweeper.md = documents\game\mine-sweeper.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "graph", "graph", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "graph", "graph", "{5F8B10AF-05FC-4A63-AB76-6AD1D48251BD}"
 	ProjectSection(SolutionItems) = preProject
 		documents\graph\graph.md = documents\graph\graph.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tool", "tool", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tool", "tool", "{9CA3846C-9F11-42F5-9C2B-A9B7BB9BC7B2}"
 	ProjectSection(SolutionItems) = preProject
 		documents\tool\compare.md = documents\tool\compare.md
 		documents\tool\json-extract.md = documents\tool\json-extract.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualization", "visualization", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualization", "visualization", "{9791E918-8EAB-41D0-9502-98AE013305E6}"
 	ProjectSection(SolutionItems) = preProject
 		documents\visualization\snow-flake.md = documents\visualization\snow-flake.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{F222D079-DB78-44F8-8E90-39ECD8C034EB}"
+	ProjectSection(SolutionItems) = preProject
+		resources\features\chat.png = resources\features\chat.png
+		resources\features\home.png = resources\features\home.png
+		resources\features\log.png = resources\features\log.png
+		resources\features\plugin.png = resources\features\plugin.png
+		resources\features\schedule.png = resources\features\schedule.png
+		resources\features\setting.png = resources\features\setting.png
+	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "skip-list", "skip-list", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "skip-list", "skip-list", "{ABC0B3DA-0325-4FAF-B859-7C976F6FB137}"
 	ProjectSection(SolutionItems) = preProject
 		documents\data-structure\resources\skip-list\sl-add.gif = documents\data-structure\resources\skip-list\sl-add.gif
 		documents\data-structure\resources\skip-list\sl-find.gif = documents\data-structure\resources\skip-list\sl-find.gif
@@ -83,11 +91,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "skip-list", "skip-list", "{
 		documents\data-structure\resources\skip-list\sl-remove.gif = documents\data-structure\resources\skip-list\sl-remove.gif
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "avl-tree", "avl-tree", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "avl-tree", "avl-tree", "{75F79872-12F7-4FBD-B73E-D5FD4F8A4BB7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "features", "features", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "features", "features", "{2D78A886-A17F-4FCF-98FA-4DD3B4BC4DFD}"
 	ProjectSection(SolutionItems) = preProject
 		resources\features\chat.png = resources\features\chat.png
 		resources\features\home.png = resources\features\home.png
@@ -156,7 +162,15 @@ Global
 		{65F714C0-178B-455F-AE0C-6FF46F788E0A} = {AAFD7BE3-FDF6-4AF8-8A3A-F7A71DADB287}
 		{0871854B-29C1-4F1F-B776-EE5391A98CFD} = {AAFD7BE3-FDF6-4AF8-8A3A-F7A71DADB287}
 		{AEFBE653-F75B-4A4C-A004-76A7F32CFD44} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{6262CD5B-66FE-47B6-BD88-FF34DD81209F} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
+		{5E4B1E50-D56F-41CF-B772-945EBF86AC6A} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
+		{D61A29DC-FF49-42D1-8E59-7FE3EF0D26CC} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
+		{5F8B10AF-05FC-4A63-AB76-6AD1D48251BD} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
+		{9CA3846C-9F11-42F5-9C2B-A9B7BB9BC7B2} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
+		{9791E918-8EAB-41D0-9502-98AE013305E6} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
+		{ABC0B3DA-0325-4FAF-B859-7C976F6FB137} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
+		{75F79872-12F7-4FBD-B73E-D5FD4F8A4BB7} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
+		{2D78A886-A17F-4FCF-98FA-4DD3B4BC4DFD} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F28D13C-E0E5-4BFE-AAB8-83F44715B622}
