@@ -7,6 +7,7 @@ using LemonPlatform.Core.Infrastructures.Denpendency;
 using LemonPlatform.Core.Infrastructures.Ioc;
 using LemonPlatform.Core.Infrastructures.MainWindowService;
 using LemonPlatform.Core.Models;
+using LemonPlatform.Wpf.Helpers;
 using LemonPlatform.Wpf.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
@@ -27,6 +28,12 @@ namespace LemonPlatform.Wpf.ViewModels
             SelectMenuItem = MenuItems.First(x => x.Title == _defaultMenu);
             MessageHelper.SendSnackMessage("Lemon Platform");
             MessageHelper.SendStatusBarTextMessage("Ready");
+
+            var update = UpdateHelper.CheckForUpdatesAsync().Result;
+            if (update.HasNewVersion)
+            {
+                //MessageHelper
+            }
         }
 
         [ObservableProperty]
@@ -111,6 +118,11 @@ namespace LemonPlatform.Wpf.ViewModels
                         IsIndeterminate = bool.Parse(message.Content.ToString()!);
                         break;
                     }
+
+                case MessageType.Dialog:
+
+                    break;
+
                 default:
 
                     break;

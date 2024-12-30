@@ -7,24 +7,27 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
 		<ApplicationIcon>Resources\Icons\lemon.ico</ApplicationIcon>
+		<Authors>Tracy Ma</Authors>
+		<Copyright>Copyright © Tracy Ma</Copyright>
+		<AssemblyVersion>1.1.0.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Icons\lemon.ico" />
-	  <None Remove="Resources\Images\home.png" />
-	  <None Remove="Resources\Images\lemon.png" />
+		<None Remove="Resources\Icons\lemon.ico" />
+		<None Remove="Resources\Images\home.png" />
+		<None Remove="Resources\Images\lemon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <COMReference Include="IWshRuntimeLibrary">
-	    <WrapperTool>tlbimp</WrapperTool>
-	    <VersionMinor>0</VersionMinor>
-	    <VersionMajor>1</VersionMajor>
-	    <Guid>f935dc20-1cf0-11d0-adb9-00c04fd58a0b</Guid>
-	    <Lcid>0</Lcid>
-	    <Isolated>false</Isolated>
-	    <EmbedInteropTypes>true</EmbedInteropTypes>
-	  </COMReference>
+		<COMReference Include="IWshRuntimeLibrary">
+			<WrapperTool>tlbimp</WrapperTool>
+			<VersionMinor>0</VersionMinor>
+			<VersionMajor>1</VersionMajor>
+			<Guid>f935dc20-1cf0-11d0-adb9-00c04fd58a0b</Guid>
+			<Lcid>0</Lcid>
+			<Isolated>false</Isolated>
+			<EmbedInteropTypes>true</EmbedInteropTypes>
+		</COMReference>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -45,18 +48,14 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="nlog.config">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Resource Include="Resources\Icons\lemon.ico" />
-	  <Resource Include="Resources\Images\home.png" />
-	  <Resource Include="Resources\Images\lemon.png" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="ViewModels\UserControls\" />
+		<Resource Include="Resources\Icons\lemon.ico" />
+		<Resource Include="Resources\Images\home.png" />
+		<Resource Include="Resources\Images\lemon.png" />
 	</ItemGroup>
 
 </Project>

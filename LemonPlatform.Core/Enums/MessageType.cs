@@ -7,6 +7,7 @@
         IsBusy,
         Snack,
         StatusBarText,
-        StatusBarProcess
+        StatusBarProcess,
+        Dialog
     }
 }
