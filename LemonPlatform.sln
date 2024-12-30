@@ -74,6 +74,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualization", "visualizat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{F222D079-DB78-44F8-8E90-39ECD8C034EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "avl-tree", "avl-tree", "{75F79872-12F7-4FBD-B73E-D5FD4F8A4BB7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "features", "features", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
 		resources\features\chat.png = resources\features\chat.png
 		resources\features\home.png = resources\features\home.png
@@ -83,24 +87,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{
 		resources\features\setting.png = resources\features\setting.png
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "skip-list", "skip-list", "{ABC0B3DA-0325-4FAF-B859-7C976F6FB137}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "skip-list", "skip-list", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
 		documents\data-structure\resources\skip-list\sl-add.gif = documents\data-structure\resources\skip-list\sl-add.gif
 		documents\data-structure\resources\skip-list\sl-find.gif = documents\data-structure\resources\skip-list\sl-find.gif
 		documents\data-structure\resources\skip-list\sl-position.jpg = documents\data-structure\resources\skip-list\sl-position.jpg
 		documents\data-structure\resources\skip-list\sl-remove.gif = documents\data-structure\resources\skip-list\sl-remove.gif
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "avl-tree", "avl-tree", "{75F79872-12F7-4FBD-B73E-D5FD4F8A4BB7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "features", "features", "{2D78A886-A17F-4FCF-98FA-4DD3B4BC4DFD}"
-	ProjectSection(SolutionItems) = preProject
-		resources\features\chat.png = resources\features\chat.png
-		resources\features\home.png = resources\features\home.png
-		resources\features\log.png = resources\features\log.png
-		resources\features\plugin.png = resources\features\plugin.png
-		resources\features\schedule.png = resources\features\schedule.png
-		resources\features\setting.png = resources\features\setting.png
 	EndProjectSection
 EndProject
 Global
@@ -168,9 +162,8 @@ Global
 		{5F8B10AF-05FC-4A63-AB76-6AD1D48251BD} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
 		{9CA3846C-9F11-42F5-9C2B-A9B7BB9BC7B2} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
 		{9791E918-8EAB-41D0-9502-98AE013305E6} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
-		{ABC0B3DA-0325-4FAF-B859-7C976F6FB137} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
 		{75F79872-12F7-4FBD-B73E-D5FD4F8A4BB7} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
-		{2D78A886-A17F-4FCF-98FA-4DD3B4BC4DFD} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F28D13C-E0E5-4BFE-AAB8-83F44715B622}
