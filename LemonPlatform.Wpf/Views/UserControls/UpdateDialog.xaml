@@ -5,8 +5,50 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LemonPlatform.Wpf.Views.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="518" 
+             d:DesignWidth="320">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="15">
+            <Image Source="/Resources/Images/update.png" Stretch="Uniform" Height="100" Width="100"/>
+            <ProgressBar Value="{Binding Current}" Maximum="{Binding Total}">
+                <ProgressBar.Style>
+                    <Style TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
+                        <Setter Property="IsIndeterminate" Value="True"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Status}" Value="Updating">
+                                <Setter Property="IsIndeterminate" Value="False"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="Success">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="Fail">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ProgressBar.Style>
+            </ProgressBar>
+        </StackPanel>
+        
+        <TextBox Grid.Row="1"
+                 Text="{Binding Logs}" 
+                 Margin="15"
+                 AcceptsReturn="True"
+                 AcceptsTab="True"
+                 IsReadOnly="True"     
+                 VerticalContentAlignment="Top" 
+                 VerticalScrollBarVisibility="Auto"
+                 TextWrapping="Wrap"/>
 
+        <Button Grid.Row="2"
+                Margin="15" 
+                Content="Update"
+                Command="{Binding RestartCommand}"
+                HorizontalAlignment="Stretch"/>
     </Grid>
 </UserControl>

@@ -26,6 +26,9 @@ namespace LemonPlatform.Wpf.ViewModels.UserControls
         [ObservableProperty]
         private string _description;
 
+        [ObservableProperty]
+        private bool _isPopupVisible;
+
         [RelayCommand]
         private void Ignore()
         {

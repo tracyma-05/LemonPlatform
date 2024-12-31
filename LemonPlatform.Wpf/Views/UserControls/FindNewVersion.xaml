@@ -6,55 +6,64 @@
              xmlns:local="clr-namespace:LemonPlatform.Wpf.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="400" 
-             d:DesignWidth="300">
-    <Grid>
+             d:DesignWidth="400">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
-            <Image Source="/Resources/Images/update.png" Height="180" Width="200"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="Current Version: " Style="{StaticResource MaterialDesignBodySmallTextBlock}" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding CurrentVersion}" Style="{StaticResource MaterialDesignBodySmallTextBlock}" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Center"/>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,10">
+            <Image Source="/Resources/Images/update.png" Height="180" Width="200" Margin="0,0,0,10"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Current Version: " 
+                   Style="{StaticResource MaterialDesignBodySmallTextBlock}" 
+                   Foreground="{DynamicResource MaterialDesignBody}" 
+                   HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding CurrentVersion}" 
+                   Style="{StaticResource MaterialDesignBodySmallTextBlock}" 
+                   Foreground="{DynamicResource MaterialDesignBody}" 
+                   HorizontalAlignment="Center" Margin="0,0,0,5"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="Find New Version: " Style="{StaticResource MaterialDesignBodyMediumTextBlock}" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding Version}" Style="{StaticResource MaterialDesignBodyLargeTextBlock}" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Center"/>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Find New Version: " 
+                   Style="{StaticResource MaterialDesignBodyMediumTextBlock}" 
+                   Foreground="{DynamicResource MaterialDesignBody}" 
+                   HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding Version}" 
+                   Style="{StaticResource MaterialDesignBodyLargeTextBlock}" 
+                   Foreground="{DynamicResource MaterialDesignBody}" 
+                   HorizontalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
-        <TextBox Margin="10"
-                 VerticalContentAlignment="Top" 
-                 VerticalScrollBarVisibility="Auto"
-                 TextWrapping="Wrap"
-                 IsReadOnly="True"
-                 Grid.Row="1"
-                 BorderThickness="0"
-                 Text="{Binding Description}"
-                 AcceptsReturn="True"
-                 AcceptsTab="True"/>
 
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+        <TextBox Margin="10"
+             VerticalContentAlignment="Top" 
+             VerticalScrollBarVisibility="Auto"
+             TextWrapping="Wrap"
+             IsReadOnly="True"
+             Grid.Row="1"
+             BorderThickness="0"
+             Text="{Binding Description}"
+             AcceptsReturn="True"
+             AcceptsTab="True"/>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">
+            <CheckBox Content="Don't show this again"
+                  IsChecked="{Binding IsPopupVisible, Mode=TwoWay}"
+                  Margin="0,0,10,0"/>
+
             <Button Content="Ignore" 
-                    Command="{Binding IgnoreCommand}"
-                    Style="{StaticResource MaterialDesignPaperLightButton}"
-                    Grid.Column="0" 
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    BorderThickness="0"/>
-            
+                Command="{Binding IgnoreCommand}"
+                Style="{StaticResource MaterialDesignPaperLightButton}"
+                Margin="0,0,10,0"/>
+
             <Button Content="Update"
-                    Command="{Binding UpdateCommand}"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}"
-                    Grid.Column="2" 
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    BorderThickness="0"/>
-        </Grid>
+                Command="{Binding UpdateCommand}"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"/>
+        </StackPanel>
     </Grid>
+
 </UserControl>
