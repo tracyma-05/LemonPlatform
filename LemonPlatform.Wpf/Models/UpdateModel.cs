@@ -4,6 +4,10 @@
     {
         public string Version { get; set; }
 
+        public string CurrentVersion { get; set; }
+
+        public string Description { get; set; }
+
         public bool HasNewVersion { get; set; } = false;
 
         public Dictionary<string, string> Main { get; set; } = new Dictionary<string, string>();

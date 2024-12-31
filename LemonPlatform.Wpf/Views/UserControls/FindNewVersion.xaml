@@ -14,10 +14,14 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <Image Source="/Resources/Images/update.png" Width="100" Stretch="UniformToFill"/>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Find New Version: " Style="{StaticResource MaterialDesignTitleLargeTextBlock}" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding Version}" Style="{StaticResource MaterialDesignDisplaySmallTextBlock}" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Center"/>
+            <Image Source="/Resources/Images/update.png" Height="180" Width="200"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Current Version: " Style="{StaticResource MaterialDesignBodySmallTextBlock}" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding CurrentVersion}" Style="{StaticResource MaterialDesignBodySmallTextBlock}" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Find New Version: " Style="{StaticResource MaterialDesignBodyMediumTextBlock}" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding Version}" Style="{StaticResource MaterialDesignBodyLargeTextBlock}" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
         <TextBox Margin="10"
@@ -34,7 +38,6 @@
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Content="Ignore" 
@@ -44,7 +47,7 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     BorderThickness="0"/>
-            <Rectangle Grid.Column="1"  Stretch="Fill" StrokeThickness="1" Stroke="Gray"/>
+            
             <Button Content="Update"
                     Command="{Binding UpdateCommand}"
                     Style="{StaticResource MaterialDesignRaisedLightButton}"
@@ -53,6 +56,5 @@
                     VerticalAlignment="Stretch"
                     BorderThickness="0"/>
         </Grid>
-
     </Grid>
 </UserControl>

@@ -9,13 +9,11 @@
 		<ApplicationIcon>Resources\Icons\lemon.ico</ApplicationIcon>
 		<Authors>Tracy Ma</Authors>
 		<Copyright>Copyright © Tracy Ma</Copyright>
-		<AssemblyVersion>1.1.0.0</AssemblyVersion>
+		<AssemblyVersion>0.1.0.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="Resources\Icons\lemon.ico" />
-		<None Remove="Resources\Images\home.png" />
-		<None Remove="Resources\Images\lemon.png" />
+	  <None Remove="Resources\Images\update.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -56,6 +54,7 @@
 		<Resource Include="Resources\Icons\lemon.ico" />
 		<Resource Include="Resources\Images\home.png" />
 		<Resource Include="Resources\Images\lemon.png" />
+		<Resource Include="Resources\Images\update.png" />
 	</ItemGroup>
 
 </Project>

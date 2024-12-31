@@ -2,12 +2,15 @@
 using LemonPlatform.Core.Commons;
 using LemonPlatform.Core.Databases;
 using LemonPlatform.Core.Databases.Models;
+using LemonPlatform.Core.Helpers;
 using LemonPlatform.Core.Infrastructures.Ioc;
 using LemonPlatform.Wpf.Configs;
 using LemonPlatform.Wpf.Exceptions;
 using LemonPlatform.Wpf.Helpers;
 using LemonPlatform.Wpf.Resources;
+using LemonPlatform.Wpf.ViewModels.UserControls;
 using LemonPlatform.Wpf.Views;
+using LemonPlatform.Wpf.Views.UserControls;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,6 +76,8 @@ namespace LemonPlatform.Wpf
             notifyIcon.DataContext = notifyIconDataContext;
 
             PostInit();
+
+            await CheckUpdateAsync();
         }
 
         protected override async void OnExit(ExitEventArgs e)
@@ -80,6 +85,18 @@ namespace LemonPlatform.Wpf
             await _host.StopAsync();
             notifyIcon.Dispose();
             base.OnExit(e);
+        }
+
+        private async Task CheckUpdateAsync()
+        {
+            var update = await UpdateHelper.CheckForUpdatesAsync();
+            if (update.HasNewVersion)
+            {
+                var model = new FindNewVersionViewModel(update);
+                var view = new FindNewVersion(model);
+
+                MessageHelper.SendDialog(view);
+            }
         }
 
         private async Task<bool> GetThemeAsync()

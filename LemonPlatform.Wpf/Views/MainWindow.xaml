@@ -91,7 +91,7 @@
                         <StackPanel>
                             <Button Content="User Info"/>
                             <Separator />
-                            <Button Content="Check Update" />
+                            <Button Content="Check Update" Command="{Binding CheckUpdateCommand}"/>
                             <Separator />
                             <Button Content="Exit" Command="{Binding ExitCommand}"/>
                         </StackPanel>

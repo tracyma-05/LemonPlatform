@@ -19,121 +19,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Core", "Lemon
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libraries", "libraries", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{AAFD7BE3-FDF6-4AF8-8A3A-F7A71DADB287}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.BusyIndicator", "LemonPlatform.BusyIndicator\LemonPlatform.BusyIndicator.csproj", "{B7D8F202-34C5-4E2B-A6AA-023FB5C5FE40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Module.Tools", "LemonPlatform.Module.Tools\LemonPlatform.Module.Tools.csproj", "{B5739466-A452-42EE-9D7A-F4C5D277674F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Module.DataStructure", "LemonPlatform.Module.DataStructure\LemonPlatform.Module.DataStructure.csproj", "{461A4D44-3FC3-4846-B4F2-F9514F5A5595}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Module.Algorithm", "LemonPlatform.Module.Algorithm\LemonPlatform.Module.Algorithm.csproj", "{41BBD38C-D760-449B-83E5-0CE9C37C6B9E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Module.Graph", "LemonPlatform.Module.Graph\LemonPlatform.Module.Graph.csproj", "{37B9636D-28EA-46B7-ACFD-4FEBE5DA9DB8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Module.Game", "LemonPlatform.Module.Game\LemonPlatform.Module.Game.csproj", "{65F714C0-178B-455F-AE0C-6FF46F788E0A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Module.Visualization", "LemonPlatform.Module.Visualization\LemonPlatform.Module.Visualization.csproj", "{0871854B-29C1-4F1F-B776-EE5391A98CFD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.CustomControls", "LemonPlatform.CustomControls\LemonPlatform.CustomControls.csproj", "{AEFBE653-F75B-4A4C-A004-76A7F32CFD44}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documents", "documents", "{CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "algorithm", "algorithm", "{6262CD5B-66FE-47B6-BD88-FF34DD81209F}"
-	ProjectSection(SolutionItems) = preProject
-		documents\algorithm\selection-sort.md = documents\algorithm\selection-sort.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data-structure", "data-structure", "{5E4B1E50-D56F-41CF-B772-945EBF86AC6A}"
-	ProjectSection(SolutionItems) = preProject
-		documents\data-structure\avl-tree.md = documents\data-structure\avl-tree.md
-		documents\data-structure\red-black-tree.md = documents\data-structure\red-black-tree.md
-		documents\data-structure\skip-list.md = documents\data-structure\skip-list.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game", "game", "{D61A29DC-FF49-42D1-8E59-7FE3EF0D26CC}"
-	ProjectSection(SolutionItems) = preProject
-		documents\game\a-puzzle-a-day.md = documents\game\a-puzzle-a-day.md
-		documents\game\mine-sweeper.md = documents\game\mine-sweeper.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "graph", "graph", "{5F8B10AF-05FC-4A63-AB76-6AD1D48251BD}"
-	ProjectSection(SolutionItems) = preProject
-		documents\graph\graph.md = documents\graph\graph.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tool", "tool", "{9CA3846C-9F11-42F5-9C2B-A9B7BB9BC7B2}"
-	ProjectSection(SolutionItems) = preProject
-		documents\tool\compare.md = documents\tool\compare.md
-		documents\tool\json-extract.md = documents\tool\json-extract.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualization", "visualization", "{9791E918-8EAB-41D0-9502-98AE013305E6}"
-	ProjectSection(SolutionItems) = preProject
-		documents\visualization\snow-flake.md = documents\visualization\snow-flake.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{F222D079-DB78-44F8-8E90-39ECD8C034EB}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "features", "features", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-	ProjectSection(SolutionItems) = preProject
-		resources\features\chat.png = resources\features\chat.png
-		resources\features\home.png = resources\features\home.png
-		resources\features\log.png = resources\features\log.png
-		resources\features\plugin.png = resources\features\plugin.png
-		resources\features\schedule.png = resources\features\schedule.png
-		resources\features\setting.png = resources\features\setting.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "skip-list", "skip-list", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-	ProjectSection(SolutionItems) = preProject
-		documents\data-structure\resources\skip-list\sl-add.gif = documents\data-structure\resources\skip-list\sl-add.gif
-		documents\data-structure\resources\skip-list\sl-find.gif = documents\data-structure\resources\skip-list\sl-find.gif
-		documents\data-structure\resources\skip-list\sl-position.jpg = documents\data-structure\resources\skip-list\sl-position.jpg
-		documents\data-structure\resources\skip-list\sl-remove.gif = documents\data-structure\resources\skip-list\sl-remove.gif
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "avl-tree", "avl-tree", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-	ProjectSection(SolutionItems) = preProject
-		documents\data-structure\resources\avl-tree\avl-add.gif = documents\data-structure\resources\avl-tree\avl-add.gif
-		documents\data-structure\resources\avl-tree\avl-ll.gif = documents\data-structure\resources\avl-tree\avl-ll.gif
-		documents\data-structure\resources\avl-tree\avl-lr.gif = documents\data-structure\resources\avl-tree\avl-lr.gif
-		documents\data-structure\resources\avl-tree\avl-remove.gif = documents\data-structure\resources\avl-tree\avl-remove.gif
-		documents\data-structure\resources\avl-tree\avl-rl.gif = documents\data-structure\resources\avl-tree\avl-rl.gif
-		documents\data-structure\resources\avl-tree\avl-rr.gif = documents\data-structure\resources\avl-tree\avl-rr.gif
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "red-black-tree", "red-black-tree", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-	ProjectSection(SolutionItems) = preProject
-		documents\data-structure\resources\red-black-tree\rbt-fc.gif = documents\data-structure\resources\red-black-tree\rbt-fc.gif
-		documents\data-structure\resources\red-black-tree\rbt-lr.gif = documents\data-structure\resources\red-black-tree\rbt-lr.gif
-		documents\data-structure\resources\red-black-tree\rbt-rr.gif = documents\data-structure\resources\red-black-tree\rbt-rr.gif
-		documents\data-structure\resources\red-black-tree\rbt.png = documents\data-structure\resources\red-black-tree\rbt.png
-		documents\data-structure\resources\red-black-tree\rdt-add.gif = documents\data-structure\resources\red-black-tree\rdt-add.gif
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-	ProjectSection(SolutionItems) = preProject
-		documents\algorithm\resources\selection-run.gif = documents\algorithm\resources\selection-run.gif
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mine-sweeper", "mine-sweeper", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-	ProjectSection(SolutionItems) = preProject
-		documents\game\resources\mine-sweeper\mine-sweeper.gif = documents\game\resources\mine-sweeper\mine-sweeper.gif
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "a-puzzle-a-day", "a-puzzle-a-day", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-	ProjectSection(SolutionItems) = preProject
-		documents\game\resources\a-puzzle-a-day\configuration.gif = documents\game\resources\a-puzzle-a-day\configuration.gif
-		documents\game\resources\a-puzzle-a-day\random-all.gif = documents\game\resources\a-puzzle-a-day\random-all.gif
-		documents\game\resources\a-puzzle-a-day\random-one.gif = documents\game\resources\a-puzzle-a-day\random-one.gif
-		documents\game\resources\a-puzzle-a-day\schedule-all.gif = documents\game\resources\a-puzzle-a-day\schedule-all.gif
-		documents\game\resources\a-puzzle-a-day\schedule-one.gif = documents\game\resources\a-puzzle-a-day\schedule-one.gif
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,30 +41,6 @@ Global
 		{B7D8F202-34C5-4E2B-A6AA-023FB5C5FE40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7D8F202-34C5-4E2B-A6AA-023FB5C5FE40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7D8F202-34C5-4E2B-A6AA-023FB5C5FE40}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B5739466-A452-42EE-9D7A-F4C5D277674F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5739466-A452-42EE-9D7A-F4C5D277674F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5739466-A452-42EE-9D7A-F4C5D277674F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5739466-A452-42EE-9D7A-F4C5D277674F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{461A4D44-3FC3-4846-B4F2-F9514F5A5595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{461A4D44-3FC3-4846-B4F2-F9514F5A5595}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{461A4D44-3FC3-4846-B4F2-F9514F5A5595}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{461A4D44-3FC3-4846-B4F2-F9514F5A5595}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41BBD38C-D760-449B-83E5-0CE9C37C6B9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41BBD38C-D760-449B-83E5-0CE9C37C6B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41BBD38C-D760-449B-83E5-0CE9C37C6B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41BBD38C-D760-449B-83E5-0CE9C37C6B9E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{37B9636D-28EA-46B7-ACFD-4FEBE5DA9DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37B9636D-28EA-46B7-ACFD-4FEBE5DA9DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37B9636D-28EA-46B7-ACFD-4FEBE5DA9DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37B9636D-28EA-46B7-ACFD-4FEBE5DA9DB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65F714C0-178B-455F-AE0C-6FF46F788E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65F714C0-178B-455F-AE0C-6FF46F788E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65F714C0-178B-455F-AE0C-6FF46F788E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65F714C0-178B-455F-AE0C-6FF46F788E0A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0871854B-29C1-4F1F-B776-EE5391A98CFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0871854B-29C1-4F1F-B776-EE5391A98CFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0871854B-29C1-4F1F-B776-EE5391A98CFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0871854B-29C1-4F1F-B776-EE5391A98CFD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AEFBE653-F75B-4A4C-A004-76A7F32CFD44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AEFBE653-F75B-4A4C-A004-76A7F32CFD44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEFBE653-F75B-4A4C-A004-76A7F32CFD44}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -187,20 +51,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B7D8F202-34C5-4E2B-A6AA-023FB5C5FE40} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{B5739466-A452-42EE-9D7A-F4C5D277674F} = {AAFD7BE3-FDF6-4AF8-8A3A-F7A71DADB287}
-		{461A4D44-3FC3-4846-B4F2-F9514F5A5595} = {AAFD7BE3-FDF6-4AF8-8A3A-F7A71DADB287}
-		{41BBD38C-D760-449B-83E5-0CE9C37C6B9E} = {AAFD7BE3-FDF6-4AF8-8A3A-F7A71DADB287}
-		{37B9636D-28EA-46B7-ACFD-4FEBE5DA9DB8} = {AAFD7BE3-FDF6-4AF8-8A3A-F7A71DADB287}
-		{65F714C0-178B-455F-AE0C-6FF46F788E0A} = {AAFD7BE3-FDF6-4AF8-8A3A-F7A71DADB287}
-		{0871854B-29C1-4F1F-B776-EE5391A98CFD} = {AAFD7BE3-FDF6-4AF8-8A3A-F7A71DADB287}
 		{AEFBE653-F75B-4A4C-A004-76A7F32CFD44} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{6262CD5B-66FE-47B6-BD88-FF34DD81209F} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
-		{5E4B1E50-D56F-41CF-B772-945EBF86AC6A} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
-		{D61A29DC-FF49-42D1-8E59-7FE3EF0D26CC} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
-		{5F8B10AF-05FC-4A63-AB76-6AD1D48251BD} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
-		{9CA3846C-9F11-42F5-9C2B-A9B7BB9BC7B2} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
-		{9791E918-8EAB-41D0-9502-98AE013305E6} = {CDDF7F80-9E06-418B-A4DE-FA2116DBD7D7}
-		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F28D13C-E0E5-4BFE-AAB8-83F44715B622}

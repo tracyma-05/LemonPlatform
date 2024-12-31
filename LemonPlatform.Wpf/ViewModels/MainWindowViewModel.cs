@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using LemonPlatform.Core.Commons;
 using LemonPlatform.Core.Enums;
 using LemonPlatform.Core.Helpers;
 using LemonPlatform.Core.Infrastructures.Denpendency;
@@ -9,6 +10,9 @@ using LemonPlatform.Core.Infrastructures.MainWindowService;
 using LemonPlatform.Core.Models;
 using LemonPlatform.Wpf.Helpers;
 using LemonPlatform.Wpf.Models;
+using LemonPlatform.Wpf.ViewModels.UserControls;
+using LemonPlatform.Wpf.Views.UserControls;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -24,16 +28,10 @@ namespace LemonPlatform.Wpf.ViewModels
         {
             WeakReferenceMessenger.Default.Register(this);
 
-            MenuItems = new ObservableCollection<LemonMenuItem>(LemonMenuItem.MenuItems);
+            MenuItems = [.. LemonMenuItem.MenuItems];
             SelectMenuItem = MenuItems.First(x => x.Title == _defaultMenu);
             MessageHelper.SendSnackMessage("Lemon Platform");
             MessageHelper.SendStatusBarTextMessage("Ready");
-
-            var update = UpdateHelper.CheckForUpdatesAsync().Result;
-            if (update.HasNewVersion)
-            {
-                //MessageHelper
-            }
         }
 
         [ObservableProperty]
@@ -73,7 +71,20 @@ namespace LemonPlatform.Wpf.ViewModels
             Application.Current.Shutdown();
         }
 
-        public void Receive(LemonMessage message)
+        [RelayCommand]
+        private async Task CheckUpdate()
+        {
+            var update = await UpdateHelper.CheckForUpdatesAsync();
+            if (update.HasNewVersion)
+            {
+                var model = new FindNewVersionViewModel(update);
+                var view = new FindNewVersion(model);
+
+                MessageHelper.SendDialog(view);
+            }
+        }
+
+        public async void Receive(LemonMessage message)
         {
             if (message.Content == null) return;
             switch (message.MessageType)
@@ -97,13 +108,13 @@ namespace LemonPlatform.Wpf.ViewModels
                     }
                 case MessageType.Snack:
                     {
-                        Application.Current.Dispatcher.BeginInvoke(() =>
-                        {
-                            if (Application.Current.MainWindow is IMainHostWindow window)
-                            {
-                                window.AddSnackMessage(message.Content.ToString()!);
-                            }
-                        });
+                        await Application.Current.Dispatcher.BeginInvoke(() =>
+                         {
+                             if (Application.Current.MainWindow is IMainHostWindow window)
+                             {
+                                 window.AddSnackMessage(message.Content.ToString()!);
+                             }
+                         });
 
                         break;
                     }
@@ -120,8 +131,12 @@ namespace LemonPlatform.Wpf.ViewModels
                     }
 
                 case MessageType.Dialog:
+                    {
+                        var view = message.Content;
+                        await DialogHost.Show(view, LemonConstants.RootDialog);
 
-                    break;
+                        break;
+                    }
 
                 default:
 

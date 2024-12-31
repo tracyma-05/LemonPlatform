@@ -23,8 +23,10 @@ namespace LemonPlatform.Wpf.Helpers
             var url = $"https://api.github.com/repos/{RepositoryOwner}/{RepositoryName}/releases/latest";
             var response = await url.WithHeader("User-Agent", "WPF-App-Updater").GetStringAsync();
             var release = JsonDocument.Parse(response);
+            result.CurrentVersion = currentVersion;
             result.Version = release.RootElement.GetProperty("tag_name").GetString()!;
-            if (!IsNewVersionAvailable(currentVersion, result.Version)) return result;
+            result.HasNewVersion = IsNewVersionAvailable(currentVersion, result.Version);
+            result.Description = release.RootElement.GetProperty("body").ToString();
             var asserts = release.RootElement.GetProperty("assets");
             foreach (var item in asserts.EnumerateArray())
             {

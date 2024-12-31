@@ -12,6 +12,8 @@ namespace LemonPlatform.Core.Commons
 
         public const string DbName = "lemon.db";
 
+        public const string RootDialog = "RootDialog";
+
         public static List<ILemonModule> Modules = new List<ILemonModule>();
 
         public const string GuestUserId = "Guest";

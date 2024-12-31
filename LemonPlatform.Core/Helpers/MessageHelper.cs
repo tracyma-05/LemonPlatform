@@ -44,5 +44,10 @@ namespace LemonPlatform.Core.Helpers
         {
             SendLemonMessage(MessageType.StatusBarProcess, context);
         }
+
+        public static void SendDialog(object view)
+        {
+            SendLemonMessage(MessageType.Dialog, view);
+        }
     }
 }
