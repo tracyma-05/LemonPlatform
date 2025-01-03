@@ -10,8 +10,17 @@
 
         public bool HasNewVersion { get; set; } = false;
 
-        public Dictionary<string, string> Main { get; set; } = new Dictionary<string, string>();
+        public List<UpdateFileInfo> Main { get; set; } = new List<UpdateFileInfo>();
 
-        public Dictionary<string, string> Modules { get; set; } = new Dictionary<string, string>();
+        public List<UpdateFileInfo> Modules { get; set; } = new List<UpdateFileInfo>();
+    }
+
+    public class UpdateFileInfo
+    {
+        public string FileName { get; set; }
+
+        public string FileUrl { get; set; }
+
+        public long FileSize { get; set; }
     }
 }

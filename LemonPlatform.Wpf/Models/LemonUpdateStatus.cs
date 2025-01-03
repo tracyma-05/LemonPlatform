@@ -2,8 +2,9 @@
 {
     public enum LemonUpdateStatus
     {
-        Checking,
-        Updating,
+        Init,
+        Checked,
+        Downloaded,
         Success,
         Fail
     }

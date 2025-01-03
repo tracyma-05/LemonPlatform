@@ -10,11 +10,16 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Margin="15">
             <Image Source="/Resources/Images/update.png" Stretch="Uniform" Height="100" Width="100"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Current Download: "/>
+                <TextBlock Text="{Binding CurrentFile}"/>
+            </StackPanel>
             <ProgressBar Value="{Binding Current}" Maximum="{Binding Total}">
                 <ProgressBar.Style>
                     <Style TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
@@ -34,21 +39,47 @@
                 </ProgressBar.Style>
             </ProgressBar>
         </StackPanel>
-        
-        <TextBox Grid.Row="1"
-                 Text="{Binding Logs}" 
-                 Margin="15"
-                 AcceptsReturn="True"
-                 AcceptsTab="True"
-                 IsReadOnly="True"     
-                 VerticalContentAlignment="Top" 
-                 VerticalScrollBarVisibility="Auto"
-                 TextWrapping="Wrap"/>
 
-        <Button Grid.Row="2"
+        <DockPanel Grid.Row="1" Margin="15">
+            <TextBlock Text="Update Information: " DockPanel.Dock="Top"/>
+            <TextBox 
+                Text="{Binding Infos}"
+                AcceptsReturn="True"
+                AcceptsTab="True"
+                IsReadOnly="True"     
+                VerticalContentAlignment="Top" 
+                VerticalScrollBarVisibility="Auto"
+                MaxHeight="100"
+                MaxWidth="500"
+                TextWrapping="Wrap"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="2" Margin="15">
+            <TextBlock Text="Update Logs: " DockPanel.Dock="Top"/>
+            <TextBox 
+                Text="{Binding Logs}" 
+                AcceptsReturn="True"
+                AcceptsTab="True"
+                IsReadOnly="True"     
+                VerticalContentAlignment="Top" 
+                VerticalScrollBarVisibility="Auto"
+                MaxHeight="200"
+                MaxWidth="500"
+                TextWrapping="Wrap"/>
+        </DockPanel>
+
+        <UniformGrid Grid.Row="3" Columns="2">
+            <Button 
+                Margin="15" 
+                Content="Download"
+                Command="{Binding DownloadCommand}"
+                HorizontalAlignment="Stretch"/>
+
+            <Button Grid.Row="3"
                 Margin="15" 
                 Content="Update"
                 Command="{Binding RestartCommand}"
                 HorizontalAlignment="Stretch"/>
+        </UniformGrid>
     </Grid>
 </UserControl>

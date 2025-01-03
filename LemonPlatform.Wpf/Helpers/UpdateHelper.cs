@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using LemonPlatform.Core.Exceptions;
 using LemonPlatform.Wpf.Models;
 using System.Diagnostics;
 using System.IO;
@@ -13,7 +14,7 @@ namespace LemonPlatform.Wpf.Helpers
     {
         private const string RepositoryOwner = "tracyma-05";
         private const string RepositoryName = "LemonPlatform";
-        private const string MainPrefix = "LemonPlatform.Main";
+        private const string MainPrefix = "LemonPlaform.Main";
         private const string ModulePrefix = "LemonPlatform.Module";
 
         public static async Task<UpdateModel> CheckForUpdatesAsync()
@@ -32,14 +33,25 @@ namespace LemonPlatform.Wpf.Helpers
             {
                 var name = item.GetProperty("name").ToString();
                 var downloadUrl = item.GetProperty("browser_download_url").ToString();
+                var size =long.Parse(item.GetProperty("size").ToString());
                 if (name.Contains(MainPrefix))
                 {
-                    result.Main.Add(name, downloadUrl);
+                    result.Main.Add(new UpdateFileInfo
+                    {
+                        FileName = name,
+                        FileUrl = downloadUrl,
+                        FileSize = size
+                    });
                 }
 
                 if (name.Contains(ModulePrefix))
                 {
-                    result.Modules.Add(name, downloadUrl);
+                    result.Modules.Add(new UpdateFileInfo
+                    {
+                        FileName = name,
+                        FileUrl = downloadUrl,
+                        FileSize = size,
+                    });
                 }
             }
 
@@ -72,6 +84,34 @@ namespace LemonPlatform.Wpf.Helpers
             {
                 Process.Start(tempFilePath);
                 Application.Current.Shutdown();
+            }
+        }
+
+        public static bool IsDotNetDesktopRuntimeInstalled(string versionIdentifier)
+        {
+            try
+            {
+                ProcessStartInfo processStartInfo = new ProcessStartInfo
+                {
+                    FileName = "dotnet",
+                    Arguments = "--list-runtimes",
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (Process process = Process.Start(processStartInfo))
+                {
+                    using (var reader = process.StandardOutput)
+                    {
+                        string result = reader.ReadToEnd();
+                        return result.Contains(versionIdentifier);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new LemonException($"Error checking .NET Desktop Runtime: {ex.Message}");
             }
         }
     }
