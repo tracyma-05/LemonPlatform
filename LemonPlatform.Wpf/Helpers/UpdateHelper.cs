@@ -14,7 +14,7 @@ namespace LemonPlatform.Wpf.Helpers
     {
         private const string RepositoryOwner = "tracyma-05";
         private const string RepositoryName = "LemonPlatform";
-        private const string MainPrefix = "LemonPlaform.Main";
+        private const string MainPrefix = "LemonPlatform.Main";
         private const string ModulePrefix = "LemonPlatform.Module";
 
         public static async Task<UpdateModel> CheckForUpdatesAsync()

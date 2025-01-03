@@ -1,5 +1,6 @@
 ﻿using LemonPlatform.Updater.Helpers;
 using LemonPlatform.Updater.Models;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Windows;
@@ -52,6 +53,18 @@ namespace LemonPlatform.Updater
                         UpdateProgress(processedEntries, totalEntries);
                         LogMessage($"Handle: {entry.FullName}");
                     }
+                }
+
+                var result = MessageBox.Show("Update Success!!!", "Update", MessageBoxButton.OK);
+                if (result == MessageBoxResult.OK)
+                {
+                    var mainPath = AppDomain.CurrentDomain.BaseDirectory;
+                    var directoryInfo = new DirectoryInfo(mainPath);
+                    var parentDirectory = directoryInfo.Parent;
+                    var app = Path.Combine(parentDirectory.FullName, "LemonPlatform.Wpf.exe");
+
+                    Process.Start(app);
+                    Application.Current.Shutdown();
                 }
             });
         }

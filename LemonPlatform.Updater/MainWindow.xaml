@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:LemonPlatform.Updater"
         mc:Ignorable="d"
         Title="Lemon Updater" 
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
         Height="300"
         Width="500">
     <Grid Margin="10">
