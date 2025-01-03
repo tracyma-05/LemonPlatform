@@ -17,7 +17,7 @@ namespace LemonPlatform.Updater
 
         private async void StartUpdateProcess(List<UpdateModel> models)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 LogMessage("Start update...");
                 var tasks = models.OrderBy(x => x.Order);
@@ -55,17 +55,20 @@ namespace LemonPlatform.Updater
                     }
                 }
 
-                var result = MessageBox.Show("Update Success!!!", "Update", MessageBoxButton.OK, MessageBoxImage.Information);
-                if (result == MessageBoxResult.OK)
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    var mainPath = AppDomain.CurrentDomain.BaseDirectory;
-                    var directoryInfo = new DirectoryInfo(mainPath);
-                    var parentDirectory = directoryInfo.Parent;
-                    var app = Path.Combine(parentDirectory.FullName, "LemonPlatform.Wpf.exe");
+                    var result = MessageBox.Show(this, "Update Success!!!", "Update", MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        var mainPath = AppDomain.CurrentDomain.BaseDirectory;
+                        var directoryInfo = new DirectoryInfo(mainPath);
+                        var parentDirectory = directoryInfo.Parent;
+                        var app = Path.Combine(parentDirectory.FullName, "LemonPlatform.Wpf.exe");
 
-                    Process.Start(app);
-                    Application.Current.Shutdown();
-                }
+                        Process.Start(app);
+                        Application.Current.Shutdown();
+                    }
+                });
             });
         }
 
