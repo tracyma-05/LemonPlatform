@@ -1,9 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LemonPlatform.Core.Exceptions;
 using LemonPlatform.Wpf.Helpers;
 using LemonPlatform.Wpf.Models;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Windows;
 
 namespace LemonPlatform.Wpf.ViewModels.UserControls
@@ -47,11 +51,13 @@ namespace LemonPlatform.Wpf.ViewModels.UserControls
             var tmpBasePath = Path.Combine(Path.GetTempPath(), dir);
             if (!Directory.Exists(tmpBasePath)) Directory.CreateDirectory(tmpBasePath);
             using var http = new HttpClient();
+            var order = 0;
             while (_updateTasks.Count > 0)
             {
                 var file = _updateTasks.Dequeue();
                 Logs = $"Download file {file.FileName}{Environment.NewLine}";
 
+                order++;
                 CurrentFile = file.FileName;
                 Total = file.FileSize;
                 Current = 0;
@@ -64,7 +70,12 @@ namespace LemonPlatform.Wpf.ViewModels.UserControls
                     var fileSize = fileInfo.Length;
                     if (fileSize == file.FileSize)
                     {
-                        _updates.Add(file);
+                        _updates.Add(new ZipModel
+                        {
+                            Source = tmpFilePath,
+                            Target = file.Target,
+                            Order = order
+                        });
                         continue;
                     }
                     else
@@ -91,29 +102,36 @@ namespace LemonPlatform.Wpf.ViewModels.UserControls
                     }
                 }
 
-                _updates.Add(file);
+                _updates.Add(new ZipModel
+                {
+                    Source = tmpFilePath,
+                    Target = file.Target,
+                    Order = order
+                });
+
+
             }
 
+            var content = JsonSerializer.Serialize(_updates);
+
+            await File.WriteAllTextAsync("update.json", content, encoding: Encoding.UTF8);
             Status = LemonUpdateStatus.Downloaded;
         }
 
         private Queue<UpdateTask> _updateTasks = new Queue<UpdateTask>();
-        private HashSet<UpdateTask> _updates = new HashSet<UpdateTask>();
+        private HashSet<ZipModel> _updates = new HashSet<ZipModel>();
 
         [RelayCommand(CanExecute = nameof(CanRestart))]
         private void Restart()
         {
-            if (_updateTasks == null || _updateTasks.Count > 0) return;
-            while (_updateTasks.Count > 0)
-            {
-                var task = _updateTasks.Dequeue();
-                if (string.IsNullOrWhiteSpace(task.Target)) continue;
-                var dir = Path.GetDirectoryName(task.Target);
+            var updateFileName = "update.json";
+            var updateFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateFileName);
+            var updater = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "updater\\LemonPlatform.Updater.exe");
 
-                if (!string.IsNullOrWhiteSpace(dir) && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            if (!File.Exists(updateFilePath)) throw new LemonException("can not find update.json.");
+            if (!File.Exists(updater)) throw new LemonException("can not find update application.");
 
-            }
-
+            Process.Start(updater, updateFilePath);
             Application.Current.Shutdown();
         }
 
@@ -175,13 +193,13 @@ namespace LemonPlatform.Wpf.ViewModels.UserControls
                 foreach (var item in _updateModel.Modules)
                 {
                     Infos += $"Module: {item.FileName} {HumanReadableFileSize(item.FileSize)}{Environment.NewLine}";
-
+                    var target = Path.Combine(moduleDir, item.FileName.Replace(".zip", ""));
                     _updateTasks.Enqueue(new UpdateTask
                     {
                         FileName = item.FileName,
                         FileUrl = item.FileUrl,
                         FileSize = item.FileSize,
-                        Target = moduleDir,
+                        Target = target,
                         IsMain = false
                     });
                 }

@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Module.Tools"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Module.Visualization", "LemonPlatform.Module.Visualization\LemonPlatform.Module.Visualization.csproj", "{90A3CD04-9172-2246-810F-1947984EC841}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonPlatform.Updater", "LemonPlatform.Updater\LemonPlatform.Updater.csproj", "{B9C45649-CA23-4962-98BD-35A66CB9A1EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{90A3CD04-9172-2246-810F-1947984EC841}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90A3CD04-9172-2246-810F-1947984EC841}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90A3CD04-9172-2246-810F-1947984EC841}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9C45649-CA23-4962-98BD-35A66CB9A1EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9C45649-CA23-4962-98BD-35A66CB9A1EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9C45649-CA23-4962-98BD-35A66CB9A1EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9C45649-CA23-4962-98BD-35A66CB9A1EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +102,7 @@ Global
 		{E5ECE13D-97EB-3A41-5995-75E40DA7A515} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{0A5401FD-9D3B-64A4-6BCC-630510F76095} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{90A3CD04-9172-2246-810F-1947984EC841} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{B9C45649-CA23-4962-98BD-35A66CB9A1EF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F28D13C-E0E5-4BFE-AAB8-83F44715B622}
