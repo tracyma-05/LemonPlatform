@@ -55,7 +55,7 @@ namespace LemonPlatform.Updater
                     }
                 }
 
-                var result = MessageBox.Show("Update Success!!!", "Update", MessageBoxButton.OK);
+                var result = MessageBox.Show("Update Success!!!", "Update", MessageBoxButton.OK, MessageBoxImage.Information);
                 if (result == MessageBoxResult.OK)
                 {
                     var mainPath = AppDomain.CurrentDomain.BaseDirectory;

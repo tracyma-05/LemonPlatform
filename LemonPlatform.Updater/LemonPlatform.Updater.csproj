@@ -7,6 +7,19 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<OutputPath>$(SolutionDir)LemonPlatform.Wpf/bin/$(Configuration)/$(TargetFramework)/updater</OutputPath>
 		<UseWPF>true</UseWPF>
+		<ApplicationIcon>update.ico</ApplicationIcon>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="update.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="update.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="update.ico" />
+	</ItemGroup>
 
 </Project>

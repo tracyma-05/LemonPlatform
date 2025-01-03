@@ -1,14 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LemonPlatform.Core.Commons;
 using LemonPlatform.Core.Exceptions;
 using LemonPlatform.Wpf.Helpers;
 using LemonPlatform.Wpf.Models;
+using MaterialDesignThemes.Wpf;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Windows;
+using System.Windows.Forms;
+using Application = System.Windows.Application;
 
 namespace LemonPlatform.Wpf.ViewModels.UserControls
 {
@@ -76,6 +79,7 @@ namespace LemonPlatform.Wpf.ViewModels.UserControls
                             Target = file.Target,
                             Order = order
                         });
+
                         continue;
                     }
                     else
@@ -108,12 +112,9 @@ namespace LemonPlatform.Wpf.ViewModels.UserControls
                     Target = file.Target,
                     Order = order
                 });
-
-
             }
 
             var content = JsonSerializer.Serialize(_updates);
-
             await File.WriteAllTextAsync("update.json", content, encoding: Encoding.UTF8);
             Status = LemonUpdateStatus.Downloaded;
         }
@@ -133,6 +134,15 @@ namespace LemonPlatform.Wpf.ViewModels.UserControls
 
             Process.Start(updater, updateFilePath);
             Application.Current.Shutdown();
+        }
+
+        [RelayCommand]
+        private void Ignore()
+        {
+            if (DialogHost.IsDialogOpen(LemonConstants.RootDialog))
+            {
+                DialogHost.Close(LemonConstants.RootDialog, DialogResult.Cancel);
+            }
         }
 
         private bool CanRestart => Status == LemonUpdateStatus.Downloaded;

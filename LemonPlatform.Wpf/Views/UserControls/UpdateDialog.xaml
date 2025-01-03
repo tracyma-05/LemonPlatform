@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:LemonPlatform.Wpf.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="518" 
-             d:DesignWidth="320">
+             d:DesignWidth="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -68,15 +68,23 @@
                 TextWrapping="Wrap"/>
         </DockPanel>
 
-        <UniformGrid Grid.Row="3" Columns="2">
+        <UniformGrid Grid.Row="3" Columns="3">
             <Button 
-                Margin="15" 
+                Margin="10"
+                Content="Ignore"
+                Command="{Binding IgnoreCommand}"
+                HorizontalAlignment="Stretch"/>
+
+            <Button 
+                Grid.Column="1"
+                Margin="10"
                 Content="Download"
                 Command="{Binding DownloadCommand}"
                 HorizontalAlignment="Stretch"/>
 
-            <Button Grid.Row="3"
-                Margin="15" 
+            <Button
+                Grid.Column="2"
+                Margin="10"
                 Content="Update"
                 Command="{Binding RestartCommand}"
                 HorizontalAlignment="Stretch"/>
