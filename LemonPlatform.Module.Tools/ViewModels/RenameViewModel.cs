@@ -43,15 +43,24 @@ namespace LemonPlatform.Module.Tools.ViewModels
         [RelayCommand(CanExecute = nameof(CanRename))]
         private void Rename()
         {
-            foreach (var item in Files)
+            RenameInternal(Files);
+            UpdateTreeView();
+        }
+
+        private void RenameInternal(List<FileItem> files)
+        {
+            foreach (var item in files)
             {
-                if (item.Type == "Folder") continue;
+                if (item.Type == "Folder")
+                {
+                    RenameInternal(item.Children);
+                    continue;
+                };
+
                 var fileName = item.Name.Replace(SourceInfo, DestinationInfo);
                 var newPath = Path.Combine(Path.GetDirectoryName(item.Path), fileName + item.Extension);
                 File.Move(item.Path, newPath);
             }
-
-            UpdateTreeView();
         }
 
         [RelayCommand]
