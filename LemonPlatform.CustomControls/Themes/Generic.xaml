@@ -4,5 +4,10 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/LemonPlatform.CustomControls;component/Themes/ScreenCuts/ScreenCut.xaml" />
+
+        <ResourceDictionary Source="/LemonPlatform.CustomControls;component/Themes/TreeViews/SuperTreeView.xaml"/>
+        <ResourceDictionary Source="/LemonPlatform.CustomControls;component/Themes/TreeViews/SuperTreeViewItem.xaml"/>
+        <ResourceDictionary Source="/LemonPlatform.CustomControls;component/Themes/TreeViews/ChevronSwitch.xaml"/>
+        <ResourceDictionary Source="/LemonPlatform.CustomControls;component/Themes/TreeViews/FileIcon.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

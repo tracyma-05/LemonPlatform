@@ -14,6 +14,7 @@ namespace LemonPlatform.Module.Tools
             { 
                 new PluginItem("Compare", typeof(CompareToolView), "FileCompare", "#ff461f", "string compare", PluginType.TextTools),
                 new PluginItem("JsonExtract", typeof(JsonExtractToolView), "CloudBraces", "#ff2d51", "json extract tool", PluginType.TextTools),
+                new PluginItem("Rename", typeof(RenameView), "RenameBox", "#ff2e58", "rename tool", PluginType.TextTools),
             };
         }
 

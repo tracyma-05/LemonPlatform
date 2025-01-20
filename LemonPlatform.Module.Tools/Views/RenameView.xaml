@@ -1,0 +1,87 @@
+﻿<Page x:Class="LemonPlatform.Module.Tools.Views.RenameView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LemonPlatform.Module.Tools.Views"
+      xmlns:controls="clr-namespace:LemonPlatform.CustomControls.Controls.TreeViews;assembly=LemonPlatform.CustomControls"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:converters="clr-namespace:LemonPlatform.Core.Converters;assembly=LemonPlatform.Core"
+      mc:Ignorable="d" 
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      Title="RenameView">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Row="0" Margin="10">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
+                        <materialDesign:PackIcon Height="25" Width="25" Kind="Dictionary" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBox 
+                            Width="220"
+                            Height="30" 
+                            Margin="10" 
+                            materialDesign:HintAssist.Hint="Dictory Path"
+                            materialDesign:HintAssist.HelperText="Click button"
+                            Text="{Binding FilePath,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button Width="90" Height="30" Content="Select" Command="{Binding OpenDialogCommand}" Margin="10"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
+                        <materialDesign:PackIcon Height="25" Width="25" Kind="Ruler" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBox 
+                            Width="100"
+                            Height="30" 
+                            Margin="10" 
+                            materialDesign:HintAssist.Hint="Source"
+                            materialDesign:HintAssist.HelperText="Source info"
+                            Text="{Binding SourceInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBox 
+                            Width="100"
+                            Height="30" 
+                            Margin="10" 
+                            materialDesign:HintAssist.Hint="Destination"
+                            materialDesign:HintAssist.HelperText="Destination info"
+                            Text="{Binding DestinationInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        
+                        <Button Width="90" Height="30" Content="Rename" Command="{Binding RenameCommand}" Margin="10"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+            
+            <Border
+                Grid.Row="1"
+                Margin="10"
+                BorderThickness="1"
+                CornerRadius="5"
+                BorderBrush="{DynamicResource MaterialDesignDivider}"
+                MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid,AncestorLevel=2}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.5-10}"
+                MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid,AncestorLevel=2}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.5-10}">
+                <TextBox Text="{Binding Response}" 
+                     TextWrapping="Wrap" 
+                     VerticalContentAlignment="Top"
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Auto"
+                     AcceptsReturn="True"/>
+            </Border>
+        </Grid>
+
+        <controls:SuperTreeView 
+            Grid.Column="1"
+            Margin="10"
+            Foreground="{DynamicResource MaterialDesignBody}"
+            Background="{DynamicResource MaterialDesignPaper}"
+            ItemsSource="{Binding Files}" 
+            SelectionCommand="{Binding SelectionCommand}"/>
+    </Grid>
+</Page>
