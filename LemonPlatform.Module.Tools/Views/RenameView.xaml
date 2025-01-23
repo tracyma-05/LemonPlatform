@@ -8,7 +8,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:converters="clr-namespace:LemonPlatform.Core.Converters;assembly=LemonPlatform.Core"
       mc:Ignorable="d" 
-      d:DesignHeight="450"
+      d:DesignHeight="500"
       d:DesignWidth="800"
       Title="RenameView">
 
@@ -18,70 +18,80 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <materialDesign:Card Grid.Row="0" Margin="10">
+            <materialDesign:Card Margin="10">
                 <StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
-                        <materialDesign:PackIcon Height="25" Width="25" Kind="Dictionary" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBox 
-                            Width="220"
-                            Height="30" 
-                            Margin="10" 
-                            materialDesign:HintAssist.Hint="Dictory Path"
-                            materialDesign:HintAssist.HelperText="Click button"
-                            Text="{Binding FilePath,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                        <Button Width="90" Height="30" Content="Select" Command="{Binding OpenDialogCommand}" Margin="10"/>
-                    </StackPanel>
+                    <GroupBox Header="Files" Margin="5">
+                        <DockPanel Margin="10" VerticalAlignment="Top">
+                            <materialDesign:PackIcon Height="25" Width="25" Kind="Dictionary" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                            <Button Width="90" Height="30" Content="Select" Command="{Binding SelectSourcePathCommand}" Margin="10" DockPanel.Dock="Right"/>
+                            <TextBox 
+                                Height="30" 
+                                Margin="10" 
+                                materialDesign:HintAssist.Hint="Select Source Path"
+                                materialDesign:HintAssist.HelperText="Select Source Path"
+                                Text="{Binding SourcePath,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        </DockPanel>
+                    </GroupBox>
 
-                    <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
-                        <materialDesign:PackIcon Height="25" Width="25" Kind="Ruler" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBox 
-                            Width="100"
-                            Height="30" 
-                            Margin="10" 
-                            materialDesign:HintAssist.Hint="Source"
-                            materialDesign:HintAssist.HelperText="Source info"
-                            Text="{Binding SourceInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <GroupBox Header="Configuration" Margin="5">
+                        <StackPanel>
+                            <DockPanel Margin="10" VerticalAlignment="Top">
+                                <materialDesign:PackIcon Height="25" Width="25" Kind="TextBox" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                                <TextBox 
+                                    Height="30" 
+                                    Margin="10" 
+                                    materialDesign:HintAssist.Hint="Source Text"
+                                    materialDesign:HintAssist.HelperText="Source Text"
+                                    Text="{Binding SourceText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </DockPanel>
 
-                        <TextBox 
-                            Width="100"
-                            Height="30" 
-                            Margin="10" 
-                            materialDesign:HintAssist.Hint="Destination"
-                            materialDesign:HintAssist.HelperText="Destination info"
-                            Text="{Binding DestinationInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                        
-                        <Button Width="90" Height="30" Content="Rename" Command="{Binding RenameCommand}" Margin="10"/>
-                    </StackPanel>
+                            <DockPanel Margin="10" VerticalAlignment="Top">
+                                <materialDesign:PackIcon Height="25" Width="25" Kind="TextBoxCheck" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                                <TextBox 
+                                    Height="30" 
+                                    Margin="10" 
+                                    materialDesign:HintAssist.Hint="Destination Text"
+                                    materialDesign:HintAssist.HelperText="Destination Text"
+                                    Text="{Binding DestinationText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </DockPanel>
+
+                            <DockPanel Margin="10" VerticalAlignment="Top">
+                                <materialDesign:PackIcon Height="25" Width="25" Kind="Filter" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                                <TextBox 
+                                    Height="30" 
+                                    Margin="10" 
+                                    materialDesign:HintAssist.Hint="Extension Filter"
+                                    materialDesign:HintAssist.HelperText="Extension Filter"
+                                    Text="{Binding Filter,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </DockPanel>
+
+                            <DockPanel Margin="10" VerticalAlignment="Top">
+                                <materialDesign:PackIcon Height="25" Width="25" Kind="Dictionary" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                                <Button Width="90" Height="30" Content="Select" Command="{Binding SelectDestinationPathCommand}" Margin="10" DockPanel.Dock="Right"/>
+                                <TextBox 
+                                    Height="30" 
+                                    Margin="10" 
+                                    materialDesign:HintAssist.Hint="Select Destination Path"
+                                    materialDesign:HintAssist.HelperText="Select Destination Path"
+                                    Text="{Binding DestinationPath,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </DockPanel>
+
+                            <UniformGrid Columns="2">
+                                <Button Width="90" Height="30" Content="Rename" Command="{Binding RenameCommand}" Margin="10"/>
+                                <Button  Width="90" Height="30" Content="Move" Command="{Binding MoveCommand}" Margin="10"/>
+                            </UniformGrid>
+                        </StackPanel>
+                    </GroupBox>
                 </StackPanel>
             </materialDesign:Card>
-            
-            <Border
-                Grid.Row="1"
-                Margin="10"
-                BorderThickness="1"
-                CornerRadius="5"
-                BorderBrush="{DynamicResource MaterialDesignDivider}"
-                MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid,AncestorLevel=2}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.5-10}"
-                MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid,AncestorLevel=2}, Converter={converters:WidthHeightValueConverter}, ConverterParameter=0.5-10}">
-                <TextBox Text="{Binding Response}" 
-                     TextWrapping="Wrap" 
-                     VerticalContentAlignment="Top"
-                     VerticalScrollBarVisibility="Auto"
-                     HorizontalScrollBarVisibility="Auto"
-                     AcceptsReturn="True"/>
-            </Border>
         </Grid>
-
-        <controls:SuperTreeView 
-            Grid.Column="1"
-            Margin="10"
-            Foreground="{DynamicResource MaterialDesignBody}"
-            Background="{DynamicResource MaterialDesignPaper}"
-            ItemsSource="{Binding Files}" 
-            SelectionCommand="{Binding SelectionCommand}"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1">
+            <controls:SuperTreeView 
+                Margin="10"
+                Foreground="{DynamicResource MaterialDesignBody}"
+                Background="{DynamicResource MaterialDesignPaper}"
+                ItemsSource="{Binding Files}" 
+                SelectionCommand="{Binding SelectionCommand}"/>
+        </ScrollViewer>
     </Grid>
 </Page>

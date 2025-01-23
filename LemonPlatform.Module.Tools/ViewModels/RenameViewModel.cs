@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LemonPlatform.Core.Helpers;
 using LemonPlatform.Core.Infrastructures.Denpendency;
 using LemonPlatform.CustomControls.Controls.TreeViews.Models;
 using Microsoft.Win32;
@@ -10,22 +11,31 @@ namespace LemonPlatform.Module.Tools.ViewModels
     [ObservableObject]
     public partial class RenameViewModel : ISingletonDependency
     {
-        [NotifyCanExecuteChangedFor(nameof(RenameCommand))]
-        [ObservableProperty]
-        private string _filePath;
-
-        [ObservableProperty]
-        private string _response;
+        public RenameViewModel()
+        {
+            Filter = ".*";
+        }
 
         [NotifyCanExecuteChangedFor(nameof(RenameCommand))]
         [ObservableProperty]
-        private string _sourceInfo;
+        private string _sourcePath;
+
+        [NotifyCanExecuteChangedFor(nameof(MoveCommand))]
+        [ObservableProperty]
+        private string _destinationPath;
+
+        [NotifyCanExecuteChangedFor(nameof(RenameCommand))]
+        [ObservableProperty]
+        private string _sourceText;
 
         [ObservableProperty]
-        private string _destinationInfo;
+        private string _destinationText;
+
+        [ObservableProperty]
+        private string _filter;
 
         [RelayCommand]
-        private void OpenDialog()
+        private void SelectSourcePath()
         {
             var dialog = new OpenFolderDialog
             {
@@ -35,8 +45,23 @@ namespace LemonPlatform.Module.Tools.ViewModels
             var result = dialog.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                FilePath = dialog.FolderName;
+                SourcePath = dialog.FolderName;
                 UpdateTreeView();
+            }
+        }
+
+        [RelayCommand]
+        private void SelectDestinationPath()
+        {
+            var dialog = new OpenFolderDialog
+            {
+                Multiselect = false,
+            };
+
+            var result = dialog.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                DestinationPath = dialog.FolderName;
             }
         }
 
@@ -47,6 +72,14 @@ namespace LemonPlatform.Module.Tools.ViewModels
             UpdateTreeView();
         }
 
+        [RelayCommand(CanExecute = nameof(CanMove))]
+        private void Move()
+        {
+            MoveInternal(Files);
+            UpdateTreeView();
+            PathHelper.OpenPath(DestinationPath);
+        }
+
         private void RenameInternal(List<FileItem> files)
         {
             foreach (var item in files)
@@ -55,11 +88,33 @@ namespace LemonPlatform.Module.Tools.ViewModels
                 {
                     RenameInternal(item.Children);
                     continue;
+                }
+                ;
+
+                if (string.IsNullOrWhiteSpace(Filter) || Filter == ".*" || item.Extension == Filter)
+                {
+                    var fileName = item.Name.Replace(SourceText, DestinationText);
+                    var newPath = Path.Combine(Path.GetDirectoryName(item.Path), fileName + item.Extension);
+                    File.Move(item.Path, newPath);
+                }
+            }
+        }
+
+        private void MoveInternal(List<FileItem> files)
+        {
+            foreach (var item in files)
+            {
+                if (item.Type == "Folder")
+                {
+                    MoveInternal(item.Children);
+                    continue;
                 };
 
-                var fileName = item.Name.Replace(SourceInfo, DestinationInfo);
-                var newPath = Path.Combine(Path.GetDirectoryName(item.Path), fileName + item.Extension);
-                File.Move(item.Path, newPath);
+                if (string.IsNullOrWhiteSpace(Filter) || Filter == ".*" || item.Extension == Filter)
+                {
+                    var newPath = Path.Combine(DestinationPath, item.Name + item.Extension);
+                    File.Move(item.Path, newPath);
+                }
             }
         }
 
@@ -70,6 +125,7 @@ namespace LemonPlatform.Module.Tools.ViewModels
         }
 
         [NotifyCanExecuteChangedFor(nameof(RenameCommand))]
+        [NotifyCanExecuteChangedFor(nameof(MoveCommand))]
         [ObservableProperty]
         private List<FileItem> _files;
 
@@ -111,14 +167,19 @@ namespace LemonPlatform.Module.Tools.ViewModels
 
         private bool CanRename()
         {
-            return !string.IsNullOrEmpty(FilePath) && !string.IsNullOrWhiteSpace(SourceInfo) || Files != null && !Files.Any();
+            return !string.IsNullOrWhiteSpace(SourcePath) && !string.IsNullOrWhiteSpace(SourceText) && Files != null && Files.Any();
+        }
+
+        private bool CanMove()
+        {
+            return !string.IsNullOrWhiteSpace(DestinationPath) && Files != null && Files.Any();
         }
 
         private void UpdateTreeView()
         {
             var source = new List<FileItem>();
             var depth = 0;
-            GetFiles(FilePath, source, depth);
+            GetFiles(SourcePath, source, depth);
 
             Files = source;
         }
