@@ -61,6 +61,12 @@ namespace LemonPlatform.Module.Game.ViewModels
         [ObservableProperty]
         private ObservableCollection<Desk> _desks;
 
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ClearAllCommand))]
+        [NotifyCanExecuteChangedFor(nameof(SearchScheduleAllCommand))]
+        [NotifyCanExecuteChangedFor(nameof(SearchScheduleOneCommand))]
+        private ObservableCollection<Desk> _updateDesks;
+
         /// <summary>
         /// store the results
         /// </summary>
@@ -115,6 +121,7 @@ namespace LemonPlatform.Module.Game.ViewModels
             _desk = null;
             _placedIndex.Clear();
             InitPuzzleItems();
+            InitDesks();
         }
 
         [RelayCommand(CanExecute = nameof(CanPreExecute))]
@@ -206,6 +213,7 @@ namespace LemonPlatform.Module.Game.ViewModels
             _desk |= newDesk;
             _placedIndex.Add(rawDesk.Index);
             UpdateDesk(models, _desk);
+            UpdateDropDesk();
         }
 
         #region private
@@ -429,6 +437,7 @@ namespace LemonPlatform.Module.Game.ViewModels
             }
 
             PuzzleItems = [.. puzzleItems];
+            InitDesks();
         }
 
         private void InitDesks()
@@ -472,6 +481,24 @@ namespace LemonPlatform.Module.Game.ViewModels
             }
 
             Desks = new ObservableCollection<Desk>(result);
+            UpdateDesks = new ObservableCollection<Desk>(result);
+        }
+
+        private void UpdateDropDesk()
+        {
+            var result = new List<Desk>();
+            if (_placedIndex != null && _placedIndex.Any())
+            {
+                for (int i = 0; i < Desks.Count; i++)
+                {
+                    if (!_placedIndex.Contains(i))
+                    {
+                        result.Add(Desks[i]);
+                    }
+                }
+            }
+
+            UpdateDesks = new ObservableCollection<Desk>(result);
         }
 
         private bool CanPreExecute()

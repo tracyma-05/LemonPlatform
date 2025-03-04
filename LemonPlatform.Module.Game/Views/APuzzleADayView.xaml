@@ -64,7 +64,7 @@
                     RequestBringIntoView="ListBox_RequestBringIntoView"
                     AllowDrop="True"
                     MouseMove="desk_MouseMove"
-                    ItemsSource="{Binding Desks}">
+                    ItemsSource="{Binding UpdateDesks}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="10">
